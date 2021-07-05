@@ -7,7 +7,9 @@ Kaillera offers the possibility to play retro games online using emulators with 
 
 Kaillera Reborn is a volunteer community focused on maintaining the network by having our own Servers List, updating related projects and hosting Kaillera servers in different locations. Feel free to join our Discord server, whether you want to help by getting involved in any of the projects or simply to keep up to date with the latest news.
 
-[Kaillera Reborn: Discord Group](https://discord.gg/eRwtHDh)
+[Discord: Kaillera Reborn](https://discord.gg/eRwtHDh)
+
+[Website: EmuLinker](https://emulinker.org)
 
 
 ### **Downloads**
@@ -51,7 +53,9 @@ Kaillera Reborn is a volunteer community focused on maintaining the network by h
 - [Source codes](http://170.39.225.176/src/)
 
 Emulators must include the functions described in the 'kailleraclient.h' file to enable Kaillera.
-For an implementation example, check the archive of source codes.
+
+Check the archive of source codes to see examples of Kaillera implementation in emulators.
+
 
 ### **List of the most accurate emulators for each system**
 
@@ -66,7 +70,7 @@ For an implementation example, check the archive of source codes.
 - [Altirra](http://www.virtualdub.org/altirra.html) (5200)
 - [A7800](https://github.com/7800-devtools/a7800) (7800)
 - [Virtual Jaguar](https://github.com/mirror/virtualjaguar) (Jaguar)
-- [Hatari](https://git.tuxfamily.org/hatari/hatari.git/) (ST)
+- [Hatari](https://github.com/hatari/hatari) (ST)
 
 > COLECO
 - [ColEm](https://fms.komkon.org/ColEm/#Downloads) (Colecovision)
