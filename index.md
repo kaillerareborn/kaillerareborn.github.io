@@ -22,7 +22,7 @@ Kaillera Reborn is a volunteer community focused on maintaining the network by h
 - [Atari800Win PLus](http://170.39.225.176/emulators/) (Atari 8bit systems)
 - [CCS64](http://170.39.225.176/emulators/) (Commodore 64)
 - [DEmul](http://170.39.225.176/emulators/) (Sega Dreamcast)
-- [ePSXe](http://170.39.225.176/emulators/) (Sony PlayStation)
+- [ePSXe](http://170.39.225.176/emulators/) (Sony PlayStation - PSX)
 - [Gens](http://170.39.225.176/emulators/) (Sega Megadrive / Genesis)
 - [MAME](http://170.39.225.176/emulators/) (Arcade systems) @ MAME32k / MAME32++ / Houba / FBNeo
 - [Meisei](http://170.39.225.176/emulators/) (Microsoft MSX)
@@ -54,7 +54,7 @@ Kaillera Reborn is a volunteer community focused on maintaining the network by h
 
 Emulators must include the functions described in the 'kailleraclient.h' file to enable Kaillera.
 
-Check the archive of source codes to see examples of Kaillera implementation in emulators.
+Check the archive of source codes to see examples of Kaillera implementations in emulators.
 
 
 ### **List of the most accurate emulators for each system**
