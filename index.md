@@ -5,11 +5,9 @@
 
 Kaillera offers the possibility to play retro games online using emulators with Kaillera support. It consists of a client and a server: the client is embedded into the emulators and the server is a standalone application that needs to be run on a PC or VM. It allows up to 8 players simultaneously through the server, and 1 vs 1 using Open Kaillera's P2P mode.
 
-Kaillera Reborn is a volunteer community focused on maintaining the network by having our own Servers List, updating related projects and hosting Kaillera servers in different locations. Feel free to join our Discord server, whether you want to help by getting involved in any of the projects or simply to keep up to date with the latest news.
+Kaillera Reborn is a volunteer community focused on maintaining the network by having our own Servers List, updating related projects and hosting Kaillera servers in different locations. Feel free to join our Discord group, whether you want to help by getting involved in any of the projects or simply to keep up to date with the latest news.
 
-[Discord: Kaillera Reborn](https://discord.gg/eRwtHDh)
-
-[Website: EmuLinker](https://emulinker.org)
+[Discord: Kaillera Reborn](https://discord.gg/eRwtHDh) – [Website: EmuLinker.org](https://emulinker.org/web/)
 
 
 ### **Downloads**
@@ -19,19 +17,19 @@ Kaillera Reborn is a volunteer community focused on maintaining the network by h
 
 
 - **Emulators**
-- [Atari800Win PLus](http://170.39.225.176/emulators/) (Atari 8bit systems)
-- [CCS64](http://170.39.225.176/emulators/) (Commodore 64)
-- [DEmul](http://170.39.225.176/emulators/) (Sega Dreamcast)
-- [ePSXe](http://170.39.225.176/emulators/) (Sony PlayStation - PSX)
-- [Gens](http://170.39.225.176/emulators/) (Sega Megadrive / Genesis)
-- [MAME](http://170.39.225.176/emulators/) (Arcade systems) @ MAME32k / MAME32++ / Houba / FBNeo
-- [Meisei](http://170.39.225.176/emulators/) (Microsoft MSX)
-- [Mupen64++](http://170.39.225.176/emulators/) (Nintendo 64)
-- [Nestopia](http://170.39.225.176/emulators/) (Nintendo Entertainment System - NES)
-- [Nostalgia](http://170.39.225.176/emulators/) (Mattel Intellivision)
-- [Project64k](http://170.39.225.176/emulators/) (Nintendo 64)
-- [Snes9k](http://170.39.225.176/emulators/) (Super Nintendo Entertainment System - SNES)
-- [WinUAE-Kaillera](http://170.39.225.176/emulators/) (Commodore Amiga)
+- [Atari800Win PLus](https://kr.gotdns.ch/emulators/Atari800Win%20PLus%204.1.zip) (Atari 8bit systems)
+- [CCS64](https://kr.gotdns.ch/emulators/CCS64%20V3.9.2.zip) (Commodore 64)
+- [DEmul](https://kr.gotdns.ch/emulators/demul07_180428.7z) (Sega Dreamcast)
+- [ePSXe](https://kr.gotdns.ch/emulators/ePSXe%201.6.0.zip) (Sony PlayStation - PSX)
+- [Gens](https://kr.gotdns.ch/emulators/Gens%202.10.zip) (Sega Megadrive / Genesis)
+- [MAME32k](https://kr.gotdns.ch/emulators/MAME32k%200.64%20(Feb%20%203%202003).zip), [MAME32++](https://kr.gotdns.ch/emulators/MAME32++%200.119%20(Sep%2014%202007).zip), [Houba](https://kr.gotdns.ch/emulators/Houba32K+%200.125%20R13%20(Jun%2027%202009).zip) (Arcade systems)
+- [Meisei](https://kr.gotdns.ch/emulators/Meisei%201.3.2.zip) (Microsoft MSX)
+- [Mupen64++](https://kr.gotdns.ch/emulators/Mupen64++%20Beta%200.1.3.12.zip) (Nintendo 64)
+- [Nestopia](https://kr.gotdns.ch/emulators/Nestopia%201.40.zip) (Nintendo Entertainment System - NES)
+- [Nostalgia](https://kr.gotdns.ch/emulators/Nostalgia%205.0.zip) (Mattel Intellivision)
+- [Project64k](https://kr.gotdns.ch/emulators/Project%2064k%200.13%20(01%20Aug%202003).zip) (Nintendo 64)
+- [Snes9k](https://kr.gotdns.ch/emulators/Snes9k%200.09z.zip) (Super Nintendo Entertainment System - SNES)
+- [WinUAE-Kaillera](https://kr.gotdns.ch/emulators/WinUAE-Kaillera-2-2.zip) (Commodore Amiga)
 
 
 - **Servers**
@@ -50,7 +48,7 @@ Kaillera Reborn is a volunteer community focused on maintaining the network by h
 - [Kaillera v0.9](http://kaillera.com/files/kaillera-0.9-sdk.zip)
 
 - **Emulators (SRC)**
-- [Source codes](http://170.39.225.176/src/)
+- [Source codes](https://kr.gotdns.ch/src/)
 
 Emulators must include the functions described in the 'kailleraclient.h' file to enable Kaillera.
 
