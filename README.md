@@ -10,6 +10,7 @@ You can find us in the Discord server linked below, alternatively you can follow
 
 ## Development
 - [Kaillera SDK](https://kr.2manygames.fr/sdk/kaillera-0.9-sdk.zip)
+
 Examples of different implementations can be found [here](https://kr.2manygames.fr/src/).
 
 ## Documentation
@@ -27,6 +28,8 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 
 ## Work In Progress
 - [Direlera](https://github.com/hsnks100/direlera-rs) ([how-to's](https://kr.2manygames.fr/docs/direlera.txt))
+
 A new Kaillera server written in Rust
 - [EmuLinkerSF-netsma](https://github.com/hopskipnfall/EmuLinkerSF-netsma)
+
 The continuation of EmuLinkerSF
