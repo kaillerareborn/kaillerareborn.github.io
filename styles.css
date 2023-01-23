@@ -94,3 +94,9 @@ footer {
    color: #28ad00;
    transition: color 0.2s ease-in-out;
 }
+
+.twitter {
+   margin: 5px;
+   max-height: 25px;
+   max-width: 25px;
+}
