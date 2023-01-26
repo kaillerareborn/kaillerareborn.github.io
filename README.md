@@ -3,7 +3,7 @@
 
 Our goal is to provide a comprehensive and curate list of documentation, resources and software.
 
-You can find us in the Discord server linked below, alternatively you can follow the Twitter account to receive alerts when new versions are released.
+You can find us in the Discord server linked below, alternatively you can follow the Twitter account.
 
 - [Discord](https://discord.gg/eRwtHDh)
 - [Twitter](https://twitter.com/Kaillera_Reborn)
@@ -29,7 +29,7 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 ## Work In Progress
 - [Direlera](https://github.com/hsnks100/direlera-rs) ([how-to's](https://kr.2manygames.fr/docs/direlera.txt))
 
-A new Kaillera server written in Rust
+A new Kaillera server written in Rust.
 - [EmuLinkerSF-netsma](https://github.com/hopskipnfall/EmuLinkerSF-netsma)
 
-The continuation of EmuLinkerSF
+The continuation of EmuLinkerSF.
