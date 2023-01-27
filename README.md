@@ -1,7 +1,7 @@
 # Kaillera Reborn
 [Kaillera Reborn](https://kaillerareborn.github.io) is a community based originally on [God-Weapon](https://god-weapon.github.io) efforts to improve Kaillera projects.
 
-Our goal is to provide a comprehensive and curate list of documentation, resources and software.
+Our goal is to provide a comprehensive and curated list of documentation, resources and software.
 
 You can find us in the Discord server linked below, alternatively you can follow the Twitter account.
 
@@ -15,6 +15,7 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 
 ## Documentation
 - [Kaillera Network Protocol](https://kr.2manygames.fr/docs/kprotocol.txt)
+- [Kaillera Input System](https://kr.2manygames.fr/docs/kprotocol.txt) `Korean`
 
 ## Clients
 - [Open Kaillera](https://kaillerareborn.github.io/#Downloads)
