@@ -14,7 +14,8 @@ a:hover {
    color: #1876e2;
 }
 
-h1,h2 {
+h1,
+h2 {
    background-color: #1876e2;
    border-radius: 5px;
    color: #ffffff;
@@ -37,10 +38,10 @@ td {
 
 table tr:first-child {
    background-color: #f0f0f0;
- }
+}
 
 table tr:nth-child(odd) {
-  background-color: #f8f8f8;
+   background-color: #f8f8f8;
 }
 
 footer {
@@ -81,7 +82,7 @@ footer {
    margin: 1px;
    padding: 5px;
    text-decoration: none;
-   width: 35px;
+   width: 40px;
 }
 
 .button2:active {
