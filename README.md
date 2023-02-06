@@ -19,18 +19,14 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 
 ## Clients
 - [Open Kaillera](https://kaillerareborn.github.io/#Downloads)
-- [Supraclient](https://github.com/God-Weapon/SupraclientC/releases)
+- [Supraclient](https://github.com/God-Weapon/SupraclientC)
 
 ## Emulators
 - [Various](https://kaillerareborn.github.io/#Downloads)
 
 ## Servers
-- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF/releases) ([how-to's](https://kr.2manygames.fr/docs/emulinker.txt))
+- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) ([how-to's](https://kr.2manygames.fr/docs/emulinker.txt))
 
 ## Work In Progress
-- [Direlera](https://github.com/hsnks100/direlera-rs) ([how-to's](https://kr.2manygames.fr/docs/direlera.txt))
-
-A new Kaillera server written in Rust.
-- [EmuLinkerSF-netsma](https://github.com/hopskipnfall/EmuLinkerSF-netsma)
-
-The continuation of EmuLinkerSF.
+- [Direlera](https://github.com/hsnks100/direlera-rs) ([how-to's](https://kr.2manygames.fr/docs/direlera.txt)) - New Kaillera server written in Rust.
+- [EmuLinkerSF-netsma](https://github.com/hopskipnfall/EmuLinkerSF-netsma) - The continuation of EmuLinkerSF.
