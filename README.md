@@ -17,16 +17,16 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 - [Kaillera Network Protocol](https://kr.2manygames.fr/docs/kprotocol.txt)
 - [Kaillera Input System](https://kangssu.com/kaillera-%EC%9D%98-%EA%B2%8C%EC%9E%84%EC%9E%85%EB%A0%A5-%EC%B2%98%EB%A6%AC%EB%B0%A9%EB%B2%95) `Korean`
 
-## Clients
-- [Open Kaillera](https://kaillerareborn.github.io)
-- [Supraclient](https://github.com/God-Weapon/SupraclientC)
-
 ## Emulators
 - [Various](https://kaillerareborn.github.io)
 
-## Servers
+## Kaillera clients
+- [Open Kaillera](https://kaillerareborn.github.io)
+- [Supraclient](https://github.com/God-Weapon/SupraclientC)
+
+## Kaillera servers
 - [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) ([Tutorial](https://kr.2manygames.fr/docs/emulinker.txt))
 
 ## Work In Progress
-- [Direlera-rs](https://github.com/hsnks100/direlera-rs) ([Tutorial](https://kr.2manygames.fr/docs/direlera.txt)): New Kaillera server written in Rust.
+- [Direlera-rs](https://github.com/hsnks100/direlera-rs) ([Tutorial](https://kr.2manygames.fr/docs/direlera.txt)): New Kaillera server in Rust.
 - [EmuLinkerSF-netsma](https://github.com/hopskipnfall/EmuLinkerSF-netsma): Next EmuLinkerSF version.

@@ -2,7 +2,7 @@ body {
    background-color: #ffffff;
    font-family: "Segoe UI", Arial, sans-serif;
    margin: 0 auto;
-   max-width: 1050px;
+   max-width: 1042px;
    text-align: center;
    width: 100%;
 }
@@ -17,7 +17,6 @@ a:hover {
 
 h1,
 h2 {
-   background-color: #ffffff;
    border: 2px solid #1876e2;
    border-radius: 5px;
    color: #1876e2;
@@ -25,7 +24,6 @@ h2 {
    margin: 8px 0;
    padding: 4px;
 }
-
 
 table {
    border-collapse: collapse;
@@ -79,8 +77,8 @@ footer {
 
 .button2 {
    background-color: #f0f0f0ce;
-   border-radius: 5px;
    border: 1px solid #807b6e;
+   border-radius: 5px;
    color: #1876e2;
    display: inline-block;
    margin: 1px;
@@ -101,7 +99,7 @@ footer {
 }
 
 .twitter {
-   margin: 5px;
+   margin: 4px;
    max-height: 25px;
    max-width: 25px;
 }
