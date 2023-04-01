@@ -18,7 +18,8 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 - [Kaillera Input System](https://kangssu.com/kaillera-%EC%9D%98-%EA%B2%8C%EC%9E%84%EC%9E%85%EB%A0%A5-%EC%B2%98%EB%A6%AC%EB%B0%A9%EB%B2%95) `Korean`
 
 ## Emulators
-- [Various](https://kaillerareborn.github.io)
+- [RArch](https://kaillerareborn.github.io)
+- [+ More](https://kaillerareborn.github.io)
 
 ## Kaillera clients
 - [Open Kaillera](https://kaillerareborn.github.io)
