@@ -26,8 +26,8 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 - [Supraclient](https://github.com/God-Weapon/SupraclientC)
 
 ## Kaillera servers
-- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) ([Tutorial](https://kr.2manygames.fr/docs/emulinker.txt))
+- [EmuLinker-K](https://github.com/hopskipnfall/EmuLinker-K) ([Tutorial](https://kr.2manygames.fr/docs/emulinker.txt))
+- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) `Legacy version`
 
 ## Work In Progress
 - [Direlera-rs](https://github.com/hsnks100/direlera-rs) ([Tutorial](https://kr.2manygames.fr/docs/direlera.txt)): New Kaillera server in Rust.
-- [EmuLinkerSF-netsma](https://github.com/hopskipnfall/EmuLinkerSF-netsma): Next EmuLinkerSF version.
