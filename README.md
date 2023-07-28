@@ -30,4 +30,6 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 - [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) `Legacy version`
 
 ## Work In Progress
-- [Direlera-rs](https://github.com/hsnks100/direlera-rs) ([Tutorial](https://kr.2manygames.fr/docs/direlera.txt)): New Kaillera server in Rust.
+- [Direlera-rs](https://github.com/hsnks100/direlera-rs) ([Tutorial](https://kr.2manygames.fr/docs/direlera.txt)): Kaillera server in Rust.
+- [Kaillera Plus](https://github.com/kwilson21/Kaillera-Plus-Client): Kaillera client in Python.
+- [Kaillera Plus (Plugin)](https://github.com/kwilson21/Kaillera-Plus-Plugin)
