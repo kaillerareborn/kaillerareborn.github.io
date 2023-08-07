@@ -3,10 +3,10 @@
 
 Our goal is to provide a comprehensive and updated list of documentation, resources and software.
 
-You can find us in the Discord server below, alternatively you can follow the Twitter account.
+You can find us in the Discord server below, alternatively you can follow the X (Twitter) account.
 
 - [Discord](https://discord.gg/eRwtHDh)
-- [Twitter](https://twitter.com/Kaillera_Reborn)
+- [X (Twitter)](https://x.com/kaillera_reborn)
 
 ## Development
 - [Kaillera SDK](https://kr.2manygames.fr/sdk/kaillera-0.9-sdk.zip)
@@ -19,7 +19,7 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 
 ## Emulators
 - [RArch](https://kaillerareborn.github.io)
-- [+ More](https://kaillerareborn.github.io)
+- [+ Older versions](https://kr.2manygames.fr/emulators/)
 
 ## Kaillera clients
 - [Open Kaillera](https://kaillerareborn.github.io)

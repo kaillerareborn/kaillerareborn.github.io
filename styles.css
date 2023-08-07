@@ -39,11 +39,7 @@ td {
 }
 
 table tr:first-child {
-   background-color: #f0f0f0;
-}
-
-table tr:nth-child(odd) {
-   background-color: #f8f8f8;
+   background-color: #fafafa;
 }
 
 footer {
@@ -51,7 +47,7 @@ footer {
 }
 
 .button {
-   background-color: #f0f0f0ce;
+   background-color: #ffffff;
    border: 1px solid #807b6e;
    border-radius: 5px;
    color: #1876e2;
@@ -59,7 +55,7 @@ footer {
    margin: 1px;
    padding: 5px;
    text-decoration: none;
-   transform: scale(1);
+   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
    width: 160px;
 }
 
@@ -69,14 +65,12 @@ footer {
 }
 
 .button:hover {
-   background-color: #e9e9e9;
-   color: #28ad00;
-   transform: scale(1.01);
-   transition: color 0.2s ease-in-out;
+   background-color: #1876e2;
+   color: #ffffff;
 }
 
 .button2 {
-   background-color: #f0f0f0ce;
+   background-color: #ffffff;
    border: 1px solid #807b6e;
    border-radius: 5px;
    color: #1876e2;
@@ -84,22 +78,22 @@ footer {
    margin: 1px;
    padding: 5px;
    text-decoration: none;
+   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
    width: 40px;
 }
 
 .button2:active {
    background-color: #dddddd;
-   box-shadow: inset 0 0 2px #333333;
+   box-shadow: inset 0 0 2px #000000;
 }
 
 .button2:hover {
-   background-color: #e9e9e9;
-   color: #28ad00;
-   transition: color 0.2s ease-in-out;
+   background-color: #2e9551;
+   color: #ffffff;
 }
 
-.twitter {
-   margin: 4px;
+.x {
+   margin-top: 5px;
    max-height: 25px;
    max-width: 25px;
 }
