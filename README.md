@@ -3,10 +3,10 @@
 
 Our goal is to provide a comprehensive and updated list of documentation, resources and software.
 
-You can find us in the Discord server below, alternatively you can follow the X (Twitter) account.
+You can find us in the Discord server below, alternatively you can follow the X/Twitter account.
 
 - [Discord](https://discord.gg/eRwtHDh)
-- [X (Twitter)](https://x.com/kaillera_reborn)
+- [X/Twitter](https://twitter.com/kaillera_reborn)
 
 ## Development
 - [Kaillera SDK](https://kr.2manygames.fr/sdk/kaillera-0.9-sdk.zip)
