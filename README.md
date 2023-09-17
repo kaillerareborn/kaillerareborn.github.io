@@ -27,9 +27,8 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 
 ## Kaillera servers
 - [EmuLinker-K](https://github.com/hopskipnfall/EmuLinker-K) ([Tutorial](https://kr.2manygames.fr/docs/emulinker.txt))
-- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) `Legacy version`
+- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) ([Admin Client](https://github.com/God-Weapon/EmulinkerSF-Admin-Client)) `Legacy version`
 
 ## Work In Progress
 - [Direlera-rs](https://github.com/hsnks100/direlera-rs) ([Tutorial](https://kr.2manygames.fr/docs/direlera.txt)): Kaillera server in Rust.
-- [Kaillera Plus](https://github.com/kwilson21/Kaillera-Plus-Client): Kaillera client in Python.
-- [Kaillera Plus (Plugin)](https://github.com/kwilson21/Kaillera-Plus-Plugin)
+- [Kaillera Plus](https://github.com/kwilson21/Kaillera-Plus-Client) ([Plugin](https://github.com/kwilson21/Kaillera-Plus-Plugin)): Kaillera client in Python.
