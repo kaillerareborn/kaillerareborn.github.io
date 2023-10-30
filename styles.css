@@ -2,7 +2,7 @@ body {
    background-color: #ffffff;
    font-family: "Segoe UI", Arial, sans-serif;
    margin: 0 auto;
-   max-width: 1042px;
+   max-width: 910px;
    text-align: center;
    width: 100%;
 }
@@ -17,7 +17,7 @@ a:hover {
 
 h1,
 h2 {
-   border: 2px solid #1876e2;
+   border: 1px solid #1876e2;
    border-radius: 5px;
    color: #1876e2;
    font-size: 20px;
@@ -43,7 +43,7 @@ table tr:first-child {
 }
 
 footer {
-   font-size: 12px;
+   font-size: 13px;
 }
 
 .button {
@@ -79,7 +79,7 @@ footer {
    padding: 5px;
    text-decoration: none;
    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-   width: 40px;
+   width: 50px;
 }
 
 .button2:active {
@@ -92,8 +92,9 @@ footer {
    color: #ffffff;
 }
 
-.x {
-   margin-top: 5px;
-   max-height: 25px;
-   max-width: 25px;
+.social {
+   margin-inline-start: 15px;
+   margin-top: 10px;
+   max-height: 30px;
+   max-width: 30px;
 }
