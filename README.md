@@ -3,7 +3,7 @@
 
 Our goal is to provide a comprehensive and updated list of documentation, resources and software.
 
-You can join us in the following platform:
+You can join us at:
 
 - [Discord](https://discord.gg/eRwtHDh)
 
@@ -31,9 +31,9 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 - [Supraclient](https://github.com/God-Weapon/SupraclientC)
 
 ## Kaillera servers
-- [EmuLinker-K](https://github.com/hopskipnfall/EmuLinker-K) ([Tutorial](https://kr.2manygames.fr/docs/emulinker.txt))
-- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) ([Admin Client](https://github.com/God-Weapon/EmulinkerSF-Admin-Client))
+- [EmuLinker-K](https://github.com/hopskipnfall/EmuLinker-K) [(Tutorial)](https://kr.2manygames.fr/docs/emulinker.txt)
+- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) [[Admin Client]](https://github.com/God-Weapon/EmulinkerSF-Admin-Client)
 
 ## Work In Progress
-- [Direlera-rs](https://github.com/hsnks100/direlera-rs) ([Tutorial](https://kr.2manygames.fr/docs/direlera.txt)) - Kaillera server in Rust.
-- [Kaillera Plus](https://github.com/kwilson21/Kaillera-Plus-Client) ([Plugin](https://github.com/kwilson21/Kaillera-Plus-Plugin)) - Kaillera client in Python.
+- [Direlera-rs](https://github.com/hsnks100/direlera-rs) [(Tutorial)](https://kr.2manygames.fr/docs/direlera.txt) - Kaillera server in Rust.
+- [Kaillera Plus](https://github.com/kwilson21/Kaillera-Plus-Client) [[Plugin]](https://github.com/kwilson21/Kaillera-Plus-Plugin) - Kaillera client in Python.
