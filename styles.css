@@ -2,7 +2,7 @@ body {
    background-color: #ffffff;
    font-family: "Segoe UI", Arial, sans-serif;
    margin: 0 auto;
-   max-width: 910px;
+   max-width: 908px;
    text-align: center;
    width: 100%;
 }
@@ -52,7 +52,6 @@ footer {
    border-radius: 5px;
    color: #1876e2;
    display: inline-block;
-   margin: 1px;
    padding: 5px;
    text-decoration: none;
    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
@@ -75,11 +74,11 @@ footer {
    border-radius: 5px;
    color: #1876e2;
    display: inline-block;
-   margin: 1px;
+   margin-right: 2px;
    padding: 5px;
    text-decoration: none;
    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-   width: 50px;
+   width: 55px;
 }
 
 .button2:active {
