@@ -91,6 +91,11 @@ footer {
    color: #ffffff;
 }
 
+.logo {
+   margin-top: 10px;
+   margin-right: 100px;
+}
+
 .social {
    margin-inline-start: 15px;
    margin-top: 10px;
