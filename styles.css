@@ -52,6 +52,7 @@ footer {
    border-radius: 5px;
    color: #1876e2;
    display: inline-block;
+   margin-top: 1px;
    padding: 5px;
    text-decoration: none;
    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
