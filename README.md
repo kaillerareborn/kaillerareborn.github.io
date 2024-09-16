@@ -7,7 +7,7 @@ You can join us at:
 
 - [Discord](https://discord.gg/eRwtHDh)
 
-Alternatively, you can follow our social media accounts:
+Social media accounts:
 
 - [Bluesky](https://bsky.app/profile/kaillerareborn.bsky.social)
 - [Mastodon](https://mastodon.social/@kaillerareborn)
@@ -16,7 +16,7 @@ Alternatively, you can follow our social media accounts:
 ## Development
 - [Kaillera SDK](https://kr.2manygames.fr/sdk/kaillera-0.9-sdk.zip)
 
-Examples of different implementations can be found [here](https://kr.2manygames.fr/src/).
+Required to integrate Kaillera in an emulator. Different integration examples can be found [here](https://kr.2manygames.fr/src/).
 
 ## Documentation
 - [Kaillera Network Protocol](https://kr.2manygames.fr/docs/kprotocol.txt)
@@ -24,16 +24,16 @@ Examples of different implementations can be found [here](https://kr.2manygames.
 
 ## Emulators
 - [RArch](https://kaillerareborn.github.io)
-- [+ Older versions](https://kr.2manygames.fr/emulators/)
+- [> Previous emulators](https://kr.2manygames.fr/emulators/)
 
-## Kaillera clients
+## Kaillera Clients
 - [Open Kaillera](https://kaillerareborn.github.io)
 - [Supraclient](https://github.com/God-Weapon/SupraclientC)
 
-## Kaillera servers
-- [EmuLinker-K](https://github.com/hopskipnfall/EmuLinker-K) [(Tutorial)](https://kr.2manygames.fr/docs/emulinker.txt)
-- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) [[Admin Client]](https://github.com/God-Weapon/EmulinkerSF-Admin-Client)
+## Kaillera Servers
+- [EmuLinker-K](https://github.com/hopskipnfall/EmuLinker-K)
+- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) / [Admin Client](https://github.com/God-Weapon/EmulinkerSF-Admin-Client) (ESF/ELK)
 
 ## Work In Progress
-- [Direlera-rs](https://github.com/hsnks100/direlera-rs) [(Tutorial)](https://kr.2manygames.fr/docs/direlera.txt) - Kaillera server in Rust.
-- [Kaillera Plus](https://github.com/kwilson21/Kaillera-Plus-Client) [[Plugin]](https://github.com/kwilson21/Kaillera-Plus-Plugin) - Kaillera client in Python.
+- [Direlera-rs](https://github.com/hsnks100/direlera-rs) `Kaillera server in Rust`
+- [Kaillera Plus](https://github.com/kwilson21/Kaillera-Plus-Client) / [Plugin](https://github.com/kwilson21/Kaillera-Plus-Plugin) `Kaillera client in Python`
