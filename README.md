@@ -7,9 +7,7 @@ You can find us on:
 <details>
 <summary>Discord:</summary>
 
-> The server is focused on development and support for Kaillera software, **activity is very low**.
->
-> Join if you: need support, want to follow long-term progress or wish to contribute in any way.
+> Note: the server is strictly focused on development and support for Kaillera software.
 
 - [Discord](https://discord.gg/eRwtHDh)
 </details>
@@ -42,5 +40,3 @@ Social media:
 
 ## WIP
 - [Direlera-rs](https://github.com/hsnks100/direlera-rs) `Kaillera server in Rust`
-- [Kaillera Plus](https://github.com/kwilson21/Kaillera-Plus-Client) `Kaillera client in Python`
-  - [Plugin](https://github.com/kwilson21/Kaillera-Plus-Plugin)

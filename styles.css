@@ -110,7 +110,6 @@ footer {
    max-width: 100%;
    width: 400px;
    height: auto;
-   margin-left: -25px;
    margin-top: 15px;
    object-fit: contain;
    transition: transform 0.2s ease;
