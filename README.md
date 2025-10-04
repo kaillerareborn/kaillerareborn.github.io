@@ -22,7 +22,7 @@ Social media:
 > Required to integrate Kaillera in an emulator. Different integration examples are available [here](https://kr.2manygames.fr/src/ "Source codes archive").
 
 ## Documentation
-- [Kaillera Network Protocol](https://kr.2manygames.fr/docs/kprotocol.txt)
+- [Kaillera Network Protocol](https://kaillerareborn.github.io/resources/kailleraprotocol.txt)
 - [Kaillera Input System](https://kangssu.com/kaillera-%EC%9D%98-%EA%B2%8C%EC%9E%84%EC%9E%85%EB%A0%A5-%EC%B2%98%EB%A6%AC%EB%B0%A9%EB%B2%95 "Korean")
 
 ## Emulators
