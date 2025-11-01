@@ -1,5 +1,5 @@
 Kaillera network protocol analysis started originally by Anthem and Okai project.
-Completed by SupraFast with help from Moosehead.
+Completed by SupraFast with help from Moosehead, TRAC & killercivilian.
 Master server format analysis by SupraFast.
 
 '----------------------------------------------------------------------------------------------
@@ -106,19 +106,19 @@ Master server format analysis by SupraFast.
 '// 5 byte header before each message
 '2B - word - The number of this message; every message sent is increased by 1.
 '2B - word - Length of this message; includes message type and size of data being sent.
-'1B - byte - Message type ex). 0x03 User Login.
+'1B - byte - Message type (eg. 0x03 User Login)
 '
 '// Message
 'Data
 '
 '[Repeats 5 byte header and Data for each message]
 '
-'eg). (1B), 2B,2B,1B,DataA [Repeats} 2B,2B,1B,DataB [Repeats] 2B,2B,1B,DataC and etc.
-'eg). User Quit Request [0x01]:  (01),    01,00,    04,00,  01,   00,00,FF
-'                                initial  message#  Length  Type  Data
-'                                ^
-'                                Note: We are only sending one message!
-'                                      If it were 2 messages this would be 02.
+'eg. (1B), 2B, 2B, 1B, DataA [Repeats] 2B, 2B, 1B, DataB [Repeats] 2B, 2B, 1B, DataC (etc.)
+'eg. User Quit Request [0x01]:  (01),    01,00,    04,00,  01,   00,00,FF
+'                               Initial  message#  Length  Type  Data
+'                               ^
+'                               Note: We are only sending one message!
+'                                     If it were 2 messages, this would be 02.
 'The packet to send would look like this: 01,01,00,04,00,01,00,00,FF
 '----------------------------------------------------------------------------------------------
 
@@ -282,7 +282,7 @@ Master server format analysis by SupraFast.
 '
 '            Server Notification:
 '            NB : Empty String [00]
-'            2B : Frame Delay (eg. (connectionType * (frameDelay + 1) <- Block on that frame
+'            2B : Frame Delay (eg. (connectionType * (frameDelay + 1) <- Block on that frame)
 '            1B : Your Player Number (eg. if you're player 1 or 2...)
 '            1B : Total Players
 '

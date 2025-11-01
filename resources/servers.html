@@ -1,15 +1,23 @@
 <h2>How to run</h2>
 <h3>EmuLinker-K</h3>
-<h4>Linux (CLI)</h4>
+<h4>Linux</h4>
 <ul>
     <li>Install Java: *
-        <ul>
-            <li><code># sudo apt install openjdk-25-jdk</code> (Debian and derivatives)</li>
-            <li><code># sudo dnf install java-25-openjdk</code> (Red Hat and derivatives)</li>
-        </ul>
+        <pre><code>$ sudo apt install openjdk-25-jdk      # Debian based distros
+$ sudo dnf install java-25-openjdk     # Red Hat based distros
+$ sudo pacman -S jdk-openjdk           # Arch based distros
+$ sudo zypper install java-25-openjdk  # SUSE based distros</code></pre>
     </li>
-    <li><code># cd server_folder</code> and grant executable permissions: <code># chmod +x *.sh</code></li>
-    <li><code># ./start-server.sh</code></li>
+    <li><code>$ cd /path/server_folder</code></li>
+    <li><code>$ chmod +x *.sh</code></li>
+    <li><code>$ ./start-server.sh</code></li>
+</ul>
+
+<h4>macOS</h4>
+<ul>
+    <li>Install <strong><a href="https://formulae.brew.sh/formula/openjdk" target="_blank"
+                rel="noopener noreferrer">Java</a></strong> (via Homebrew)</li>
+    <li>[Rest of steps like Linux]</li>
 </ul>
 
 <h4>Windows</h4>
@@ -19,17 +27,17 @@
     <li><code>server.bat</code></li>
 </ul>
 
-<p class="note">- Include the IP address of your server in the <code>masterList.serverConnectAddress=</code> value
+<p class="note">Include the IP address of your server in the <code>masterList.serverConnectAddress=</code> value
     (emulinker.cfg) to make it appear in the Kaillera Master Lists.</p>
-<p class="note">* Change the number to 21 (or 17) if the latest LTS version isn't yet available in your distro's
-    repositories.</p>
+<p class="note">* Change the number to 21 if the latest LTS version isn't yet available in your distro's repositories.
+</p>
 
 <div class="separator"></div>
 
 <h2>How to update</h2>
 <h3>EmuLinker-K</h3>
 <ul>
-    <li>Drag the new <code>emulinker-k-*.jar</code> file to the <code>lib</code> folder.</li>
+    <li>Drag the new <code>emulinker-k.jar</code> file to the <code>lib</code> folder.</li>
     <li>Replace the <code>.bat</code> and <code>.sh</code> files.</li>
-    <li>Restart EmuLinker to apply changes.</li>
+    <li>Restart EmuLinker.</li>
 </ul>

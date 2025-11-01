@@ -7,7 +7,7 @@ You can find us on:
 <details>
 <summary>Discord:</summary>
 
-- [Discord](https://discord.gg/eRwtHDh "Kaillera Reborn Discord server")
+- [Discord server](https://discord.gg/eRwtHDh "Kaillera Reborn")
 
 > Note: the server is strictly focused on development and support for Kaillera software.
 </details>
@@ -23,7 +23,7 @@ Social media:
 
 ## Documentation
 - [Kaillera Network Protocol](https://kaillerareborn.github.io/resources/kailleraprotocol.txt)
-- [Kaillera Input System](https://kangssu.com/kaillera-%EC%9D%98-%EA%B2%8C%EC%9E%84%EC%9E%85%EB%A0%A5-%EC%B2%98%EB%A6%AC%EB%B0%A9%EB%B2%95 "Korean")
+- [Kaillera Protocol Dissector](https://raw.githubusercontent.com/hsnks100/direlera-rs/refs/heads/develop/kaillera.lua)
 
 ## Emulators
 - [RetroArch-K](https://kaillerareborn.github.io)
