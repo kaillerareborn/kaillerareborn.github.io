@@ -23,7 +23,9 @@ Social media:
 
 ## Documentation
 - [Kaillera Network Protocol](https://kaillerareborn.github.io/resources/kailleraprotocol.txt)
-- [Kaillera Protocol Dissector](https://raw.githubusercontent.com/hsnks100/direlera-rs/refs/heads/develop/kaillera.lua)
+- @hsnks100
+  - [Kaillera Game Sync Protocol](https://github.com/hsnks100/direlera-rs/blob/master/GAME_SYNC_PROTOCOL.md)
+  - [Kaillera Protocol Dissector](https://github.com/hsnks100/direlera-rs/blob/master/kaillera.lua)
 
 ## Emulators
 - [RetroArch-K](https://kaillerareborn.github.io)
