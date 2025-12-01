@@ -23,9 +23,9 @@ Social media:
 
 ## Documentation
 - [Kaillera Network Protocol](https://kaillerareborn.github.io/resources/kailleraprotocol.txt)
-- @hsnks100
-  - [Kaillera Game Sync Protocol](https://github.com/hsnks100/direlera-rs/blob/master/GAME_SYNC_PROTOCOL.md)
-  - [Kaillera Protocol Dissector](https://github.com/hsnks100/direlera-rs/blob/master/kaillera.lua)
+- @caromdreamer
+  - [Kaillera Game Sync Protocol](https://github.com/caromdreamer/direlera-rs/blob/master/GAME_SYNC_PROTOCOL.md)
+  - [Kaillera Protocol Dissector](https://github.com/caromdreamer/direlera-rs/blob/master/kaillera.lua)
 
 ## Emulators
 - [RetroArch-K](https://kaillerareborn.github.io)
@@ -41,7 +41,7 @@ Social media:
   - [EmuLinkerSF Admin Client](https://github.com/God-Weapon/EmulinkerSF-Admin-Client "EmuLinker-K compatible")
 
 ## WIP
-- [Direlera-rs](https://github.com/hsnks100/direlera-rs "Kaillera server in Rust")
+- [Direlera-rs](https://github.com/caromdreamer/direlera-rs "Kaillera server in Rust")
 - [KailleraNET](https://github.com/benbaker76/KailleraNET "Kaillera client in C#")
 - [KailleraPlus](https://github.com/kwilson21/Kaillera-Plus-Client "Kaillera client in Python")
   - [Plugin](https://github.com/kwilson21/Kaillera-Plus-Plugin "KailleraPlus plugin")
