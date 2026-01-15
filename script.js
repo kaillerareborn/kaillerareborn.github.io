@@ -72,37 +72,35 @@ function closeAllChips(exceptChip = null, restoreFocus = false) {
   }
 }
 
+function trapFocus(element, event) {
+  const focusableContent = element.querySelectorAll(focusableSelector);
+  if (focusableContent.length === 0) {
+    event.preventDefault();
+    return;
+  }
+
+  const firstFocusable = focusableContent[0];
+  const lastFocusable = focusableContent[focusableContent.length - 1];
+
+  if (event.shiftKey) {
+    if (document.activeElement === firstFocusable) {
+      lastFocusable.focus();
+      event.preventDefault();
+    }
+  } else {
+    if (document.activeElement === lastFocusable) {
+      firstFocusable.focus();
+      event.preventDefault();
+    }
+  }
+}
+
 function handlePopupKeydown(e) {
   const popup = document.getElementById('popup');
   if (!popup || !popup.classList.contains('show')) return;
 
-  if (e.key === 'Escape') {
-    handleGlobalClose();
-    return;
-  }
-
   if (e.key === 'Tab') {
-    const focusableContent = popup.querySelectorAll(focusableSelector);
-
-    if (focusableContent.length === 0) {
-      e.preventDefault();
-      return;
-    }
-
-    const firstFocusable = focusableContent[0];
-    const lastFocusable = focusableContent[focusableContent.length - 1];
-
-    if (e.shiftKey) {
-      if (document.activeElement === firstFocusable) {
-        lastFocusable.focus();
-        e.preventDefault();
-      }
-    } else {
-      if (document.activeElement === lastFocusable) {
-        firstFocusable.focus();
-        e.preventDefault();
-      }
-    }
+    trapFocus(popup, e);
   }
 }
 
@@ -389,24 +387,8 @@ document.addEventListener('keydown', function (e) {
   const activeChip = document.querySelector('.md3-chip-popup.md3-chip--active');
   if (activeChip && e.key === 'Tab') {
     const smallPopup = activeChip.querySelector('.md3-small-popup');
-    if (!smallPopup) return;
-
-    const focusableContent = smallPopup.querySelectorAll(focusableSelector);
-    if (focusableContent.length === 0) return;
-
-    const firstFocusable = focusableContent[0];
-    const lastFocusable = focusableContent[focusableContent.length - 1];
-
-    if (e.shiftKey) {
-      if (document.activeElement === firstFocusable) {
-        e.preventDefault();
-        lastFocusable.focus();
-      }
-    } else {
-      if (document.activeElement === lastFocusable) {
-        e.preventDefault();
-        firstFocusable.focus();
-      }
+    if (smallPopup) {
+      trapFocus(smallPopup, e);
     }
   }
 });
@@ -443,13 +425,17 @@ function initializeSubMenus() {
 
     if (window.matchMedia('(hover: hover)').matches) {
       category.addEventListener('mouseenter', () => {
-        openSubmenu();
+        if (window.innerWidth > 768) {
+          openSubmenu();
+        }
       });
 
       category.addEventListener('mouseleave', () => {
-        hoverTimeout = setTimeout(() => {
-          closeSubmenu();
-        }, 500);
+        if (window.innerWidth > 768) {
+          hoverTimeout = setTimeout(() => {
+            closeSubmenu();
+          }, 500);
+        }
       });
     }
 
@@ -470,18 +456,179 @@ function initializeSubMenus() {
       }
     });
 
-    const subLinks = subPopup.querySelectorAll(focusableSelector);
-    subLinks.forEach((link) => {
-      link.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          e.preventDefault();
-          e.stopPropagation();
-          closeSubmenu();
-          triggerBtn.focus();
-        }
-      });
+    subPopup.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        e.stopPropagation();
+        closeSubmenu();
+        triggerBtn.focus();
+      }
     });
   });
 }
 
+const retroArchData = [
+  { text: 'Linux (x86_64)', url: 'https://kr.2manygames.fr/retroarch-k-linux' },
+  { text: 'Windows (32-bit)', url: 'https://kr.2manygames.fr/retroarch-k-windows-x86' },
+  { text: 'Windows (64-bit)', url: 'https://kr.2manygames.fr/retroarch-k-windows' }
+];
+
+const oldEmulatorsData = [
+  {
+    category: 'Arcade',
+    id: 'arcade-menu',
+    items: [
+      { type: 'header', text: 'Arcade' },
+      { type: 'link', text: 'MAME32k', url: 'https://kr.2manygames.fr/emulators/MAME32k%200.64%20(Feb%20%203%202003).zip' },
+      { type: 'link', text: 'MAME32++', url: 'https://kr.2manygames.fr/emulators/MAME32++%200.119%20(Sep%2014%202007).zip' },
+      { type: 'link', text: 'Houba', url: 'https://kr.2manygames.fr/emulators/Houba32K+%200.125%20R13%20(Jun%2027%202009).zip' }
+    ]
+  },
+  {
+    category: 'Atari',
+    id: 'atari-menu',
+    items: [
+      { type: 'header', text: '8 bit systems' },
+      { type: 'link', text: 'Atari800Win Plus', url: 'https://kr.2manygames.fr/emulators/Atari800Win%20PLus%204.1.zip' }
+    ]
+  },
+  {
+    category: 'Commodore',
+    id: 'commodore-menu',
+    items: [
+      { type: 'header', text: 'Amiga' },
+      { type: 'link', text: 'WinUAE-Kaillera', url: 'https://kr.2manygames.fr/emulators/WinUAE-Kaillera-2-2.zip' },
+      { type: 'header', text: 'C64' },
+      { type: 'link', text: 'CCS64', url: 'https://kr.2manygames.fr/emulators/CCS64%20V3.10.zip' }
+    ]
+  },
+  {
+    category: 'Mattel',
+    id: 'mattel-menu',
+    items: [
+      { type: 'header', text: 'Intellivision' },
+      { type: 'link', text: 'Nostalgia', url: 'https://kr.2manygames.fr/emulators/Nostalgia%205.0.zip' }
+    ]
+  },
+  {
+    category: 'Microsoft',
+    id: 'microsoft-menu',
+    items: [
+      { type: 'header', text: 'MSX' },
+      { type: 'link', text: 'Meisei', url: 'https://kr.2manygames.fr/emulators/Meisei%201.3.2.zip' }
+    ]
+  },
+  {
+    category: 'Nintendo',
+    id: 'nintendo-menu',
+    items: [
+      { type: 'header', text: 'NES' },
+      { type: 'link', text: 'Nestopia', url: 'https://kr.2manygames.fr/emulators/Nestopia%201.40.zip' },
+      { type: 'header', text: 'SNES' },
+      { type: 'link', text: 'Snes9k', url: 'https://kr.2manygames.fr/emulators/Snes9k%200.09z.zip' },
+      { type: 'header', text: 'N64' },
+      { type: 'link', text: 'Mupen64++', url: 'https://kr.2manygames.fr/emulators/Mupen64++%20Beta%200.1.3.12.zip' },
+      { type: 'link', text: 'Project64k', url: 'https://kr.2manygames.fr/emulators/Project64k%200.13%20(01%20Aug%202003).zip' }
+    ]
+  },
+  {
+    category: 'Sega',
+    id: 'sega-menu',
+    items: [
+      { type: 'header', text: 'Mega Drive' },
+      { type: 'link', text: 'Gens', url: 'https://kr.2manygames.fr/emulators/Gens%202.10.zip' },
+      { type: 'header', text: 'Dreamcast' },
+      { type: 'link', text: 'DEmul', url: 'https://www.emu-france.com/?wpfb_dl=7038' }
+    ]
+  },
+  {
+    category: 'Sony',
+    id: 'sony-menu',
+    items: [
+      { type: 'header', text: 'PlayStation' },
+      { type: 'link', text: 'ePSXe', url: 'https://kr.2manygames.fr/emulators/ePSXe%201.6.0.zip' }
+    ]
+  }
+];
+
+function renderNestedMenu(containerId, data) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const fragment = document.createDocumentFragment();
+
+  data.forEach(section => {
+    const categoryDiv = document.createElement('div');
+    categoryDiv.className = 'md3-popup-item md3-popup-category';
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'md3-popup-link md3-popup-with-arrow ripple-target';
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-haspopup', 'true');
+    button.setAttribute('aria-controls', section.id);
+    button.textContent = section.category;
+
+    const submenuDiv = document.createElement('div');
+    submenuDiv.id = section.id;
+    submenuDiv.className = 'md3-small-popup md3-small-popup--level2';
+    submenuDiv.setAttribute('aria-label', `${section.category} emulators`);
+
+    section.items.forEach(item => {
+      if (item.type === 'header') {
+        const header = document.createElement('div');
+        header.className = 'md3-popup-header';
+        header.textContent = item.text;
+        submenuDiv.appendChild(header);
+
+        const divider = document.createElement('div');
+        divider.className = 'md3-popup-divider';
+        submenuDiv.appendChild(divider);
+      } else if (item.type === 'link') {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'md3-popup-item';
+
+        const a = document.createElement('a');
+        a.className = 'md3-popup-link ripple-target';
+        a.href = item.url;
+        a.textContent = item.text;
+
+        itemDiv.appendChild(a);
+        submenuDiv.appendChild(itemDiv);
+      }
+    });
+
+    categoryDiv.appendChild(button);
+    categoryDiv.appendChild(submenuDiv);
+    fragment.appendChild(categoryDiv);
+  });
+
+  container.appendChild(fragment);
+}
+
+function renderFlatMenu(containerId, items) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const fragment = document.createDocumentFragment();
+
+  items.forEach(item => {
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'md3-popup-item';
+
+    const a = document.createElement('a');
+    a.className = 'md3-popup-link ripple-target';
+    a.href = item.url;
+    a.setAttribute('role', 'menuitem');
+    a.textContent = item.text;
+
+    itemDiv.appendChild(a);
+    fragment.appendChild(itemDiv);
+  });
+
+  container.appendChild(fragment);
+}
+
+renderFlatMenu('retroarch-k-popup', retroArchData);
+renderNestedMenu('old-emulators-popup', oldEmulatorsData);
 initializeSubMenus();

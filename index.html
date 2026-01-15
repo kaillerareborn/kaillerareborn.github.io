@@ -23,7 +23,7 @@
 
 <body>
   <header class="md3-header">
-    <nav class="md3-header-container" aria-label="Main navigation">
+    <nav class="md3-header-container container" aria-label="Main navigation">
       <a class="md3-logo-link" href="https://kaillerareborn.github.io" aria-label="Kaillera Reborn home">
         <h1 class="visually-hidden">Kaillera Reborn</h1>
         <img src="images/kaillerareborn_logo.png" alt="Kaillera Reborn" class="md3-logo">
@@ -31,7 +31,7 @@
     </nav>
   </header>
 
-  <main id="main-content" class="md3-main">
+  <main id="main-content" class="md3-main container">
     <section id="introduction" class="md3-fullwidth-section">
       <div class="md3-fullwidth-content">
         <p>
@@ -66,29 +66,12 @@
           <div class="md3-card-content">
             <div class="md3-chip-set">
               <div class="md3-chip md3-chip-popup" id="retroarch-k-button">
+                <span class="md3-chip-tooltip">Multisystem</span>
                 <button type="button" class="md3-chip-action ripple-target" aria-haspopup="true" aria-expanded="false"
                   aria-controls="retroarch-k-popup">
                   <span class="md3-chip-text">RetroArch-K</span>
                 </button>
                 <div class="md3-small-popup" id="retroarch-k-popup" role="menu" aria-label="RetroArch-K">
-                  <div class="md3-popup-item">
-                    <a class="md3-popup-link ripple-target" href="https://kr.2manygames.fr/retroarch-k-linux"
-                      role="menuitem">
-                      Linux (x86_64)
-                    </a>
-                  </div>
-                  <div class="md3-popup-item">
-                    <a class="md3-popup-link ripple-target" href="https://kr.2manygames.fr/retroarch-k-windows-x86"
-                      role="menuitem">
-                      Windows (32-bit)
-                    </a>
-                  </div>
-                  <div class="md3-popup-item">
-                    <a class="md3-popup-link ripple-target" href="https://kr.2manygames.fr/retroarch-k-windows"
-                      role="menuitem">
-                      Windows (64-bit)
-                    </a>
-                  </div>
                 </div>
               </div>
               <div class="md3-chip md3-chip-src">
@@ -98,7 +81,21 @@
                 </a>
               </div>
             </div>
-
+            <div class="md3-chip-set">
+              <div class="md3-chip md3-chip-popup">
+                <span class="md3-chip-tooltip">Nintendo 64</span>
+                <a class="md3-chip-action ripple-target" href="https://github.com/Jay-Day/RMG-K/releases"
+                  target="_blank" rel="noopener noreferrer" aria-label="RMG-K">
+                  <span class="md3-chip-text">RMG-K</span>
+                </a>
+              </div>
+              <div class="md3-chip md3-chip-src">
+                <a class="md3-chip-action ripple-target" href="https://github.com/Jay-Day/RMG-K" target="_blank"
+                  rel="noopener noreferrer" aria-label="RMG-K source code">
+                  <span class="md3-chip-text">src</span>
+                </a>
+              </div>
+            </div>
             <div class="md3-chip-set">
               <div class="md3-chip md3-chip-popup" id="old-emulators-button">
                 <button type="button" class="md3-chip-action ripple-target" aria-haspopup="true" aria-expanded="false"
@@ -106,149 +103,6 @@
                   <span class="md3-chip-text">Old Emulators</span>
                 </button>
                 <div class="md3-small-popup" id="old-emulators-popup" role="menu" aria-label="Old Emulators">
-
-                  <div class="md3-popup-item md3-popup-category">
-                    <button type="button" class="md3-popup-link md3-popup-with-arrow ripple-target"
-                      aria-expanded="false" aria-haspopup="true" aria-controls="arcade-menu">Arcade</button>
-                    <div id="arcade-menu" class="md3-small-popup md3-small-popup--level2" aria-label="Arcade emulators">
-                      <div class="md3-popup-header">Arcade</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/MAME32k%200.64%20(Feb%20%203%202003).zip">MAME32k</a>
-                      </div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/MAME32++%200.119%20(Sep%2014%202007).zip">MAME32++</a>
-                      </div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/Houba32K+%200.125%20R13%20(Jun%2027%202009).zip">Houba</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="md3-popup-item md3-popup-category">
-                    <button type="button" class="md3-popup-link md3-popup-with-arrow ripple-target"
-                      aria-expanded="false" aria-haspopup="true" aria-controls="atari-menu">Atari</button>
-                    <div id="atari-menu" class="md3-small-popup md3-small-popup--level2" aria-label="Atari emulators">
-                      <div class="md3-popup-header">8 bit systems</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/Atari800Win%20PLus%204.1.zip">Atari800Win Plus</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="md3-popup-item md3-popup-category">
-                    <button type="button" class="md3-popup-link md3-popup-with-arrow ripple-target"
-                      aria-expanded="false" aria-haspopup="true" aria-controls="commodore-menu">Commodore</button>
-                    <div id="commodore-menu" class="md3-small-popup md3-small-popup--level2"
-                      aria-label="Commodore emulators">
-                      <div class="md3-popup-header">Amiga</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/WinUAE-Kaillera-2-2.zip">WinUAE-Kaillera</a>
-                      </div>
-                      <div class="md3-popup-header">C64</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/CCS64%20V3.10.zip">CCS64</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="md3-popup-item md3-popup-category">
-                    <button type="button" class="md3-popup-link md3-popup-with-arrow ripple-target"
-                      aria-expanded="false" aria-haspopup="true" aria-controls="mattel-menu">Mattel</button>
-                    <div id="mattel-menu" class="md3-small-popup md3-small-popup--level2" aria-label="Mattel emulators">
-                      <div class="md3-popup-header">Intellivision</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/Nostalgia%205.0.zip">Nostalgia</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="md3-popup-item md3-popup-category">
-                    <button type="button" class="md3-popup-link md3-popup-with-arrow ripple-target"
-                      aria-expanded="false" aria-haspopup="true" aria-controls="microsoft-menu">Microsoft</button>
-                    <div id="microsoft-menu" class="md3-small-popup md3-small-popup--level2"
-                      aria-label="Microsoft emulators">
-                      <div class="md3-popup-header">MSX</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/Meisei%201.3.2.zip">Meisei</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="md3-popup-item md3-popup-category">
-                    <button type="button" class="md3-popup-link md3-popup-with-arrow ripple-target"
-                      aria-expanded="false" aria-haspopup="true" aria-controls="nintendo-menu">Nintendo</button>
-                    <div id="nintendo-menu" class="md3-small-popup md3-small-popup--level2"
-                      aria-label="Nintendo emulators">
-                      <div class="md3-popup-header">NES</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/Nestopia%201.40.zip">Nestopia</a>
-                      </div>
-                      <div class="md3-popup-header">SNES</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/Snes9k%200.09z.zip">Snes9k</a>
-                      </div>
-                      <div class="md3-popup-header">N64</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/Mupen64++%20Beta%200.1.3.12.zip">Mupen64++</a>
-                      </div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/Project64k%200.13%20(01%20Aug%202003).zip">Project64k</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="md3-popup-item md3-popup-category">
-                    <button type="button" class="md3-popup-link md3-popup-with-arrow ripple-target"
-                      aria-expanded="false" aria-haspopup="true" aria-controls="sega-menu">Sega</button>
-                    <div id="sega-menu" class="md3-small-popup md3-small-popup--level2" aria-label="Sega emulators">
-                      <div class="md3-popup-header">Mega Drive</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/Gens%202.10.zip">Gens</a>
-                      </div>
-                      <div class="md3-popup-header">Dreamcast</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/demul_251211.7z">DEmul</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="md3-popup-item md3-popup-category">
-                    <button type="button" class="md3-popup-link md3-popup-with-arrow ripple-target"
-                      aria-expanded="false" aria-haspopup="true" aria-controls="sony-menu">Sony</button>
-                    <div id="sony-menu" class="md3-small-popup md3-small-popup--level2" aria-label="Sony emulators">
-                      <div class="md3-popup-header">PlayStation</div>
-                      <div class="md3-popup-divider"></div>
-                      <div class="md3-popup-item">
-                        <a class="md3-popup-link ripple-target"
-                          href="https://kr.2manygames.fr/emulators/ePSXe%201.6.0.zip">ePSXe</a>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
               <div class="md3-chip md3-chip-src">
@@ -353,7 +207,7 @@
   </main>
 
   <footer class="md3-footer">
-    <div class="md3-footer-container">
+    <div class="md3-footer-container container">
       <nav class="md3-footer-links" aria-label="Footer">
         <a class="md3-link" href="https://2manygames.fr" target="_blank" rel="noopener noreferrer"
           title="Kaillera & CS 1.6 servers">2Many Games</a>
@@ -361,7 +215,7 @@
         <a class="md3-link" href="https://god-weapon.github.io" target="_blank" rel="noopener noreferrer"
           title="Kaillera Netplay stuff">God Weapon</a>
       </nav>
-      <p class="md3-body-small">&copy; 2025 Kaillera Reborn</p>
+      <p class="md3-body-small">&copy; 2026 Kaillera Reborn</p>
       <nav class="md3-social-container" aria-label="Social media links">
         <a class="md3-social-link ripple-target" href="https://bsky.app/profile/kaillerareborn.bsky.social"
           target="_blank" rel="noopener noreferrer" title="Bluesky">

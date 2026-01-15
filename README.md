@@ -28,7 +28,8 @@ Social media:
   - [Kaillera Protocol Dissector](https://github.com/caromdreamer/direlera-rs/blob/master/kaillera.lua)
 
 ## Emulators
-- [RetroArch-K](https://kaillerareborn.github.io)
+- [RetroArch-K](https://kaillerareborn.github.io "Multisystem")
+- [RMG-K](https://github.com/Jay-Day/RMG-K "Nintendo 64")
 - [Old Emulators](https://kr.2manygames.fr/emulators/)
 
 ## Kaillera clients

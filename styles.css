@@ -4,32 +4,67 @@
   --blue-chip: #2596be;
   --grey-hover: #e0e0e0;
   --lightblue-hover: #e6f2ff;
-  --overlay-bg: rgba(0, 0, 0, 0.5);
+
   --surface: #ffffff;
   --surface-container-low: #f5f5f5;
   --surface-container-high: #eaeaea;
-  --text-color: #262626;
-  --divider-color: #bdbdbd;
-  --border-color-translucent: transparent;
-  --card-border-color: transparent;
-  --chip-border-color: #c0c0c0;
+  --overlay-bg: rgba(0, 0, 0, 0.5);
   --popup-bg: rgba(255, 255, 255, 0.98);
   --sub-popup-bg: #fafafa;
   --pre-bg: #f6f8fa;
+
+  --text-color: #262626;
+  --divider-color: #bdbdbd;
+  --divider-strong: #737373;
+  --divider-light: #ddd;
+  --border-strong: #b0b0b0;
+  --border-color-translucent: transparent;
+
+  --chip-border-color: #c0c0c0;
+
   --skeleton-grad-start: #f0f0f0;
   --skeleton-grad-mid: #e0e0e0;
   --skeleton-grad-end: #f0f0f0;
+
   --body-small: 13px;
+
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
+
   --z-card: 1;
   --z-card-active: 10;
   --z-small-popup: 50;
   --z-overlay: 100;
   --z-modal: 110;
+
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+  --shadow-2: 0 1px 4px rgba(0, 0, 0, 0.18);
+  --shadow-3: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-modal: 0 24px 38px rgba(0, 0, 0, 0.20), 0 9px 46px rgba(0, 0, 0, 0.14);
+
+  --duration-fast: 0.2s;
+  --duration-std: 0.25s;
+  --duration-slow: 0.5s;
+  --ease-default: ease;
+  --ease-standard: cubic-bezier(.4, 0, .2, 1);
+
+  --transition-fast: var(--duration-fast) var(--ease-default);
+  --transition-std: var(--duration-std) var(--ease-default);
+  --transition-popup: opacity var(--transition-std), transform var(--transition-std), visibility 0s linear;
+  --transition-fade-visibility: opacity var(--transition-std), visibility 0s linear var(--duration-std);
+  --transition-fade-visibility-show: opacity var(--transition-std), visibility 0s linear 0s;
+}
+
+.flex-center,
+.md3-chip,
+.md3-chip-action,
+.md3-chip a:not(.md3-popup-link, .md3-small-popup a) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,18 +72,21 @@
     --blue-dark: #8ab4f8;
     --grey-hover: #3c4043;
     --lightblue-hover: #303134;
-    --overlay-bg: rgba(0, 0, 0, 0.5);
+
     --surface: #1e1e1e;
     --surface-container-low: #121212;
     --surface-container-high: #2c2c2c;
-    --text-color: #e3e3e3;
-    --divider-color: #444;
-    --border-color-translucent: #333;
-    --card-border-color: #333;
-    --chip-border-color: #444;
+    --overlay-bg: rgba(0, 0, 0, 0.5);
     --popup-bg: rgba(30, 30, 30, 0.98);
     --sub-popup-bg: #2c2c2c;
     --pre-bg: #2c2c2c;
+
+    --text-color: #e3e3e3;
+    --divider-color: #444;
+    --border-color-translucent: #333;
+
+    --chip-border-color: #444;
+
     --skeleton-grad-start: #2c2c2c;
     --skeleton-grad-mid: #3e3e3e;
     --skeleton-grad-end: #2c2c2c;
@@ -99,12 +137,18 @@ body {
   height: 100%;
 }
 
-html {
-  scrollbar-gutter: stable;
-}
-
 body.popup-open {
   overflow: hidden;
+}
+
+a {
+  color: var(--blue-dark);
+  text-decoration: none;
+  transition: color var(--transition-std);
+}
+
+a:hover {
+  color: var(--blue-hover);
 }
 
 .visually-hidden {
@@ -115,7 +159,6 @@ body.popup-open {
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
   border: 0;
 }
 
@@ -125,27 +168,27 @@ body.popup-open {
   border-radius: 4px;
 }
 
-a {
-  color: var(--blue-dark);
-  text-decoration: none;
-  transition: color 0.25s ease;
-}
-
-a:hover {
-  color: var(--blue-hover);
-}
-
-.icon-button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+.icon-button,
+.md3-social-link,
+.popup-content>.close {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
   border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: background-color var(--transition-fast);
+}
+
+.icon-button {
+  width: 32px;
+  height: 32px;
+}
+
+.icon-button:hover {
+  background-color: var(--grey-hover);
 }
 
 .md3-header {
@@ -153,15 +196,15 @@ a:hover {
   padding-inline: var(--space-md);
 }
 
-.md3-header-container,
-.md3-main,
-.md3-fullwidth-section {
-  padding-inline: var(--space-md);
+
+.container {
+  max-width: 1200px;
+  margin-inline: auto;
+  width: 100%;
 }
 
 .md3-header-container {
-  max-width: 1200px;
-  margin-inline: auto;
+  padding-inline: var(--space-md);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -175,8 +218,17 @@ a:hover {
 .md3-main {
   flex: 1;
   padding: var(--space-md);
-  max-width: 1200px;
-  margin-inline: auto;
+}
+
+.md3-section {
+  margin-bottom: var(--space-xl);
+}
+
+.md3-row {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .md3-fullwidth-section {
@@ -185,21 +237,20 @@ a:hover {
 
 .md3-fullwidth-content {
   max-width: calc(360px * 3 + 32px);
+  width: 100%;
   margin-inline: auto;
   padding: var(--space-lg);
   background: var(--surface);
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+  box-shadow: var(--shadow-1);
   text-align: center;
-  border: 1px solid var(--card-border-color);
+  border: 1px solid var(--border-color-translucent);
 }
 
 .md3-fullwidth-content p {
   font-size: 1rem;
   line-height: 1.4;
   margin-bottom: var(--space-md);
-  text-align: center;
-  color: var(--text-color);
 }
 
 .md3-fullwidth-content p:last-child {
@@ -216,45 +267,34 @@ a:hover {
   line-height: 1.4;
 }
 
-.md3-section {
-  margin-bottom: var(--space-xl);
-}
-
-.md3-row {
-  display: flex;
-  gap: var(--space-md);
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
 .md3-card {
   background: var(--surface);
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+  box-shadow: var(--shadow-1);
   max-width: 360px;
   width: 100%;
   position: relative;
   z-index: var(--z-card);
   transform: translateY(0);
   transition:
-    box-shadow 0.25s cubic-bezier(.4, 0, .2, 1),
-    transform 0.25s cubic-bezier(.4, 0, .2, 1),
+    box-shadow var(--duration-std) var(--ease-standard),
+    transform var(--duration-std) var(--ease-standard),
     z-index 0s linear 0.2s,
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-  border: 1px solid var(--card-border-color);
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+  border: 1px solid var(--border-color-translucent);
 }
 
 .md3-card:hover,
 .md3-card--popup-open {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, .16);
+  border-color: var(--blue-chip);
 }
 
 .md3-card--popup-open {
   z-index: var(--z-card-active);
   transition:
-    box-shadow 0.25s cubic-bezier(.4, 0, .2, 1),
-    transform 0.25s cubic-bezier(.4, 0, .2, 1),
+    box-shadow var(--duration-std) var(--ease-standard),
+    transform var(--duration-std) var(--ease-standard),
     z-index 0s linear 0s;
 }
 
@@ -266,7 +306,7 @@ a:hover {
 
 .md3-header-content-wrapper {
   display: inline-block;
-  border-bottom: 1px solid #b0b0b0;
+  border-bottom: 1px solid var(--border-strong);
   padding-bottom: var(--space-sm);
   width: 100%;
 }
@@ -291,14 +331,11 @@ a:hover {
 .md3-chip {
   position: relative;
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 40px;
-  border-radius: 999px;
+  border-radius: 20px;
   border: 1px solid var(--chip-border-color);
   background: transparent;
-  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: background-color var(--transition-std), border-color var(--transition-std), box-shadow var(--transition-std);
 }
 
 .md3-chip::after {
@@ -323,12 +360,12 @@ a:hover {
 .md3-chip--active {
   background: var(--blue-chip);
   border-color: transparent;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow-2);
 }
 
 .md3-chip:hover .md3-chip-text,
 .md3-chip--active .md3-chip-text {
-  color: #fff;
+  color: var(--surface);
 }
 
 .md3-chip-src {
@@ -337,50 +374,74 @@ a:hover {
 
 .md3-chip-src:hover {
   background: var(--grey-hover);
-  border-color: #b0b0b0;
+  border-color: var(--border-strong);
 }
 
 .md3-chip-src:hover .md3-chip-text {
   color: var(--text-color);
 }
 
-.md3-chip button {
+.md3-chip>button,
+.md3-chip-action {
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.md3-chip>button {
   background: none;
   border: none;
   cursor: pointer;
   font: inherit;
   text-align: center;
-  border-radius: inherit;
-  overflow: hidden;
-  position: relative;
 }
 
 .md3-chip-action {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
   text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  border-radius: inherit;
 }
 
 .md3-chip-text {
   font-size: 0.9rem;
   font-weight: 500;
-  white-space: nowrap;
   color: var(--text-color);
+}
+
+.md3-chip-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--surface);
+  color: var(--text-color);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: var(--shadow-3);
+  border: 1px solid var(--chip-border-color);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  transition:
+    opacity var(--transition-std),
+    transform var(--transition-std),
+    visibility 0s linear 0.25s;
+}
+
+.md3-chip-popup:hover .md3-chip-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px) translateZ(0);
+  transition:
+    opacity var(--transition-std),
+    transform var(--transition-std),
+    visibility 0s linear 0s;
 }
 
 .md3-chip-src a,
 .md3-chip a:not(.md3-popup-link, .md3-small-popup a) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   height: 100%;
   padding-inline: var(--space-lg);
@@ -396,56 +457,14 @@ a:hover {
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--blue-chip);
   border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow-2);
   padding-block: 8px;
   z-index: var(--z-small-popup);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  min-width: 180px;
-  max-width: 320px;
-  transform: translateY(-50%) translateX(0);
-  transform-origin: left center;
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease,
-    visibility 0s linear 0.25s;
+  transition: var(--transition-popup) 0.25s;
   will-change: transform, opacity;
-}
-
-.md3-small-popup {
-  inset-inline-start: calc(100% + 9px);
-  top: 50%;
-}
-
-.md3-popup-up .md3-small-popup {
-  top: auto;
-  bottom: 50%;
-  transform: translateY(50%) translateX(0);
-}
-
-.md3-small-popup--level2 {
-  inset-inline-start: 100%;
-  top: 50%;
-  transform: translateY(-50%) translateX(0);
-}
-
-.md3-popup-right .md3-small-popup {
-  inset-inline-start: auto;
-  inset-inline-end: calc(100% + 9px);
-  transform: translateY(-50%) translateX(0);
-  transform-origin: right center;
-}
-
-.md3-popup-right.md3-popup-up .md3-small-popup {
-  top: auto;
-  bottom: 50%;
-  transform: translateY(50%) translateX(0);
-}
-
-.md3-popup-right .md3-chip::after {
-  inset-inline-start: auto;
-  inset-inline-end: 100%;
 }
 
 .md3-small-popup.show,
@@ -453,23 +472,53 @@ a:hover {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateY(-50%) translateX(0);
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease,
-    visibility 0s linear 0s;
+  transition: var(--transition-popup) 0s;
 }
 
-.md3-popup-up .md3-small-popup.show {
-  transform: translateY(50%) translateX(0);
-}
+@media (min-width: 769px) {
 
-.md3-popup-right .md3-small-popup.show {
-  transform: translateY(-50%) translateX(0);
-}
+  .md3-small-popup,
+  .md3-small-popup--level2 {
+    min-width: 180px;
+    max-width: 320px;
+  }
 
-.md3-popup-right.md3-popup-up .md3-small-popup.show {
-  transform: translateY(50%) translateX(0);
+  .md3-small-popup {
+    inset-inline-start: calc(100% + 9px);
+    top: 50%;
+    transform: translateY(-50%) translateX(0);
+    transform-origin: left center;
+  }
+
+  .md3-popup-up .md3-small-popup {
+    top: auto;
+    bottom: 50%;
+    transform: translateY(50%) translateX(0);
+  }
+
+  .md3-small-popup--level2 {
+    inset-inline-start: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .md3-popup-right .md3-small-popup {
+    inset-inline-start: auto;
+    inset-inline-end: calc(100% + 9px);
+    transform: translateY(-50%) translateX(0);
+    transform-origin: right center;
+  }
+
+  .md3-popup-right.md3-popup-up .md3-small-popup {
+    top: auto;
+    bottom: 50%;
+    transform: translateY(50%) translateX(0);
+  }
+
+  .md3-popup-right .md3-chip::after {
+    inset-inline-start: auto;
+    inset-inline-end: 100%;
+  }
 }
 
 .md3-popup-with-arrow::after {
@@ -490,40 +539,41 @@ a:hover {
   position: relative;
 }
 
-button.md3-popup-link {
-  width: 100%;
-  border: none;
-  background: transparent;
-  font-family: inherit;
-  font-size: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
 .md3-popup-link {
   display: block;
+  width: 100%;
   padding-block: 6px;
   padding-inline: 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   text-align: left;
   color: var(--text-color);
-  transition: background 0.25s ease;
+  background: transparent;
+  border: none;
+  font: inherit;
+  transition: background var(--transition-std);
   position: relative;
   padding-inline-end: 24px;
   user-select: none;
   cursor: pointer;
   overflow: hidden;
+  text-decoration: none;
 }
 
 .md3-popup-link:hover,
-.md3-popup-link:focus {
+.md3-popup-link:focus-visible {
   background: var(--grey-hover);
   color: var(--text-color);
   outline: none;
+  border-radius: 8px;
 }
 
-.md3-popup-category--active>.md3-popup-link {
-  background: var(--grey-hover);
+@media (min-width: 769px) {
+  .md3-popup-category--active>.md3-popup-link {
+    background: var(--grey-hover);
+    color: var(--text-color);
+    outline: none;
+    border-radius: 8px;
+  }
 }
 
 .md3-popup-header {
@@ -541,7 +591,7 @@ button.md3-popup-link {
 
 .md3-popup-divider {
   height: 1px;
-  background: #737373;
+  background: var(--divider-strong);
   margin-block: 4px;
   width: calc(100% - 24px);
   margin-inline-start: 12px;
@@ -552,7 +602,7 @@ button.md3-popup-link {
 }
 
 .skeleton {
-  background: #ddd;
+  background: var(--divider-light);
   background: linear-gradient(90deg, var(--skeleton-grad-start) 25%, var(--skeleton-grad-mid) 50%, var(--skeleton-grad-end) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
@@ -587,8 +637,6 @@ button.md3-popup-link {
 }
 
 .md3-footer-container {
-  max-width: 1200px;
-  margin-inline: auto;
   text-align: center;
 }
 
@@ -623,20 +671,14 @@ button.md3-popup-link {
 .md3-social-link {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: var(--shadow-1);
+  background: var(--surface);
+  transition: background-color var(--transition-std), box-shadow var(--transition-std);
   position: relative;
-  overflow: hidden;
 }
 
 .md3-social-link:hover {
   background: var(--lightblue-hover);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, .18);
 }
 
 .md3-social-icon {
@@ -646,8 +688,8 @@ button.md3-popup-link {
 
 .info-icon {
   position: absolute;
-  top: 20px;
-  inset-inline-end: 24px;
+  top: 14px;
+  inset-inline-end: 18px;
 }
 
 .info-icon img {
@@ -661,31 +703,34 @@ button.md3-popup-link {
   z-index: var(--z-modal);
   inset-inline-start: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
   width: 80%;
   max-width: 900px;
   max-height: 90dvh;
   background-color: var(--surface);
-  border-radius: 12px;
-  box-shadow: 0 24px 38px rgba(0, 0, 0, 0.20), 0 9px 46px rgba(0, 0, 0, 0.14);
+  border-radius: 8px;
+  box-shadow: var(--shadow-modal);
+  overflow: hidden;
+  transform: translate(-50%, -50%) translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+  transition: var(--transition-fade-visibility);
 }
 
 .popup.show {
   display: block;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.25s ease, visibility 0s linear 0s;
+  transition: var(--transition-fade-visibility-show);
 }
 
 .popup-content {
   padding: 20px 28px;
-  border-radius: 12px;
-  background: var(--surface);
+  border-radius: 8px;
+  background: transparent;
   opacity: 0;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity var(--transition-std);
   position: relative;
   max-height: 80dvh;
   overflow-y: auto;
@@ -697,7 +742,6 @@ button.md3-popup-link {
 
 .popup-content.show {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .overlay {
@@ -709,34 +753,26 @@ button.md3-popup-link {
   background: var(--overlay-bg);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+  transition: var(--transition-fade-visibility);
   z-index: var(--z-overlay);
 }
 
 .overlay.show {
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.25s ease, visibility 0s linear 0s;
+  transition: var(--transition-fade-visibility-show);
 }
 
 .popup-content>.close {
   position: absolute;
   inset-inline-end: 12px;
   font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
   color: var(--text-color);
   opacity: 0.6;
-  z-index: 10;
   width: 32px;
   height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  line-height: 1;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  line-height: 0;
 }
 
 .close:hover {
@@ -749,6 +785,7 @@ button.md3-popup-link {
   line-height: 1.6;
   color: var(--text-color);
   font-size: 16px;
+  text-align: left;
 }
 
 #popup-content-wrapper h1,
@@ -813,7 +850,7 @@ button.md3-popup-link {
   background-color: var(--surface-container-high);
   padding-block: 0.2em;
   padding-inline: 0.4em;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 0.9em;
 }
 
@@ -834,7 +871,7 @@ button.md3-popup-link {
 #popup-content-wrapper hr {
   border: 0;
   height: 1px;
-  background: #ddd;
+  background: var(--divider-light);
   margin-block: 2em;
 }
 
@@ -849,7 +886,7 @@ button.md3-popup-link {
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.15);
   transform: scale(0);
-  animation: ripple-anim 500ms linear;
+  animation: ripple-anim var(--duration-slow) linear;
   pointer-events: none;
 }
 
@@ -873,76 +910,72 @@ button.md3-popup-link {
     position: static;
   }
 
-  .md3-small-popup {
+  .md3-small-popup,
+  .md3-popup-right .md3-small-popup,
+  .md3-popup-up .md3-small-popup,
+  .md3-popup-right.md3-popup-up .md3-small-popup {
     inset-inline-start: 0;
     inset-inline-end: 0;
     width: 100%;
-    min-width: unset;
-    max-width: unset;
-    top: 100%;
-    transform: translateY(4px);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
-    max-height: 60vh;
-    overflow-y: auto;
-    background: var(--surface);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .md3-popup-right .md3-small-popup {
-    inset-inline-start: 0;
-    inset-inline-end: 0;
-    transform: translateY(4px);
-  }
-
-  .md3-popup-up .md3-small-popup,
-  .md3-popup-right.md3-popup-up .md3-small-popup {
     top: 100%;
     bottom: auto;
+    max-height: 60vh;
+    overflow-y: auto;
     transform: translateY(4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: var(--surface);
+    transition: opacity var(--duration-slow) var(--ease-default), transform var(--duration-slow) var(--ease-default), visibility 0s linear 0.25s;
   }
 
-  .md3-small-popup.show {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateY(0);
-    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s linear 0s;
-  }
-
-  .md3-popup-right .md3-small-popup.show {
-    transform: translateY(0);
-  }
-
+  .md3-small-popup.show,
+  .md3-popup-right .md3-small-popup.show,
   .md3-popup-up .md3-small-popup.show,
   .md3-popup-right.md3-popup-up .md3-small-popup.show {
     transform: translateY(0);
+    transition: opacity var(--duration-slow) var(--ease-default), transform var(--duration-slow) var(--ease-default), visibility 0s linear 0s;
   }
 
   .md3-small-popup--level2 {
     position: relative;
-    top: auto;
-    inset-inline-start: auto;
-    transform: none;
     width: 100%;
-    max-width: 100%;
-    margin-top: var(--space-xs);
     box-shadow: none;
     border: none;
     border-inline-start: 2px solid var(--blue-chip);
     background: var(--sub-popup-bg);
     padding-inline-start: 12px;
-    display: none;
+    padding-block: 0;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    transform: none;
+    transition:
+      max-height var(--duration-slow) var(--ease-standard),
+      padding-block var(--duration-slow) var(--ease-standard),
+      opacity var(--duration-fast) linear,
+      visibility 0s linear var(--duration-slow),
+      margin-top var(--duration-fast) var(--ease-standard);
   }
 
   .md3-small-popup--level2.md3-subpopup-open {
-    display: block;
-    transform: none;
+    max-height: 500px;
+    padding-block: 8px;
+    opacity: 1;
+    visibility: visible;
+    margin-top: var(--space-xs);
+    transition:
+      max-height var(--duration-slow) var(--ease-standard),
+      padding-block var(--duration-slow) var(--ease-standard),
+      opacity var(--duration-std) linear,
+      visibility 0s linear 0s,
+      margin-top var(--duration-fast) var(--ease-standard);
   }
 
   .md3-chip::after {
+    display: none;
+  }
+
+  .md3-chip-tooltip {
     display: none;
   }
 
@@ -968,6 +1001,10 @@ button.md3-popup-link {
 
   .popup {
     width: 95%;
+  }
+
+  .popup-content {
+    padding: 16px;
   }
 
   .popup-content {
