@@ -69,9 +69,11 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --blue-dark: #8ab4f8;
+    color-scheme: dark;
+    --blue-dark: #669df6;
+    --blue-hover: #8ab4f8;
     --grey-hover: #3c4043;
-    --lightblue-hover: #303134;
+    --lightblue-hover: #3c4043;
 
     --surface: #1e1e1e;
     --surface-container-low: #121212;
@@ -104,6 +106,10 @@
 
   .md3-social-link {
     background: var(--surface-container-high) !important;
+  }
+
+  .md3-social-link:hover {
+    background: var(--lightblue-hover) !important;
   }
 
   .info-icon img {
@@ -229,6 +235,7 @@ a:hover {
   gap: var(--space-md);
   justify-content: center;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .md3-fullwidth-section {
@@ -336,16 +343,6 @@ a:hover {
   border: 1px solid var(--chip-border-color);
   background: transparent;
   transition: background-color var(--transition-std), border-color var(--transition-std), box-shadow var(--transition-std);
-}
-
-.md3-chip::after {
-  content: "";
-  position: absolute;
-  top: -10px;
-  bottom: -10px;
-  inset-inline-start: 100%;
-  width: 14px;
-  pointer-events: none;
 }
 
 .md3-chip-set .md3-chip:first-child {
@@ -513,11 +510,6 @@ a:hover {
     top: auto;
     bottom: 50%;
     transform: translateY(50%) translateX(0);
-  }
-
-  .md3-popup-right .md3-chip::after {
-    inset-inline-start: auto;
-    inset-inline-end: 100%;
   }
 }
 
@@ -765,18 +757,31 @@ a:hover {
 
 .popup-content>.close {
   position: absolute;
-  inset-inline-end: 12px;
-  font-size: 24px;
-  color: var(--text-color);
-  opacity: 0.6;
+  inset-inline-end: 16px;
   width: 32px;
   height: 32px;
+  color: var(--text-color);
   transition: background-color var(--transition-fast), color var(--transition-fast);
-  line-height: 0;
+}
+
+.popup-content>.close::before,
+.popup-content>.close::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 16px;
+  background-color: currentColor;
+}
+
+.popup-content>.close::before {
+  transform: rotate(45deg);
+}
+
+.popup-content>.close::after {
+  transform: rotate(-45deg);
 }
 
 .close:hover {
-  opacity: 1;
   color: var(--text-color);
   background-color: var(--grey-hover);
 }
@@ -846,26 +851,25 @@ a:hover {
   font-style: italic;
 }
 
-#popup-content-wrapper code {
+#popup-content-wrapper code,
+#popup-content-wrapper pre {
   background-color: var(--surface-container-high);
   padding-block: 0.2em;
   padding-inline: 0.4em;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 0.9em;
 }
 
 #popup-content-wrapper pre {
-  background-color: var(--pre-bg);
-  padding: 16px;
-  border-radius: 6px;
   overflow: auto;
   margin-bottom: 1em;
+  width: fit-content;
 }
 
 #popup-content-wrapper pre code {
   background: none;
   padding: 0;
-  font-size: 0.9em;
+  font-size: 100%;
 }
 
 #popup-content-wrapper hr {
@@ -969,10 +973,6 @@ a:hover {
       opacity var(--duration-std) linear,
       visibility 0s linear 0s,
       margin-top var(--duration-fast) var(--ease-standard);
-  }
-
-  .md3-chip::after {
-    display: none;
   }
 
   .md3-chip-tooltip {

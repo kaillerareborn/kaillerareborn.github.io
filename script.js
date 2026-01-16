@@ -222,6 +222,26 @@ function renderPopupContent(htmlText, type, wrapper, titleEl) {
   if (titleEl) {
     titleEl.textContent = loadedTitle || (type.charAt(0).toUpperCase() + type.slice(1));
   }
+
+  adjustPreWidths(wrapper);
+}
+
+function adjustPreWidths(wrapper) {
+  const preElements = wrapper.querySelectorAll('pre');
+  if (preElements.length <= 1) return;
+
+  let maxWidth = 0;
+  preElements.forEach(pre => {
+    pre.style.width = 'fit-content';
+    const width = pre.getBoundingClientRect().width;
+    if (width > maxWidth) maxWidth = width;
+  });
+
+  if (maxWidth > 0) {
+    preElements.forEach(pre => {
+      pre.style.width = `${maxWidth}px`;
+    });
+  }
 }
 
 function closeMainPopup() {
@@ -551,7 +571,7 @@ const oldEmulatorsData = [
   }
 ];
 
-function renderNestedMenu(containerId, data) {
+function renderMultiMenu(containerId, data) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
@@ -606,7 +626,7 @@ function renderNestedMenu(containerId, data) {
   container.appendChild(fragment);
 }
 
-function renderFlatMenu(containerId, items) {
+function renderSingleMenu(containerId, items) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
@@ -629,6 +649,6 @@ function renderFlatMenu(containerId, items) {
   container.appendChild(fragment);
 }
 
-renderFlatMenu('retroarch-k-popup', retroArchData);
-renderNestedMenu('old-emulators-popup', oldEmulatorsData);
+renderSingleMenu('retroarch-k-popup', retroArchData);
+renderMultiMenu('old-emulators-popup', oldEmulatorsData);
 initializeSubMenus();
