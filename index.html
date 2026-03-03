@@ -3,22 +3,45 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kaillera Reborn</title>
   <meta name="description"
     content="Kaillera Reborn provides a list of Kaillera software. Grab an emulator and start playing online with other users!">
-  <meta name="keywords" content="Kaillera, emulation, netplay, retro games, online gaming">
+  <meta name="keywords" content="Kaillera, emulation, netplay, retro games, online gaming, multiplayer">
   <meta name="author" content="Kaillera Reborn">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Kaillera Reborn - Netplay for Emulators">
-  <meta property="og:description" content="Play retro games online with Kaillera.">
-  <meta property="og:image" content="https://kaillerareborn.github.io/images/kaillerareborn_logo.png">
-  <meta property="og:url" content="https://kaillerareborn.github.io">
+
+  <link rel="canonical" href="https://kaillerareborn.github.io">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="dns-prefetch" href="https://github.com">
   <link rel="dns-prefetch" href="https://kr.2manygames.fr">
   <link rel="stylesheet" href="styles.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kaillerareborn.github.io">
+  <meta property="og:title" content="Kaillera Reborn - Netplay for Emulators">
+  <meta property="og:description" content="Play retro games online with Kaillera.">
+  <meta property="og:image" content="https://kaillerareborn.github.io/images/kaillerareborn_logo.png">
+  <meta property="og:site_name" content="Kaillera Reborn">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Kaillera Reborn",
+    "url": "https://kaillerareborn.github.io",
+    "description": "Kaillera Reborn provides a list of Kaillera software. Grab an emulator and start playing online with other users!",
+    "author": {
+      "@type": "Organization",
+      "name": "Kaillera Reborn"
+    },
+    "sameAs": [
+      "https://bsky.app/profile/kaillerareborn.bsky.social",
+      "https://mastodon.social/@kaillerareborn",
+      "https://twitter.com/kaillerareborn"
+    ]
+  }
+  </script>
+  <script src="script.js" type="module"></script>
 </head>
 
 <body>
@@ -26,13 +49,15 @@
     <nav class="md3-header-container container" aria-label="Main navigation">
       <a class="md3-logo-link" href="https://kaillerareborn.github.io" aria-label="Kaillera Reborn home">
         <h1 class="visually-hidden">Kaillera Reborn</h1>
-        <img src="images/kaillerareborn_logo.png" alt="Kaillera Reborn" class="md3-logo">
+        <img src="images/kaillerareborn_logo.png" alt="Kaillera Reborn" class="md3-logo" fetchpriority="high"
+          loading="eager" decoding="async">
       </a>
     </nav>
   </header>
 
-  <main id="main-content" class="md3-main container">
-    <section id="introduction" class="md3-fullwidth-section">
+  <main id="main-content" class="md3-main container" aria-label="Main content">
+    <section id="introduction" class="md3-fullwidth-section" aria-labelledby="introduction-title">
+      <h2 id="introduction-title" class="visually-hidden">About Kaillera</h2>
       <div class="md3-fullwidth-content">
         <p>
           <strong>Kaillera</strong> offers the possibility to play retro games online using emulators with Kaillera
@@ -56,9 +81,9 @@
             <div class="md3-header-content-wrapper">
               <h2 class="md3-title-large">Emulators</h2>
               <div class="info-icon">
-                <button type="button" class="icon-button ripple-target" title="About: Emulators"
+                <button type="button" class="icon-button" title="About: Emulators"
                   data-trigger-popup="emulators" data-source="resources/emulators.html">
-                  <img src="images/info_icon.svg" alt="Information about emulators">
+                  <img src="images/info_icon.svg" alt="Information about emulators" loading="eager" decoding="async">
                 </button>
               </div>
             </div>
@@ -120,9 +145,9 @@
             <div class="md3-header-content-wrapper">
               <h2 class="md3-title-large">Clients</h2>
               <div class="info-icon">
-                <button type="button" class="icon-button ripple-target" title="About: Clients"
+                <button type="button" class="icon-button" title="About: Clients"
                   data-trigger-popup="clients" data-source="resources/clients.html">
-                  <img src="images/info_icon.svg" alt="Information about clients">
+                  <img src="images/info_icon.svg" alt="Information about clients" loading="eager" decoding="async">
                 </button>
               </div>
             </div>
@@ -164,9 +189,9 @@
             <div class="md3-header-content-wrapper">
               <h2 class="md3-title-large">Servers</h2>
               <div class="info-icon">
-                <button type="button" class="icon-button ripple-target" title="About: Servers"
+                <button type="button" class="icon-button" title="About: Servers"
                   data-trigger-popup="servers" data-source="resources/servers.html">
-                  <img src="images/info_icon.svg" alt="Information about servers">
+                  <img src="images/info_icon.svg" alt="Information about servers" loading="eager" decoding="async">
                 </button>
               </div>
             </div>
@@ -216,37 +241,39 @@
           title="Kaillera Netplay stuff">God Weapon</a>
       </nav>
       <p class="md3-body-small">&copy; 2026 Kaillera Reborn</p>
-      <nav class="md3-social-container" aria-label="Social media links">
-        <a class="md3-social-link ripple-target" href="https://bsky.app/profile/kaillerareborn.bsky.social"
-          target="_blank" rel="noopener noreferrer" title="Bluesky">
-          <img src="images/bluesky_logo.svg" alt="Bluesky" class="md3-social-icon">
-        </a>
-        <a class="md3-social-link ripple-target" href="https://mastodon.social/@kaillerareborn" target="_blank"
-          rel="noopener noreferrer" title="Mastodon">
-          <img src="images/mastodon_logo.svg" alt="Mastodon" class="md3-social-icon">
-        </a>
-        <a class="md3-social-link ripple-target" href="https://twitter.com/kaillerareborn" target="_blank"
-          rel="noopener noreferrer" title="Twitter">
-          <img src="images/twitter_logo.svg" alt="Twitter" class="md3-social-icon">
-        </a>
-        <a class="md3-social-link ripple-target" href="mailto:kaillerareborn@secria.me" title="Email address">
-          <img src="images/email_icon.svg" alt="Email address" class="md3-social-icon">
-        </a>
-      </nav>
+      <address>
+        <nav class="md3-social-container" aria-label="Social media links">
+          <a class="md3-social-link ripple-target" href="https://bsky.app/profile/kaillerareborn.bsky.social"
+            target="_blank" rel="noopener noreferrer" title="Bluesky">
+            <img src="images/bluesky_logo.svg" alt="Bluesky" class="md3-social-icon" loading="lazy" decoding="async">
+          </a>
+          <a class="md3-social-link ripple-target" href="https://mastodon.social/@kaillerareborn" target="_blank"
+            rel="noopener noreferrer" title="Mastodon">
+            <img src="images/mastodon_logo.svg" alt="Mastodon" class="md3-social-icon" loading="lazy" decoding="async">
+          </a>
+          <a class="md3-social-link ripple-target" href="https://twitter.com/kaillerareborn" target="_blank"
+            rel="noopener noreferrer" title="Twitter">
+            <img src="images/twitter_logo.svg" alt="Twitter" class="md3-social-icon" loading="lazy" decoding="async">
+          </a>
+          <a class="md3-social-link ripple-target" href="mailto:kaillerareborn@secria.me" title="Email address">
+            <img src="images/email_icon.svg" alt="Email address" class="md3-social-icon" loading="lazy"
+              decoding="async">
+          </a>
+        </nav>
+      </address>
     </div>
   </footer>
 
   <div id="popup" class="popup" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="popup-content" tabindex="-1" aria-labelledby="popup-title" aria-describedby="popup-description">
-      <button type="button" class="close ripple-target" aria-label="Close">&times;</button>
-      <div id="popup-content-wrapper">
+      <button type="button" class="close ripple-target" aria-label="Close dialog"><span
+          aria-hidden="true">&times;</span></button>
+      <div id="popup-content-wrapper" aria-live="polite" aria-atomic="true">
         <h2 id="popup-title">Loading...</h2>
         <p id="popup-description">Content is being loaded...</p>
       </div>
     </div>
   </div>
-
-  <script src="script.js" type="module"></script>
 </body>
 
 </html>

@@ -1,9 +1,9 @@
-const contentCache = {};
+const contentCache = new Map();
+const abortControllers = new Map();
 
 let activeSubPopup = null;
 let lastFocusedElement = null;
 let activeChipTrigger = null;
-let hoverTimeout = null;
 
 const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
@@ -12,67 +12,78 @@ const skeletonHTML = `
     <div class="skeleton skeleton-title"></div>
     <div class="skeleton skeleton-text"></div>
     <div class="skeleton skeleton-text"></div>
-    <div class="skeleton skeleton-text" style="width: 80%"></div>
+    <div class="skeleton skeleton-text skeleton-text-short"></div>
   </div>
 `;
 
-function toggleScrollLock(shouldLock) {
-  if (shouldLock) {
-    document.body.classList.add('popup-open');
-  } else {
-    document.body.classList.remove('popup-open');
-  }
-}
+const animateShow = (element) => {
+  if (!element) return;
+  element.dataset.isClosing = 'false';
+  element.style.display = 'block';
+  void element.offsetHeight;
+  element.classList.add('show');
+};
 
-function closeActiveSubPopup() {
-  if (activeSubPopup) {
-    activeSubPopup.classList.remove('md3-subpopup-open');
-    const prevCategory = activeSubPopup.closest('.md3-popup-category');
-    if (prevCategory) {
-      prevCategory.classList.remove('md3-popup-category--active');
-      const trigger = prevCategory.querySelector('.md3-popup-link.md3-popup-with-arrow');
-      if (trigger) {
-        trigger.setAttribute('aria-expanded', 'false');
-      }
+const animateHide = (element, onHidden = null) => {
+  if (!element) return;
+  element.dataset.isClosing = 'true';
+  element.classList.remove('show');
+
+  const handleTransitionEnd = (e) => {
+    if (e.target !== element) return;
+    if (element.dataset.isClosing !== 'true') return;
+    element.style.display = 'none';
+    if (onHidden) onHidden();
+    delete element.dataset.isClosing;
+  };
+
+  element.addEventListener('transitionend', handleTransitionEnd, { once: true });
+  setTimeout(() => {
+    if (element.dataset.isClosing === 'true') {
+      element.style.display = 'none';
+      if (onHidden) onHidden();
+      delete element.dataset.isClosing;
     }
-    activeSubPopup = null;
+  }, 300);
+};
+
+const toggleScrollLock = (shouldLock) => {
+  document.body.classList.toggle('popup-open', shouldLock);
+};
+
+const closeActiveSubPopup = () => {
+  if (!activeSubPopup) return;
+  activeSubPopup.classList.remove('md3-subpopup-open');
+  const prevCategory = activeSubPopup.closest('.md3-popup-category');
+  if (prevCategory) {
+    prevCategory.classList.remove('md3-popup-category--active');
+    const trigger = prevCategory.querySelector('.md3-popup-link.md3-popup-with-arrow');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
   }
-}
+  activeSubPopup = null;
+};
 
-function closeAllChips(exceptChip = null, restoreFocus = false) {
-  const chips = document.querySelectorAll('.md3-chip-popup');
-  chips.forEach(chip => {
-    if (chip === exceptChip) return;
+const closeAllChips = (exceptChip = null, restoreFocus = false) => {
+  for (const chip of document.querySelectorAll('.md3-chip-popup')) {
+    if (chip === exceptChip) continue;
 
-    chip.classList.remove('md3-chip--active');
-    chip.classList.remove('md3-popup-right');
-    chip.classList.remove('md3-popup-up');
+    chip.classList.remove('md3-chip--active', 'md3-popup-right', 'md3-popup-up');
 
     const popup = chip.querySelector('.md3-small-popup');
-    if (popup) popup.classList.remove('show');
+    if (popup) animateHide(popup);
 
     const button = chip.querySelector('button');
     if (button) button.setAttribute('aria-expanded', 'false');
-
-    const card = chip.closest('.md3-card');
-    if (card) {
-      const activeSibling = card.querySelector('.md3-chip-popup.md3-chip--active');
-      if (!activeSibling) {
-        card.classList.remove('md3-card--popup-open');
-      }
-    }
-  });
+  }
   closeActiveSubPopup();
 
   if (restoreFocus && activeChipTrigger && !exceptChip) {
-    if (document.body.contains(activeChipTrigger)) {
-      activeChipTrigger.focus();
-    }
+    if (document.body.contains(activeChipTrigger)) activeChipTrigger.focus();
     activeChipTrigger = null;
   }
-}
+};
 
-function trapFocus(element, event) {
+const trapFocus = (element, event) => {
   const focusableContent = element.querySelectorAll(focusableSelector);
   if (focusableContent.length === 0) {
     event.preventDefault();
@@ -81,35 +92,26 @@ function trapFocus(element, event) {
 
   const firstFocusable = focusableContent[0];
   const lastFocusable = focusableContent[focusableContent.length - 1];
+  const isShiftTab = event.shiftKey && document.activeElement === firstFocusable;
+  const isTab = !event.shiftKey && document.activeElement === lastFocusable;
 
-  if (event.shiftKey) {
-    if (document.activeElement === firstFocusable) {
-      lastFocusable.focus();
-      event.preventDefault();
-    }
-  } else {
-    if (document.activeElement === lastFocusable) {
-      firstFocusable.focus();
-      event.preventDefault();
-    }
+  if (isShiftTab || isTab) {
+    (isShiftTab ? lastFocusable : firstFocusable).focus();
+    event.preventDefault();
   }
-}
+};
 
-function handlePopupKeydown(e) {
+const handlePopupKeydown = (e) => {
   const popup = document.getElementById('popup');
-  if (!popup || !popup.classList.contains('show')) return;
+  if (!popup?.classList.contains('show') || e.key !== 'Tab') return;
+  trapFocus(popup, e);
+};
 
-  if (e.key === 'Tab') {
-    trapFocus(popup, e);
-  }
-}
-
-function openMainPopup(triggerElement, isOverlay = true) {
+const openMainPopup = async (triggerElement, isOverlay = true) => {
   const popup = document.getElementById('popup');
   const popupContentWrapper = document.getElementById('popup-content-wrapper');
   const popupTitle = document.getElementById('popup-title');
   const popupDescription = document.getElementById('popup-description');
-
   const type = triggerElement.getAttribute('data-trigger-popup');
   const url = triggerElement.getAttribute('data-source');
 
@@ -130,228 +132,183 @@ function openMainPopup(triggerElement, isOverlay = true) {
     let overlay = document.querySelector('.overlay');
     if (!overlay) {
       overlay = document.createElement('div');
-      overlay.classList.add('overlay');
+      overlay.className = 'overlay';
       overlay.addEventListener('click', closeMainPopup);
       document.body.appendChild(overlay);
-
-      void overlay.offsetWidth;
     }
-    overlay.classList.add('show');
+    requestAnimationFrame(() => animateShow(overlay));
   }
 
   popup.setAttribute('aria-hidden', 'false');
-  popup.style.display = 'block';
-
-  void popup.offsetWidth;
-
-  popup.classList.add('show');
+  requestAnimationFrame(() => animateShow(popup));
 
   document.addEventListener('keydown', handlePopupKeydown);
 
-  const popupInner = document.querySelector('.popup-content');
-  if (popupInner) {
-    popupInner.classList.add('show');
-    const firstFocusable = popupInner.querySelector(focusableSelector);
-    const closeBtn = popup.querySelector('.close');
-    if (closeBtn) {
-      closeBtn.focus();
-    } else if (firstFocusable) {
-      firstFocusable.focus();
-    } else {
-      popupInner.focus();
-    }
+  const closeBtn = popup.querySelector('.close');
+  if (closeBtn) closeBtn.focus();
+
+  if (contentCache.has(type)) {
+    renderPopupContent(contentCache.get(type), type, popupContentWrapper, popupTitle);
+    return;
   }
 
-  if (contentCache[type]) {
-    renderPopupContent(contentCache[type], type, popupContentWrapper, popupTitle);
-  } else {
-    fetch(url)
-      .then(response => {
-        if (!response.ok) throw new Error('Unable to load content');
-        return response.text();
-      })
-      .then(htmlText => {
-        contentCache[type] = htmlText;
-        renderPopupContent(htmlText, type, popupContentWrapper, popupTitle);
-      })
-      .catch(error => {
-        console.error('Error loading popup content:', error);
-        popupContentWrapper.innerHTML = '';
-        const p = document.createElement('p');
-        p.textContent = 'Unable to load content.';
-        p.style.color = 'var(--text-color)';
-        popupContentWrapper.appendChild(p);
+  abortControllers.get(type)?.abort();
+  const controller = new AbortController();
+  abortControllers.set(type, controller);
 
-        if (popupTitle) popupTitle.textContent = 'Error';
-      });
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) throw new Error('Unable to load content');
+    const htmlText = await response.text();
+    contentCache.set(type, htmlText);
+    renderPopupContent(htmlText, type, popupContentWrapper, popupTitle);
+  } catch (error) {
+    if (error.name === 'AbortError') return;
+    console.error('Error loading popup content:', error);
+    popupContentWrapper.innerHTML = `<div role="alert" aria-live="assertive"><p>${error.message || 'Unable to load content. Please try again.'}</p></div>`;
+    if (popupTitle) popupTitle.textContent = 'Error Loading Content';
+  } finally {
+    abortControllers.delete(type);
   }
-}
+};
 
-function renderPopupContent(htmlText, type, wrapper, titleEl) {
+const renderPopupContent = (htmlText, type, wrapper, titleEl) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlText, 'text/html');
 
-  const scripts = doc.querySelectorAll('script');
-  scripts.forEach(script => script.remove());
+  doc.querySelectorAll('script').forEach(script => script.remove());
 
-  const allElements = doc.body.querySelectorAll('*');
-  allElements.forEach(el => {
-    Array.from(el.attributes).forEach(attr => {
-      if (attr.name.startsWith('on')) {
-        el.removeAttribute(attr.name);
-      }
-    });
-    if (el.tagName === 'A' && el.getAttribute('href') && el.getAttribute('href').toLowerCase().startsWith('javascript:')) {
+  for (const el of doc.body.querySelectorAll('*')) {
+    for (const attr of Array.from(el.attributes)) {
+      if (attr.name.startsWith('on')) el.removeAttribute(attr.name);
+    }
+    const href = el.getAttribute('href');
+    if (el.tagName === 'A' && href?.toLowerCase().startsWith('javascript:')) {
       el.setAttribute('href', '#');
     }
-  });
-
-  wrapper.innerHTML = '';
-
-  if (doc.body.childNodes.length === 0) {
-    const p = document.createElement('p');
-    p.textContent = 'No content available.';
-    wrapper.appendChild(p);
-  } else {
-    Array.from(doc.body.childNodes).forEach(node => {
-      wrapper.appendChild(node);
-    });
   }
 
-  const loadedTitle = doc.querySelector('h1, h2')?.textContent;
+  wrapper.innerHTML = doc.body.childNodes.length === 0
+    ? '<p>No content available.</p>'
+    : '';
+
+  if (doc.body.childNodes.length > 0) {
+    wrapper.append(...doc.body.childNodes);
+  }
+
   if (titleEl) {
-    titleEl.textContent = loadedTitle || (type.charAt(0).toUpperCase() + type.slice(1));
+    titleEl.textContent = doc.querySelector('h1, h2')?.textContent || type[0].toUpperCase() + type.slice(1);
   }
 
   adjustPreWidths(wrapper);
-}
+};
 
-function adjustPreWidths(wrapper) {
+const adjustPreWidths = (wrapper) => {
   const preElements = wrapper.querySelectorAll('pre');
-  if (preElements.length <= 1) return;
+  if (preElements.length === 0) return;
 
-  let maxWidth = 0;
-  preElements.forEach(pre => {
-    pre.style.width = 'fit-content';
-    const width = pre.getBoundingClientRect().width;
-    if (width > maxWidth) maxWidth = width;
+  requestAnimationFrame(() => {
+    let maxWidth = 0;
+    for (const pre of preElements) {
+      maxWidth = Math.max(maxWidth, pre.scrollWidth);
+    }
+
+    if (maxWidth > 0) {
+      for (const pre of preElements) {
+        pre.style.width = `${maxWidth}px`;
+      }
+    }
   });
+};
 
-  if (maxWidth > 0) {
-    preElements.forEach(pre => {
-      pre.style.width = `${maxWidth}px`;
-    });
-  }
-}
-
-function closeMainPopup() {
+const closeMainPopup = () => {
   const popup = document.getElementById('popup');
-  const popupInner = document.querySelector('.popup-content');
   const overlay = document.querySelector('.overlay');
 
   document.removeEventListener('keydown', handlePopupKeydown);
 
-  if (popupInner) popupInner.classList.remove('show');
-  if (popup) popup.classList.remove('show');
-  if (overlay) overlay.classList.remove('show');
+  animateHide(popup, () => {
+    popup.setAttribute('aria-hidden', 'true');
+  });
+
+  animateHide(overlay, () => {
+    if (overlay && !overlay.classList.contains('show')) {
+      overlay.remove();
+    }
+  });
 
   setTimeout(() => {
-    if (popup && !popup.classList.contains('show')) {
-      popup.style.display = 'none';
-      popup.setAttribute('aria-hidden', 'true');
-    }
-
     toggleScrollLock(false);
-
-    if (overlay && overlay.parentNode && !overlay.classList.contains('show')) {
-      overlay.parentNode.removeChild(overlay);
-    }
-
-    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
-      lastFocusedElement.focus();
-    }
+    lastFocusedElement?.focus();
     lastFocusedElement = null;
-  }, 300);
-}
+  }, 250);
+};
 
-function handleGlobalClose() {
+const handleGlobalClose = () => {
   closeAllChips(null, true);
   closeMainPopup();
-}
+};
 
-function checkPopupPosition(chip, popup) {
-  if (!popup) return;
-
-  if (window.innerWidth <= 768) {
-    chip.classList.remove('md3-popup-right', 'md3-popup-up');
+const checkPopupPosition = (chip, popup) => {
+  if (!popup || window.innerWidth <= 768) {
+    chip?.classList.remove('md3-popup-right', 'md3-popup-up');
     return;
   }
 
   const wasHidden = !popup.classList.contains('show');
   if (wasHidden) {
-    popup.style.visibility = 'hidden';
-    popup.style.display = 'block';
+    popup.classList.add('measuring');
   }
 
   const rect = popup.getBoundingClientRect();
-  const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
 
-  if (rect.right > viewportWidth) {
-    chip.classList.add('md3-popup-right');
-  } else {
-    chip.classList.remove('md3-popup-right');
-  }
-
-  if (rect.bottom > viewportHeight) {
-    chip.classList.add('md3-popup-up');
-  } else {
-    chip.classList.remove('md3-popup-up');
-  }
+  chip.classList.toggle('md3-popup-right', rect.right > viewportWidth);
+  chip.classList.toggle('md3-popup-up', rect.bottom > viewportHeight);
 
   if (wasHidden) {
-    popup.style.visibility = '';
-    popup.style.display = '';
+    popup.classList.remove('measuring');
   }
-}
+};
 
-function createRipple(event) {
+const ripplePool = new Map();
+
+const createRipple = (event) => {
   const button = event.currentTarget;
-  const circle = document.createElement('span');
   const diameter = Math.max(button.clientWidth, button.clientHeight);
   const radius = diameter / 2;
-
   const rect = button.getBoundingClientRect();
-  const x = event.clientX - rect.left - radius;
-  const y = event.clientY - rect.top - radius;
 
-  circle.style.width = circle.style.height = `${diameter}px`;
-  circle.style.left = `${x}px`;
-  circle.style.top = `${y}px`;
-  circle.classList.add('ripple');
-
-  const ripple = button.getElementsByClassName('ripple')[0];
-  if (ripple) {
-    ripple.remove();
+  let circle = ripplePool.get(button);
+  if (!circle) {
+    circle = document.createElement('span');
+    circle.className = 'ripple';
+    ripplePool.set(button, circle);
   }
 
-  button.appendChild(circle);
-}
+  circle.style.animation = 'none';
+  circle.offsetHeight;
+
+  circle.style.width = `${diameter}px`;
+  circle.style.height = `${diameter}px`;
+  circle.style.left = `${event.clientX - rect.left - radius}px`;
+  circle.style.top = `${event.clientY - rect.top - radius}px`;
+  circle.style.animation = '';
+
+  if (!circle.parentNode) {
+    button.appendChild(circle);
+  }
+
+  circle.addEventListener('animationend', () => {
+    circle.remove();
+  }, { once: true });
+};
 
 document.addEventListener('click', (e) => {
   const target = e.target.closest('.ripple-target');
-  if (target) {
-    createRipple({
-      currentTarget: target,
-      clientX: e.clientX,
-      clientY: e.clientY
-    });
-  }
-}, {
-  capture: true
-});
+  if (target) createRipple({ currentTarget: target, clientX: e.clientX, clientY: e.clientY });
 
-document.addEventListener('click', (e) => {
   const popupTrigger = e.target.closest('[data-trigger-popup]');
   if (popupTrigger) {
     e.preventDefault();
@@ -366,114 +323,75 @@ document.addEventListener('click', (e) => {
 
   const chip = e.target.closest('.md3-chip-popup');
   if (chip) {
-    if (e.target.closest('.md3-popup-link') || e.target.closest('.md3-small-popup')) {
-      if (!e.target.closest('a')) e.stopPropagation();
-      return;
-    }
+    if (e.target.closest('.md3-popup-link, .md3-small-popup')) return;
 
     const button = chip.querySelector('button');
     const popup = chip.querySelector('.md3-small-popup');
-    const card = chip.closest('.md3-card');
-
-    const wasOpen = popup && popup.classList.contains('show');
+    const wasOpen = popup?.classList.contains('show');
 
     closeAllChips(null, false);
 
     if (!wasOpen && popup) {
       activeChipTrigger = button;
       checkPopupPosition(chip, popup);
-
-      popup.classList.add('show');
-      if (button) button.setAttribute('aria-expanded', 'true');
+      animateShow(popup);
+      button?.setAttribute('aria-expanded', 'true');
       chip.classList.add('md3-chip--active');
-      if (card) card.classList.add('md3-card--popup-open');
     } else {
       activeChipTrigger = null;
     }
     return;
   }
 
-  const clickedInsideMainPopup = e.target.closest('.popup-content');
-  if (!clickedInsideMainPopup) {
-    handleGlobalClose();
+  if (!e.target.closest('.popup-content')) handleGlobalClose();
+}, { capture: true });
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') handleGlobalClose();
+
+  if (e.key === 'Tab') {
+    const activeChip = document.querySelector('.md3-chip-popup.md3-chip--active');
+    if (activeChip) trapFocus(activeChip.querySelector('.md3-small-popup'), e);
   }
 });
 
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') {
-    handleGlobalClose();
-  }
-
-  const activeChip = document.querySelector('.md3-chip-popup.md3-chip--active');
-  if (activeChip && e.key === 'Tab') {
-    const smallPopup = activeChip.querySelector('.md3-small-popup');
-    if (smallPopup) {
-      trapFocus(smallPopup, e);
-    }
-  }
-});
-
-function initializeSubMenus() {
-  const categories = Array.from(document.querySelectorAll('.md3-popup-category'));
-
-  categories.forEach((category) => {
+const initializeSubMenus = () => {
+  for (const category of document.querySelectorAll('.md3-popup-category')) {
     const triggerBtn = category.querySelector('.md3-popup-link.md3-popup-with-arrow');
     const subPopup = category.querySelector('.md3-small-popup--level2');
+    if (!triggerBtn || !subPopup) continue;
 
-    if (!triggerBtn || !subPopup) return;
-
-    function openSubmenu() {
-      if (hoverTimeout) {
-        clearTimeout(hoverTimeout);
-        hoverTimeout = null;
-      }
-
-      if (activeSubPopup && activeSubPopup !== subPopup) {
-        closeActiveSubPopup();
-      }
+    const openSubmenu = () => {
+      clearTimeout(window.hoverTimeout);
+      if (activeSubPopup && activeSubPopup !== subPopup) closeActiveSubPopup();
       subPopup.classList.add('md3-subpopup-open');
       activeSubPopup = subPopup;
       category.classList.add('md3-popup-category--active');
       triggerBtn.setAttribute('aria-expanded', 'true');
-    }
+    };
 
-    function closeSubmenu() {
-      if (activeSubPopup === subPopup) {
-        closeActiveSubPopup();
-      }
-    }
+    const closeSubmenu = () => {
+      if (activeSubPopup === subPopup) closeActiveSubPopup();
+    };
 
     if (window.matchMedia('(hover: hover)').matches) {
       category.addEventListener('mouseenter', () => {
-        if (window.innerWidth > 768) {
-          openSubmenu();
-        }
+        if (window.innerWidth > 768) openSubmenu();
       });
 
       category.addEventListener('mouseleave', () => {
-        if (window.innerWidth > 768) {
-          hoverTimeout = setTimeout(() => {
-            closeSubmenu();
-          }, 500);
-        }
+        if (window.innerWidth > 768) window.hoverTimeout = setTimeout(closeSubmenu, 500);
       });
     }
 
     triggerBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-
-      if (activeSubPopup === subPopup) {
-        closeActiveSubPopup();
-      } else {
-        openSubmenu();
-      }
+      activeSubPopup === subPopup ? closeActiveSubPopup() : openSubmenu();
     });
 
     triggerBtn.addEventListener('focus', () => {
-      if (activeSubPopup && activeSubPopup !== subPopup) {
-        closeActiveSubPopup();
-      }
+      if (activeSubPopup && activeSubPopup !== subPopup) closeActiveSubPopup();
     });
 
     subPopup.addEventListener('keydown', (e) => {
@@ -484,8 +402,8 @@ function initializeSubMenus() {
         triggerBtn.focus();
       }
     });
-  });
-}
+  }
+};
 
 const retroArchData = [
   { text: 'Linux (x86_64)', url: 'https://kr.2manygames.fr/retroarch-k-linux' },
@@ -571,13 +489,33 @@ const oldEmulatorsData = [
   }
 ];
 
-function renderMultiMenu(containerId, data) {
+const groupBy = (() => {
+  const hasNativeGroupBy = typeof Object.groupBy === 'function';
+  return (items, keyFn) => {
+    if (hasNativeGroupBy) {
+      return Object.groupBy(items, keyFn);
+    }
+    return items.reduce((acc, item) => {
+      const key = keyFn(item);
+      (acc[key] ??= []).push(item);
+      return acc;
+    }, {});
+  };
+})();
+
+const groupEmulatorsByLetter = () => {
+  const sorted = [...oldEmulatorsData].sort((a, b) => a.category.localeCompare(b.category));
+  return groupBy(sorted, item => item.category[0].toUpperCase());
+};
+
+
+const renderMultiMenu = (containerId, data) => {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   const fragment = document.createDocumentFragment();
 
-  data.forEach(section => {
+  data.forEach(({ category, id, items }) => {
     const categoryDiv = document.createElement('div');
     categoryDiv.className = 'md3-popup-item md3-popup-category';
 
@@ -586,69 +524,115 @@ function renderMultiMenu(containerId, data) {
     button.className = 'md3-popup-link md3-popup-with-arrow ripple-target';
     button.setAttribute('aria-expanded', 'false');
     button.setAttribute('aria-haspopup', 'true');
-    button.setAttribute('aria-controls', section.id);
-    button.textContent = section.category;
+    button.setAttribute('aria-controls', id);
+    button.textContent = category;
 
     const submenuDiv = document.createElement('div');
-    submenuDiv.id = section.id;
+    submenuDiv.id = id;
     submenuDiv.className = 'md3-small-popup md3-small-popup--level2';
-    submenuDiv.setAttribute('aria-label', `${section.category} emulators`);
+    submenuDiv.setAttribute('aria-label', `${category} emulators`);
 
-    section.items.forEach(item => {
-      if (item.type === 'header') {
-        const header = document.createElement('div');
-        header.className = 'md3-popup-header';
-        header.textContent = item.text;
-        submenuDiv.appendChild(header);
-
-        const divider = document.createElement('div');
-        divider.className = 'md3-popup-divider';
-        submenuDiv.appendChild(divider);
-      } else if (item.type === 'link') {
+    for (const { type, text, url } of items) {
+      if (type === 'header') {
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'md3-popup-header';
+        headerDiv.textContent = text;
+        const dividerDiv = document.createElement('div');
+        dividerDiv.className = 'md3-popup-divider';
+        submenuDiv.appendChild(headerDiv);
+        submenuDiv.appendChild(dividerDiv);
+      } else if (type === 'link') {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'md3-popup-item';
-
-        const a = document.createElement('a');
-        a.className = 'md3-popup-link ripple-target';
-        a.href = item.url;
-        a.textContent = item.text;
-
-        itemDiv.appendChild(a);
+        const link = document.createElement('a');
+        link.className = 'md3-popup-link ripple-target';
+        link.href = url;
+        link.textContent = text;
+        itemDiv.appendChild(link);
         submenuDiv.appendChild(itemDiv);
       }
-    });
+    }
 
-    categoryDiv.appendChild(button);
-    categoryDiv.appendChild(submenuDiv);
+    categoryDiv.append(button, submenuDiv);
     fragment.appendChild(categoryDiv);
   });
 
   container.appendChild(fragment);
-}
+};
 
-function renderSingleMenu(containerId, items) {
+const renderSingleMenu = (containerId, items) => {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   const fragment = document.createDocumentFragment();
-
-  items.forEach(item => {
+  for (const { url, text } of items) {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'md3-popup-item';
-
-    const a = document.createElement('a');
-    a.className = 'md3-popup-link ripple-target';
-    a.href = item.url;
-    a.setAttribute('role', 'menuitem');
-    a.textContent = item.text;
-
-    itemDiv.appendChild(a);
+    const link = document.createElement('a');
+    link.className = 'md3-popup-link ripple-target';
+    link.href = url;
+    link.textContent = text;
+    link.setAttribute('role', 'menuitem');
+    itemDiv.appendChild(link);
     fragment.appendChild(itemDiv);
-  });
-
+  }
   container.appendChild(fragment);
-}
+};
 
 renderSingleMenu('retroarch-k-popup', retroArchData);
 renderMultiMenu('old-emulators-popup', oldEmulatorsData);
 initializeSubMenus();
+
+const initIntersectionObserver = () => {
+  if (!('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    }
+  }, { threshold: 0.1, rootMargin: '50px' });
+
+  for (const card of document.querySelectorAll('.md3-card')) {
+    observer.observe(card);
+  }
+};
+
+const debounce = (func, wait) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+};
+
+const handleResize = debounce(() => {
+  const activeChip = document.querySelector('.md3-chip-popup.md3-chip--active');
+  if (activeChip) checkPopupPosition(activeChip, activeChip.querySelector('.md3-small-popup'));
+}, 150);
+
+window.addEventListener('resize', handleResize);
+
+const awaitReady = async () => {
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    return Promise.resolve();
+  }
+  return new Promise(resolve => {
+    document.addEventListener('DOMContentLoaded', resolve, { once: true });
+  });
+};
+
+await awaitReady();
+
+initIntersectionObserver();
+
+window.addEventListener('error', (e) => {
+  console.error('Global error:', e.error);
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+  console.error('Unhandled promise rejection:', e.reason);
+  e.preventDefault();
+});
