@@ -7,9 +7,9 @@ You can find us on:
 <details>
 <summary>Discord:</summary>
 
-- [Discord server](https://discord.gg/eRwtHDh "Kaillera Reborn")
+- [Kaillera Reborn](https://discord.gg/eRwtHDh)
 
-> Note: the server is strictly focused on development and support for Kaillera software.
+Note: the server is strictly focused on development and support for Kaillera software.
 </details>
 
 Social media:
@@ -33,16 +33,29 @@ Social media:
 - [Old Emulators](https://kr.2manygames.fr/emulators/)
 
 ## Kaillera clients
+- [KailleraNET](https://github.com/benbaker76/KailleraNET)
+- [KailleraPlus](https://github.com/kwilson21/Kaillera-Plus-Client) ([Plugin](https://github.com/kwilson21/Kaillera-Plus-Plugin))
+- [n02-rmg](https://github.com/Jay-Day/n02-rmg)
 - [Open Kaillera](https://kaillerareborn.github.io)
 - [Supraclient](https://github.com/God-Weapon/SupraclientC)
 
 ## Kaillera servers
+- [Direlera-rs](https://github.com/caromdreamer/direlera-rs)
 - [EmuLinker-K](https://github.com/hopskipnfall/EmuLinker-K)
-- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF)
-  - [EmuLinkerSF Admin Client](https://github.com/God-Weapon/EmulinkerSF-Admin-Client "EmuLinker-K compatible")
+- [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) ([Admin Client](https://github.com/God-Weapon/EmulinkerSF-Admin-Client "EmuLinker-K compatible"))
 
-## WIP
-- [Direlera-rs](https://github.com/caromdreamer/direlera-rs "Kaillera server in Rust")
-- [KailleraNET](https://github.com/benbaker76/KailleraNET "Kaillera client in C#")
-- [KailleraPlus](https://github.com/kwilson21/Kaillera-Plus-Client "Kaillera client in Python")
-  - [Plugin](https://github.com/kwilson21/Kaillera-Plus-Plugin "KailleraPlus plugin")
+### Projects
+- [headless-recorder-kaillera](https://github.com/kayin17-sketch/headless-recorder-kaillera) - Lightweight headless client to record Kaillera games with a modern web inferface.
+- [jumpnbump](https://github.com/fschulze/jumpnbump) - A game involving four rabbits in a deathmatch. The only known standalone game with Kaillera support (disabled as per [changelog](https://github.com/fschulze/jumpnbump/blob/master/ChangeLog#L17-L18)).
+- [KailleraEMU](https://github.com/RapidWorkers/KailleraEMU) - Kaillera Master Server Emulator in PHP.
+- [KailleraProtocol-kmp](https://github.com/hopskipnfall/KailleraProtocol-kmp) - Kaillera message APIs for Kotlin Multiplatform.
+- [kaillera-bot](https://github.com/kayin17-sketch/kaillera-bot) - Automated bot for recording Nintendo 64 games from Kaillera servers using RMG-K.
+- [kaillera-dissector](https://github.com/smash64-dev/kaillera-dissector) - Wireshark plugin to decode Kaillera middleware and P2P packets.
+- [kailpy](https://github.com/future0906/kailpy) - Kaillera with Python extension.
+- [klist-perl](https://github.com/kaillerareborn/klist-perl) - Perl script to retrieve Kaillera's Master Servers List.
+- [Krec2MP4](https://github.com/Jay-Day/Krec2MP4) - Converts N64 Kaillera replay files (.krec) to MP4 via headless mupen64plus emulation and FFmpeg encoding.
+- [krec-struct-format](https://github.com/smash64-dev/krec-struct-format) - Kaitai struct format for Kaillera recording files.
+- [lgsl-kaillera](https://github.com/smkerz/lgsl-kaillera) - LGSL for PHP (Live Game Server List), online status for Kaillera servers.
+- [netcode-lag-simulator](https://github.com/hopskipnfall/netcode-lag-simulator) - A toy delay-based netcode environment to experiment with lag assessment algorithms.
+- [netemu](https://github.com/fabsor/netemu) - An implementation of the Kaillera protocol.
+- [p2pkaillera-gcw0](https://github.com/aovrn/p2pkaillera-gcw0) - Open Kaillera's port for GCW Zero, a Linux-based handheld game console.

@@ -27,18 +27,20 @@
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Kaillera Reborn",
-    "url": "https://kaillerareborn.github.io",
-    "description": "Kaillera Reborn provides a list of Kaillera software. Grab an emulator and start playing online with other users!",
-    "author": {
-      "@type": "Organization",
-      "name": "Kaillera Reborn"
-    },
-    "sameAs": [
-      "https://bsky.app/profile/kaillerareborn.bsky.social",
-      "https://mastodon.social/@kaillerareborn",
-      "https://twitter.com/kaillerareborn"
-    ]
+   "name": "Kaillera Reborn",
+   "url": "https://kaillerareborn.github.io",
+   "description": "Kaillera Reborn provides a list of Kaillera software.",
+   "publisher": {
+     "@type": "Organization",
+     "name": "Kaillera Reborn",
+     "url": "https://kaillerareborn.github.io",
+     "logo": "https://kaillerareborn.github.io/images/kaillerareborn_logo.png", 
+     "sameAs": [
+       "https://bsky.app/profile/kaillerareborn.bsky.social",
+       "https://mastodon.social/@kaillerareborn",
+       "https://twitter.com/kaillerareborn"
+     ]
+   }
   }
   </script>
   <script src="script.js" type="module"></script>
@@ -81,8 +83,8 @@
             <div class="md3-header-content-wrapper">
               <h2 class="md3-title-large">Emulators</h2>
               <div class="info-icon">
-                <button type="button" class="icon-button" title="About: Emulators"
-                  data-trigger-popup="emulators" data-source="resources/emulators.html">
+                <button type="button" class="icon-button" title="About: Emulators" data-trigger-popup="emulators"
+                  data-source="resources/emulators.html">
                   <img src="images/info_icon.svg" alt="Information about emulators" loading="eager" decoding="async">
                 </button>
               </div>
@@ -145,8 +147,8 @@
             <div class="md3-header-content-wrapper">
               <h2 class="md3-title-large">Clients</h2>
               <div class="info-icon">
-                <button type="button" class="icon-button" title="About: Clients"
-                  data-trigger-popup="clients" data-source="resources/clients.html">
+                <button type="button" class="icon-button" title="About: Clients" data-trigger-popup="clients"
+                  data-source="resources/clients.html">
                   <img src="images/info_icon.svg" alt="Information about clients" loading="eager" decoding="async">
                 </button>
               </div>
@@ -189,8 +191,8 @@
             <div class="md3-header-content-wrapper">
               <h2 class="md3-title-large">Servers</h2>
               <div class="info-icon">
-                <button type="button" class="icon-button" title="About: Servers"
-                  data-trigger-popup="servers" data-source="resources/servers.html">
+                <button type="button" class="icon-button" title="About: Servers" data-trigger-popup="servers"
+                  data-source="resources/servers.html">
                   <img src="images/info_icon.svg" alt="Information about servers" loading="eager" decoding="async">
                 </button>
               </div>
@@ -243,19 +245,19 @@
       <p class="md3-body-small">&copy; 2026 Kaillera Reborn</p>
       <address>
         <nav class="md3-social-container" aria-label="Social media links">
-          <a class="md3-social-link ripple-target" href="https://bsky.app/profile/kaillerareborn.bsky.social"
-            target="_blank" rel="noopener noreferrer" title="Bluesky">
+          <a class="md3-social-link" href="https://bsky.app/profile/kaillerareborn.bsky.social" target="_blank"
+            rel="noopener noreferrer" title="Bluesky">
             <img src="images/bluesky_logo.svg" alt="Bluesky" class="md3-social-icon" loading="lazy" decoding="async">
           </a>
-          <a class="md3-social-link ripple-target" href="https://mastodon.social/@kaillerareborn" target="_blank"
+          <a class="md3-social-link" href="https://mastodon.social/@kaillerareborn" target="_blank"
             rel="noopener noreferrer" title="Mastodon">
             <img src="images/mastodon_logo.svg" alt="Mastodon" class="md3-social-icon" loading="lazy" decoding="async">
           </a>
-          <a class="md3-social-link ripple-target" href="https://twitter.com/kaillerareborn" target="_blank"
-            rel="noopener noreferrer" title="Twitter">
+          <a class="md3-social-link" href="https://twitter.com/kaillerareborn" target="_blank" rel="noopener noreferrer"
+            title="Twitter">
             <img src="images/twitter_logo.svg" alt="Twitter" class="md3-social-icon" loading="lazy" decoding="async">
           </a>
-          <a class="md3-social-link ripple-target" href="mailto:kaillerareborn@secria.me" title="Email address">
+          <a class="md3-social-link" href="mailto:kaillerareborn@secria.me" title="Email address">
             <img src="images/email_icon.svg" alt="Email address" class="md3-social-icon" loading="lazy"
               decoding="async">
           </a>
@@ -266,8 +268,7 @@
 
   <div id="popup" class="popup" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="popup-content" tabindex="-1" aria-labelledby="popup-title" aria-describedby="popup-description">
-      <button type="button" class="close ripple-target" aria-label="Close dialog"><span
-          aria-hidden="true">&times;</span></button>
+      <button type="button" class="close" aria-label="Close dialog"><span aria-hidden="true">&times;</span></button>
       <div id="popup-content-wrapper" aria-live="polite" aria-atomic="true">
         <h2 id="popup-title">Loading...</h2>
         <p id="popup-description">Content is being loaded...</p>
