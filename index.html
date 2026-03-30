@@ -47,6 +47,7 @@
 </head>
 
 <body>
+
   <header class="md3-header">
     <nav class="md3-header-container container" aria-label="Main navigation">
       <a class="md3-logo-link" href="https://kaillerareborn.github.io" aria-label="Kaillera Reborn home">
@@ -58,213 +59,235 @@
   </header>
 
   <main id="main-content" class="md3-main container" aria-label="Main content">
-    <section id="introduction" class="md3-fullwidth-section" aria-labelledby="introduction-title">
-      <h2 id="introduction-title" class="visually-hidden">About Kaillera</h2>
-      <div class="md3-fullwidth-content">
-        <p>
-          <strong>Kaillera</strong> offers the possibility to play retro games online using emulators with Kaillera
-          support. It consists of a client and a server: the client functions are embedded in the emulators, while the
-          server is a standalone application that needs to be run separately.
-        </p>
-        <p>
-          <a href="https://github.com/kaillerareborn/kaillerareborn.github.io?tab=readme-ov-file#kaillera-reborn"
-            aria-label="Learn more about Kaillera Reborn"><strong>Kaillera
-              Reborn</strong></a> is a community focused on maintaining the network by improving Kaillera software and
-          hosting game servers in different locations. We also count with dedicated lists for EmuLinker-based servers
-          and P2P game rooms.
-        </p>
-      </div>
-    </section>
+    <section id="downloads" class="md3-section" aria-label="Downloads section">
+      <div class="content-layout-grid">
+        <div class="layout-row top-row">
+          <aside class="sidebar-top">
+            <article class="md3-card downloads-card">
+              <div class="md3-card-content">
+                <div class="downloads-section">
+                  <header class="sidebar-section-header">
+                    <h3 class="md3-title-medium">Emulators</h3>
+                    <div class="info-icon">
+                      <button type="button" class="icon-button" title="About: Emulators" data-trigger-popup="emulators"
+                        data-source="resources/emulators.html">
+                        <img src="images/info_icon.svg" alt="Information about emulators" loading="eager"
+                          decoding="async">
+                      </button>
+                    </div>
+                  </header>
+                  <div class="md3-chip-set">
+                    <div class="md3-chip md3-chip-popup" id="retroarch-k-button">
+                      <span class="md3-chip-tooltip">Multisystem</span>
+                      <button type="button" class="md3-chip-action ripple-target" aria-haspopup="true"
+                        aria-expanded="false" aria-controls="retroarch-k-popup">
+                        <span class="md3-chip-text">RetroArch-K</span>
+                      </button>
+                      <div class="md3-small-popup" id="retroarch-k-popup" role="menu" aria-label="RetroArch-K"></div>
+                    </div>
+                    <div class="md3-chip md3-chip-src">
+                      <a class="md3-chip-action ripple-target" href="https://kr.2manygames.fr/retroarch-k-src"
+                        aria-label="RetroArch-K source code"><span class="md3-chip-text">src</span></a>
+                    </div>
+                  </div>
+                  <div class="md3-chip-set">
+                    <div class="md3-chip md3-chip-popup">
+                      <span class="md3-chip-tooltip">Nintendo 64</span>
+                      <a class="md3-chip-action ripple-target" href="https://github.com/Jay-Day/RMG-K/releases"
+                        target="_blank" rel="noopener noreferrer" aria-label="RMG-K">
+                        <span class="md3-chip-text">RMG-K</span>
+                      </a>
+                    </div>
+                    <div class="md3-chip md3-chip-src">
+                      <a class="md3-chip-action ripple-target" href="https://github.com/Jay-Day/RMG-K" target="_blank"
+                        rel="noopener noreferrer" aria-label="RMG-K source code"><span
+                          class="md3-chip-text">src</span></a>
+                    </div>
+                  </div>
+                  <div class="md3-chip-set">
+                    <div class="md3-chip md3-chip-popup" id="old-emulators-button">
+                      <button type="button" class="md3-chip-action ripple-target" aria-haspopup="true"
+                        aria-expanded="false" aria-controls="old-emulators-popup">
+                        <span class="md3-chip-text">Old Emulators</span>
+                      </button>
+                      <div class="md3-small-popup" id="old-emulators-popup" role="menu" aria-label="Old Emulators">
+                      </div>
+                    </div>
+                    <div class="md3-chip md3-chip-src">
+                      <a class="md3-chip-action ripple-target" href="https://kr.2manygames.fr/src/" target="_blank"
+                        rel="noopener noreferrer" aria-label="Old Emulators source codes"><span
+                          class="md3-chip-text">src</span></a>
+                    </div>
+                  </div>
+                </div>
 
-    <section id="downloads" class="md3-section" aria-label="Downloads">
-      <div class="md3-row">
-        <article class="md3-card" id="emulators-card">
-          <div class="md3-card-header">
-            <div class="md3-header-content-wrapper">
-              <h2 class="md3-title-large">Emulators</h2>
-              <div class="info-icon">
-                <button type="button" class="icon-button" title="About: Emulators" data-trigger-popup="emulators"
-                  data-source="resources/emulators.html">
-                  <img src="images/info_icon.svg" alt="Information about emulators" loading="eager" decoding="async">
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="md3-card-content">
-            <div class="md3-chip-set">
-              <div class="md3-chip md3-chip-popup" id="retroarch-k-button">
-                <span class="md3-chip-tooltip">Multisystem</span>
-                <button type="button" class="md3-chip-action ripple-target" aria-haspopup="true" aria-expanded="false"
-                  aria-controls="retroarch-k-popup">
-                  <span class="md3-chip-text">RetroArch-K</span>
-                </button>
-                <div class="md3-small-popup" id="retroarch-k-popup" role="menu" aria-label="RetroArch-K">
+                <div class="downloads-section">
+                  <header class="sidebar-section-header">
+                    <h3 class="md3-title-medium">Clients</h3>
+                    <div class="info-icon">
+                      <button type="button" class="icon-button" title="About: Clients" data-trigger-popup="clients"
+                        data-source="resources/clients.html">
+                        <img src="images/info_icon.svg" alt="Information about clients" loading="eager"
+                          decoding="async">
+                      </button>
+                    </div>
+                  </header>
+                  <div class="md3-chip-set">
+                    <div class="md3-chip"><a class="md3-chip-action ripple-target"
+                        href="https://kr.2manygames.fr/open-kaillera" aria-label="Open Kaillera"><span
+                          class="md3-chip-text">Open Kaillera</span></a></div>
+                    <div class="md3-chip md3-chip-src"><a class="md3-chip-action ripple-target"
+                        href="https://kr.2manygames.fr/open-kaillera-src" aria-label="Open Kaillera source code"><span
+                          class="md3-chip-text">src</span></a></div>
+                  </div>
+                  <div class="md3-chip-set">
+                    <div class="md3-chip"><a class="md3-chip-action ripple-target"
+                        href="https://github.com/God-Weapon/SupraclientC/releases" target="_blank"
+                        rel="noopener noreferrer" aria-label="Supraclient"><span
+                          class="md3-chip-text">Supraclient</span></a></div>
+                    <div class="md3-chip md3-chip-src"><a class="md3-chip-action ripple-target"
+                        href="https://github.com/God-Weapon/SupraclientC" target="_blank" rel="noopener noreferrer"
+                        aria-label="Supraclient source code"><span class="md3-chip-text">src</span></a></div>
+                  </div>
+                </div>
+
+                <div class="downloads-section">
+                  <header class="sidebar-section-header">
+                    <h3 class="md3-title-medium">Servers</h3>
+                    <div class="info-icon">
+                      <button type="button" class="icon-button" title="About: Servers" data-trigger-popup="servers"
+                        data-source="resources/servers.html">
+                        <img src="images/info_icon.svg" alt="Information about servers" loading="eager"
+                          decoding="async">
+                      </button>
+                    </div>
+                  </header>
+                  <div class="md3-chip-set">
+                    <div class="md3-chip"><a class="md3-chip-action ripple-target"
+                        href="https://github.com/hopskipnfall/EmuLinker-K/releases" target="_blank"
+                        rel="noopener noreferrer" aria-label="EmuLinker-K download"><span
+                          class="md3-chip-text">EmuLinker-K</span></a></div>
+                    <div class="md3-chip md3-chip-src"><a class="md3-chip-action ripple-target"
+                        href="https://github.com/hopskipnfall/EmuLinker-K" target="_blank" rel="noopener noreferrer"
+                        aria-label="EmuLinker-K source code"><span class="md3-chip-text">src</span></a></div>
+                  </div>
+                  <div class="md3-chip-set">
+                    <div class="md3-chip"><a class="md3-chip-action ripple-target"
+                        href="https://github.com/God-Weapon/EmuLinkerSF/releases" target="_blank"
+                        rel="noopener noreferrer" aria-label="EmuLinkerSF download"><span
+                          class="md3-chip-text">EmuLinkerSF</span></a></div>
+                    <div class="md3-chip md3-chip-src"><a class="md3-chip-action ripple-target"
+                        href="https://github.com/God-Weapon/EmuLinkerSF" target="_blank" rel="noopener noreferrer"
+                        aria-label="EmuLinkerSF source code"><span class="md3-chip-text">src</span></a></div>
+                  </div>
                 </div>
               </div>
-              <div class="md3-chip md3-chip-src">
-                <a class="md3-chip-action ripple-target" href="https://kr.2manygames.fr/retroarch-k-src"
-                  aria-label="RetroArch-K source code">
-                  <span class="md3-chip-text">src</span>
-                </a>
-              </div>
-            </div>
-            <div class="md3-chip-set">
-              <div class="md3-chip md3-chip-popup">
-                <span class="md3-chip-tooltip">Nintendo 64</span>
-                <a class="md3-chip-action ripple-target" href="https://github.com/Jay-Day/RMG-K/releases"
-                  target="_blank" rel="noopener noreferrer" aria-label="RMG-K">
-                  <span class="md3-chip-text">RMG-K</span>
-                </a>
-              </div>
-              <div class="md3-chip md3-chip-src">
-                <a class="md3-chip-action ripple-target" href="https://github.com/Jay-Day/RMG-K" target="_blank"
-                  rel="noopener noreferrer" aria-label="RMG-K source code">
-                  <span class="md3-chip-text">src</span>
-                </a>
-              </div>
-            </div>
-            <div class="md3-chip-set">
-              <div class="md3-chip md3-chip-popup" id="old-emulators-button">
-                <button type="button" class="md3-chip-action ripple-target" aria-haspopup="true" aria-expanded="false"
-                  aria-controls="old-emulators-popup">
-                  <span class="md3-chip-text">Old Emulators</span>
-                </button>
-                <div class="md3-small-popup" id="old-emulators-popup" role="menu" aria-label="Old Emulators">
+            </article>
+          </aside>
+
+          <main class="main-top">
+            <article class="md3-card list-card" id="main-list-card">
+              <div class="md3-card-header">
+                <div class="md3-header-content-wrapper">
+                  <div class="md3-chip-set tab-switcher" role="tablist">
+                    <button type="button" class="md3-chip md3-chip--active ripple-target" id="btn-show-servers"
+                      data-tab="servers" role="tab" aria-selected="true"><span class="md3-chip-text">Master Servers
+                        List</span></button>
+                    <button type="button" class="md3-chip ripple-target" id="btn-show-games" data-tab="games" role="tab"
+                      aria-selected="false"><span class="md3-chip-text">Waiting Games List</span></button>
+                  </div>
+                  <span id="list-counter" class="md3-body-small list-counter"></span>
+                  <button type="button" class="icon-button refresh-button" id="refresh-active-list" title="Refresh list"
+                    aria-label="Refresh active list">
+                    <img src="images/refresh_icon.svg" alt="Refresh icon" loading="lazy">
+                  </button>
                 </div>
               </div>
-              <div class="md3-chip md3-chip-src">
-                <a class="md3-chip-action ripple-target" href="https://kr.2manygames.fr/src/" target="_blank"
-                  rel="noopener noreferrer" aria-label="Old Emulators source codes">
-                  <span class="md3-chip-text">src</span>
-                </a>
+              <div class="md3-card-content">
+                <div class="table-container list-tab" id="servers-tab">
+                  <table id="server-table" class="md3-table">
+                    <thead>
+                      <tr>
+                        <th class="sortable" data-sort="serverName">Server</th>
+                        <th class="sortable" data-sort="location">Location</th>
+                        <th class="sortable" data-sort="numUsers">Users</th>
+                        <th class="sortable" data-sort="numGames">Games</th>
+                        <th class="sortable" data-sort="version">Version</th>
+                        <th style="min-width: 68px;">IP</th>
+                      </tr>
+                    </thead>
+                    <tbody id="server-table-body"></tbody>
+                  </table>
+                </div>
+                <div class="table-container list-tab" id="games-tab" style="display: none;">
+                  <table id="game-table" class="md3-table">
+                    <thead>
+                      <tr>
+                        <th class="sortable" data-sort="gameName">Game</th>
+                        <th class="sortable" data-sort="emulatorName">Emulator</th>
+                        <th class="sortable" data-sort="userName">User</th>
+                        <th class="sortable" data-sort="playerCount">Players</th>
+                        <th class="sortable" data-sort="serverName">Server</th>
+                        <th class="sortable" data-sort="location">Location</th>
+                        <th style="min-width: 68px;">IP</th>
+                      </tr>
+                    </thead>
+                    <tbody id="game-table-body"></tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          </div>
-        </article>
+            </article>
+          </main>
+        </div>
 
-        <article class="md3-card">
-          <div class="md3-card-header">
-            <div class="md3-header-content-wrapper">
-              <h2 class="md3-title-large">Clients</h2>
-              <div class="info-icon">
-                <button type="button" class="icon-button" title="About: Clients" data-trigger-popup="clients"
-                  data-source="resources/clients.html">
-                  <img src="images/info_icon.svg" alt="Information about clients" loading="eager" decoding="async">
-                </button>
+        <div class="layout-row bottom-row">
+          <aside class="sidebar-bottom">
+            <article class="md3-card footer-card">
+              <div class="md3-card-content">
+                <nav class="md3-footer-links" aria-label="Footer links">
+                  <a class="md3-link" href="https://2manygames.fr" target="_blank" rel="noopener noreferrer">2Many
+                    Games</a>
+                  <span class="md3-divider-vertical" aria-hidden="true"></span>
+                  <a class="md3-link" href="https://god-weapon.github.io" target="_blank" rel="noopener noreferrer">God
+                    Weapon</a>
+                </nav>
+                <p class="md3-body-small centered-text">&copy; 2026 Kaillera Reborn</p>
+                <nav class="md3-social-container" aria-label="Social media links">
+                  <a class="md3-social-link" href="https://bsky.app/profile/kaillerareborn.bsky.social" target="_blank"
+                    rel="noopener noreferrer" title="Bluesky"><img src="images/bluesky_logo.svg" alt="Bluesky"
+                      class="md3-social-icon" loading="lazy"></a>
+                  <a class="md3-social-link" href="https://mastodon.social/@kaillerareborn" target="_blank"
+                    rel="noopener noreferrer" title="Mastodon"><img src="images/mastodon_logo.svg" alt="Mastodon"
+                      class="md3-social-icon" loading="lazy"></a>
+                  <a class="md3-social-link" href="https://twitter.com/kaillerareborn" target="_blank"
+                    rel="noopener noreferrer" title="Twitter"><img src="images/twitter_logo.svg" alt="Twitter"
+                      class="md3-social-icon" loading="lazy"></a>
+                  <a class="md3-social-link" href="mailto:kaillerareborn@secria.me" title="Email"><img
+                      src="images/email_icon.svg" alt="Email" class="md3-social-icon" loading="lazy"></a>
+                </nav>
               </div>
-            </div>
-          </div>
-          <div class="md3-card-content">
-            <div class="md3-chip-set">
-              <div class="md3-chip">
-                <a class="md3-chip-action ripple-target" href="https://kr.2manygames.fr/open-kaillera"
-                  aria-label="Open Kaillera">
-                  <span class="md3-chip-text">Open Kaillera</span>
-                </a>
-              </div>
-              <div class="md3-chip md3-chip-src">
-                <a class="md3-chip-action ripple-target" href="https://kr.2manygames.fr/open-kaillera-src"
-                  aria-label="Open Kaillera source code">
-                  <span class="md3-chip-text">src</span>
-                </a>
-              </div>
-            </div>
-            <div class="md3-chip-set">
-              <div class="md3-chip">
-                <a class="md3-chip-action ripple-target" href="https://github.com/God-Weapon/SupraclientC/releases"
-                  target="_blank" rel="noopener noreferrer" aria-label="Supraclient">
-                  <span class="md3-chip-text">Supraclient</span>
-                </a>
-              </div>
-              <div class="md3-chip md3-chip-src">
-                <a class="md3-chip-action ripple-target" href="https://github.com/God-Weapon/SupraclientC"
-                  target="_blank" rel="noopener noreferrer" aria-label="Supraclient source code">
-                  <span class="md3-chip-text">src</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
+            </article>
+          </aside>
 
-        <article class="md3-card">
-          <div class="md3-card-header">
-            <div class="md3-header-content-wrapper">
-              <h2 class="md3-title-large">Servers</h2>
-              <div class="info-icon">
-                <button type="button" class="icon-button" title="About: Servers" data-trigger-popup="servers"
-                  data-source="resources/servers.html">
-                  <img src="images/info_icon.svg" alt="Information about servers" loading="eager" decoding="async">
-                </button>
+          <main class="main-bottom">
+            <article class="md3-card info-card">
+              <div class="md3-card-content">
+                <p><strong>Kaillera</strong> offers the possibility to play retro games online using emulators with
+                  Kaillera support. It consists of a client and a server: the client functions are embedded in the
+                  emulators, while the server is a standalone application that needs to be run separately.</p>
+                <p><a
+                    href="https://github.com/kaillerareborn/kaillerareborn.github.io?tab=readme-ov-file#kaillera-reborn"
+                    aria-label="Learn more about Kaillera Reborn"><strong>Kaillera Reborn</strong></a> is a community
+                  focused on maintaining the network by improving Kaillera software and hosting game servers in
+                  different locations. We also count with dedicated lists for EmuLinker-based servers and P2P game
+                  rooms.</p>
               </div>
-            </div>
-          </div>
-          <div class="md3-card-content">
-            <div class="md3-chip-set">
-              <div class="md3-chip">
-                <a class="md3-chip-action ripple-target" href="https://github.com/hopskipnfall/EmuLinker-K/releases"
-                  target="_blank" rel="noopener noreferrer" aria-label="EmuLinker-K download">
-                  <span class="md3-chip-text">EmuLinker-K</span>
-                </a>
-              </div>
-              <div class="md3-chip md3-chip-src">
-                <a class="md3-chip-action ripple-target" href="https://github.com/hopskipnfall/EmuLinker-K"
-                  target="_blank" rel="noopener noreferrer" aria-label="EmuLinker-K source code">
-                  <span class="md3-chip-text">src</span>
-                </a>
-              </div>
-            </div>
-            <div class="md3-chip-set">
-              <div class="md3-chip">
-                <a class="md3-chip-action ripple-target" href="https://github.com/God-Weapon/EmuLinkerSF/releases"
-                  target="_blank" rel="noopener noreferrer" aria-label="EmuLinkerSF download">
-                  <span class="md3-chip-text">EmuLinkerSF</span>
-                </a>
-              </div>
-              <div class="md3-chip md3-chip-src">
-                <a class="md3-chip-action ripple-target" href="https://github.com/God-Weapon/EmuLinkerSF"
-                  target="_blank" rel="noopener noreferrer" aria-label="EmuLinkerSF source code">
-                  <span class="md3-chip-text">src</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
+            </article>
+          </main>
+        </div>
       </div>
     </section>
   </main>
-
-  <footer class="md3-footer">
-    <div class="md3-footer-container container">
-      <nav class="md3-footer-links" aria-label="Footer">
-        <a class="md3-link" href="https://2manygames.fr" target="_blank" rel="noopener noreferrer"
-          title="Kaillera & CS 1.6 servers">2Many Games</a>
-        <span class="md3-divider-vertical" aria-hidden="true"></span>
-        <a class="md3-link" href="https://god-weapon.github.io" target="_blank" rel="noopener noreferrer"
-          title="Kaillera Netplay stuff">God Weapon</a>
-      </nav>
-      <p class="md3-body-small">&copy; 2026 Kaillera Reborn</p>
-      <address>
-        <nav class="md3-social-container" aria-label="Social media links">
-          <a class="md3-social-link" href="https://bsky.app/profile/kaillerareborn.bsky.social" target="_blank"
-            rel="noopener noreferrer" title="Bluesky">
-            <img src="images/bluesky_logo.svg" alt="Bluesky" class="md3-social-icon" loading="lazy" decoding="async">
-          </a>
-          <a class="md3-social-link" href="https://mastodon.social/@kaillerareborn" target="_blank"
-            rel="noopener noreferrer" title="Mastodon">
-            <img src="images/mastodon_logo.svg" alt="Mastodon" class="md3-social-icon" loading="lazy" decoding="async">
-          </a>
-          <a class="md3-social-link" href="https://twitter.com/kaillerareborn" target="_blank" rel="noopener noreferrer"
-            title="Twitter">
-            <img src="images/twitter_logo.svg" alt="Twitter" class="md3-social-icon" loading="lazy" decoding="async">
-          </a>
-          <a class="md3-social-link" href="mailto:kaillerareborn@secria.me" title="Email address">
-            <img src="images/email_icon.svg" alt="Email address" class="md3-social-icon" loading="lazy"
-              decoding="async">
-          </a>
-        </nav>
-      </address>
-    </div>
-  </footer>
 
   <div id="popup" class="popup" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="popup-content" tabindex="-1" aria-labelledby="popup-title" aria-describedby="popup-description">

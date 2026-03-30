@@ -44,13 +44,17 @@ Social media:
 - [EmuLinker-K](https://github.com/hopskipnfall/EmuLinker-K)
 - [EmuLinkerSF](https://github.com/God-Weapon/EmuLinkerSF) ([Admin Client](https://github.com/God-Weapon/EmulinkerSF-Admin-Client "EmuLinker-K compatible"))
 
+### Games
+
+- [jumpnbump](https://github.com/fschulze/jumpnbump) - A game involving four rabbits in a deathmatch (Kaillera is disabled as per [changelog](https://github.com/fschulze/jumpnbump/blob/master/ChangeLog#L17-L18)).
+
 ### Projects
 - [headless-recorder-kaillera](https://github.com/kayin17-sketch/headless-recorder-kaillera) - Lightweight headless client to record Kaillera games with a modern web inferface.
-- [jumpnbump](https://github.com/fschulze/jumpnbump) - A game involving four rabbits in a deathmatch. The only known standalone game with Kaillera support (disabled as per [changelog](https://github.com/fschulze/jumpnbump/blob/master/ChangeLog#L17-L18)).
 - [KailleraEMU](https://github.com/RapidWorkers/KailleraEMU) - Kaillera Master Server Emulator in PHP.
 - [KailleraProtocol-kmp](https://github.com/hopskipnfall/KailleraProtocol-kmp) - Kaillera message APIs for Kotlin Multiplatform.
 - [kaillera-bot](https://github.com/kayin17-sketch/kaillera-bot) - Automated bot for recording Nintendo 64 games from Kaillera servers using RMG-K.
 - [kaillera-dissector](https://github.com/smash64-dev/kaillera-dissector) - Wireshark plugin to decode Kaillera middleware and P2P packets.
+- [kaillera-next](https://github.com/kwilson21/kaillera-next) - Play N64 games online with friends in your browser, no install needed. WebRTC netplay powered by EmulatorJS. 
 - [kailpy](https://github.com/future0906/kailpy) - Kaillera with Python extension.
 - [klist-perl](https://github.com/kaillerareborn/klist-perl) - Perl script to retrieve Kaillera's Master Servers List.
 - [Krec2MP4](https://github.com/Jay-Day/Krec2MP4) - Converts N64 Kaillera replay files (.krec) to MP4 via headless mupen64plus emulation and FFmpeg encoding.

@@ -489,26 +489,6 @@ const oldEmulatorsData = [
   }
 ];
 
-const groupBy = (() => {
-  const hasNativeGroupBy = typeof Object.groupBy === 'function';
-  return (items, keyFn) => {
-    if (hasNativeGroupBy) {
-      return Object.groupBy(items, keyFn);
-    }
-    return items.reduce((acc, item) => {
-      const key = keyFn(item);
-      (acc[key] ??= []).push(item);
-      return acc;
-    }, {});
-  };
-})();
-
-const groupEmulatorsByLetter = () => {
-  const sorted = [...oldEmulatorsData].sort((a, b) => a.category.localeCompare(b.category));
-  return groupBy(sorted, item => item.category[0].toUpperCase());
-};
-
-
 const renderMultiMenu = (containerId, data) => {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -624,15 +604,218 @@ const awaitReady = async () => {
   });
 };
 
+let activeTab = 'servers';
+
+const tablesState = {
+  servers: {
+    data: [],
+    sortColumn: 'numUsers',
+    sortDir: 'desc',
+    tbodyId: 'server-table-body',
+    tabId: 'servers-tab',
+    url: 'https://kaillerareborn.2manygames.fr/server_list.json',
+    lastFetchTime: 0,
+    isFetching: false
+  },
+  games: {
+    data: [],
+    sortColumn: 'gameName',
+    sortDir: 'asc',
+    tbodyId: 'game-table-body',
+    tabId: 'games-tab',
+    url: 'https://kaillerareborn.2manygames.fr/game_list.json',
+    lastFetchTime: 0,
+    isFetching: false
+  }
+};
+
+const REFRESH_COOLDOWN = 5000;
+
+const fetchData = async (type) => {
+  const state = tablesState[type];
+  if (state.isFetching) return;
+  state.isFetching = true;
+
+  const refreshButton = document.getElementById('refresh-active-list');
+
+  const now = Date.now();
+  const timeSinceLast = now - state.lastFetchTime;
+  const waitMs = Math.max(0, REFRESH_COOLDOWN - timeSinceLast);
+
+  if (refreshButton && activeTab === type) {
+    refreshButton.classList.add('rotating');
+  }
+
+  if (waitMs > 0) {
+    await new Promise(resolve => setTimeout(resolve, waitMs));
+  }
+
+  state.lastFetchTime = Date.now();
+
+  try {
+    const response = await fetch(state.url);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const result = await response.json();
+    let data = Array.isArray(result.data) ? result.data : (Array.isArray(result) ? result : []);
+
+    state.data = data;
+    renderTable(type);
+  } catch (error) {
+    console.error(`Failed to fetch ${type} list:`, error);
+    const tbody = document.getElementById(state.tbodyId);
+    if (tbody) tbody.innerHTML = `<tr><td colspan="10">Failed to load ${type} list.</td></tr>`;
+  } finally {
+    if (refreshButton && activeTab === type) {
+      refreshButton.classList.remove('rotating');
+    }
+    state.isFetching = false;
+  }
+};
+
+let activeCopyButton = null;
+
+const renderTable = (type) => {
+  const state = tablesState[type];
+  const tbody = document.getElementById(state.tbodyId);
+  tbody.innerHTML = '';
+
+  if (state.data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="10">No data available.</td></tr>`;
+    return;
+  }
+
+  const sortedData = [...state.data].sort((a, b) => {
+    let valA = a[state.sortColumn] ?? '';
+    let valB = b[state.sortColumn] ?? '';
+
+    if (!isNaN(valA) && !isNaN(valB) && valA !== '' && valB !== '') {
+      valA = Number(valA);
+      valB = Number(valB);
+    } else {
+      valA = String(valA).toLowerCase();
+      valB = String(valB).toLowerCase();
+    }
+
+    if (valA < valB) return state.sortDir === 'asc' ? -1 : 1;
+    if (valA > valB) return state.sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  sortedData.forEach(item => {
+    const row = document.createElement('tr');
+
+    if (type === 'servers') {
+      row.innerHTML = `
+        <td>${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer">${item.serverName || 'N/A'}</a>` : (item.serverName || 'N/A')}</td>
+        <td>${item.location || 'N/A'}</td>
+        <td>${item.numUsers || 0}</td>
+        <td>${item.numGames || 0}</td>
+        <td>${item.version || 'N/A'}</td>
+        <td>
+          <button type="button" class="copy-btn-mini" onclick="copyToClipboard('${item.ipAddress}', this)">Copy</button>
+        </td>
+      `;
+    } else {
+      row.innerHTML = `
+        <td>${item.gameName || 'N/A'}</td>
+        <td>${item.emulatorName || 'N/A'}</td>
+        <td>${item.userName || 'N/A'}</td>
+        <td>${item.playerCount || 0}</td>
+        <td>${item.serverName || 'N/A'}</td>
+        <td>${item.location || 'N/A'}</td>
+        <td>
+          <button type="button" class="copy-btn-mini" onclick="copyToClipboard('${item.ipAddress}', this)">Copy</button>
+        </td>
+      `;
+    }
+    tbody.appendChild(row);
+  });
+
+  if (type === activeTab) {
+    updateCounterText(type);
+  }
+};
+
+window.copyToClipboard = (text, button) => {
+  if (activeCopyButton && activeCopyButton !== button) {
+    activeCopyButton.textContent = 'Copy';
+    activeCopyButton.classList.remove('copied');
+  }
+
+  navigator.clipboard.writeText(text || '').then(() => {
+    button.textContent = 'Copied!';
+    button.classList.add('copied');
+    activeCopyButton = button;
+  }).catch(err => console.error('Copy failed', err));
+};
+
+const handleSort = (type, column, headerElement) => {
+  const state = tablesState[type];
+  if (state.sortColumn === column) {
+    state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    state.sortColumn = column;
+    state.sortDir = 'asc';
+  }
+
+  const table = headerElement.closest('table');
+  table.querySelectorAll('th.sortable').forEach(th => {
+    th.classList.remove('sort-asc', 'sort-desc');
+  });
+  headerElement.classList.add(state.sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+
+  renderTable(type);
+};
+
+const switchTab = (tab) => {
+  activeTab = tab;
+
+  document.querySelectorAll('.tab-switcher .md3-chip').forEach(chip => {
+    const isActive = chip.dataset.tab === tab;
+    chip.classList.toggle('md3-chip--active', isActive);
+    chip.setAttribute('aria-selected', isActive);
+  });
+
+  ['servers', 'games'].forEach(type => {
+    const tabElement = document.getElementById(tablesState[type].tabId);
+    if (tabElement) {
+      tabElement.style.display = type === tab ? 'block' : 'none';
+    }
+  });
+  fetchData(tab);
+  updateCounterText(tab);
+};
+
+const updateCounterText = (type) => {
+  const counter = document.getElementById('list-counter');
+  if (!counter) return;
+  const count = tablesState[type].data.length;
+  const label = type === 'servers' ? 'servers' : 'games';
+  counter.textContent = `${count} ${label}`;
+};
+
+const initializeTables = () => {
+  document.querySelectorAll('.tab-switcher .md3-chip').forEach(chip => {
+    chip.addEventListener('click', () => switchTab(chip.dataset.tab));
+  });
+  document.getElementById('refresh-active-list')?.addEventListener('click', () => fetchData(activeTab));
+
+  ['servers', 'games'].forEach(type => {
+    const state = tablesState[type];
+    const table = document.getElementById(state.tbodyId).closest('table');
+    table.querySelectorAll('th.sortable').forEach(th => {
+      th.addEventListener('click', () => handleSort(type, th.dataset.sort, th));
+      if (th.dataset.sort === state.sortColumn) {
+        th.classList.add(state.sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+      }
+    });
+
+    if (type === activeTab) {
+      fetchData(type);
+    }
+  });
+};
+
 await awaitReady();
-
 initIntersectionObserver();
-
-window.addEventListener('error', (e) => {
-  console.error('Global error:', e.error);
-});
-
-window.addEventListener('unhandledrejection', (e) => {
-  console.error('Unhandled promise rejection:', e.reason);
-  e.preventDefault();
-});
+initializeTables();
