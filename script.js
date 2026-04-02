@@ -5,7 +5,8 @@ let activeSubPopup = null;
 let lastFocusedElement = null;
 let activeChipTrigger = null;
 
-const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+const focusableSelector =
+    'button, [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 const skeletonHTML = `
   <div class="skeleton-wrapper">
@@ -29,22 +30,19 @@ const animateHide = (element, onHidden = null) => {
   element.dataset.isClosing = 'true';
   element.classList.remove('show');
 
-  const handleTransitionEnd = (e) => {
-    if (e.target !== element) return;
-    if (element.dataset.isClosing !== 'true') return;
-    element.style.display = 'none';
-    if (onHidden) onHidden();
-    delete element.dataset.isClosing;
-  };
-
-  element.addEventListener('transitionend', handleTransitionEnd, { once: true });
-  setTimeout(() => {
+  const cleanup = () => {
     if (element.dataset.isClosing === 'true') {
       element.style.display = 'none';
-      if (onHidden) onHidden();
+      onHidden?.();
       delete element.dataset.isClosing;
     }
-  }, 300);
+  };
+
+  element.addEventListener('transitionend', (e) => {
+    if (e.target === element) cleanup();
+  }, {once: true});
+
+  setTimeout(cleanup, 300);
 };
 
 const toggleScrollLock = (shouldLock) => {
@@ -57,8 +55,9 @@ const closeActiveSubPopup = () => {
   const prevCategory = activeSubPopup.closest('.md3-popup-category');
   if (prevCategory) {
     prevCategory.classList.remove('md3-popup-category--active');
-    const trigger = prevCategory.querySelector('.md3-popup-link.md3-popup-with-arrow');
-    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    const trigger =
+        prevCategory.querySelector('.md3-popup-link.md3-popup-with-arrow');
+    trigger?.setAttribute('aria-expanded', 'false');
   }
   activeSubPopup = null;
 };
@@ -67,13 +66,14 @@ const closeAllChips = (exceptChip = null, restoreFocus = false) => {
   for (const chip of document.querySelectorAll('.md3-chip-popup')) {
     if (chip === exceptChip) continue;
 
-    chip.classList.remove('md3-chip--active', 'md3-popup-right', 'md3-popup-up');
+    chip.classList.remove(
+        'md3-chip--active', 'md3-popup-right', 'md3-popup-up');
 
     const popup = chip.querySelector('.md3-small-popup');
     if (popup) animateHide(popup);
 
     const button = chip.querySelector('button');
-    if (button) button.setAttribute('aria-expanded', 'false');
+    button?.setAttribute('aria-expanded', 'false');
   }
   closeActiveSubPopup();
 
@@ -92,7 +92,8 @@ const trapFocus = (element, event) => {
 
   const firstFocusable = focusableContent[0];
   const lastFocusable = focusableContent[focusableContent.length - 1];
-  const isShiftTab = event.shiftKey && document.activeElement === firstFocusable;
+  const isShiftTab =
+      event.shiftKey && document.activeElement === firstFocusable;
   const isTab = !event.shiftKey && document.activeElement === lastFocusable;
 
   if (isShiftTab || isTab) {
@@ -119,10 +120,9 @@ const openMainPopup = async (triggerElement, isOverlay = true) => {
 
   closeAllChips(null, false);
 
-  lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-
-  if (popupTitle) popupTitle.textContent = 'Loading...';
-  if (popupDescription) popupDescription.textContent = 'Loading content...';
+  lastFocusedElement = document.activeElement instanceof HTMLElement ?
+      document.activeElement :
+      null;
 
   popupContentWrapper.innerHTML = skeletonHTML;
 
@@ -133,22 +133,25 @@ const openMainPopup = async (triggerElement, isOverlay = true) => {
     if (!overlay) {
       overlay = document.createElement('div');
       overlay.className = 'overlay';
+      overlay.setAttribute('aria-hidden', 'true');
       overlay.addEventListener('click', closeMainPopup);
       document.body.appendChild(overlay);
     }
     requestAnimationFrame(() => animateShow(overlay));
   }
 
-  popup.setAttribute('aria-hidden', 'false');
+  popup.removeAttribute('aria-hidden');
+  popup.removeAttribute('inert');
   requestAnimationFrame(() => animateShow(popup));
 
   document.addEventListener('keydown', handlePopupKeydown);
 
   const closeBtn = popup.querySelector('.close');
-  if (closeBtn) closeBtn.focus();
+  closeBtn?.focus();
 
   if (contentCache.has(type)) {
-    renderPopupContent(contentCache.get(type), type, popupContentWrapper, popupTitle);
+    renderPopupContent(
+        contentCache.get(type), type, popupContentWrapper, popupTitle);
     return;
   }
 
@@ -157,7 +160,7 @@ const openMainPopup = async (triggerElement, isOverlay = true) => {
   abortControllers.set(type, controller);
 
   try {
-    const response = await fetch(url, { signal: controller.signal });
+    const response = await fetch(url, {signal: controller.signal});
     if (!response.ok) throw new Error('Unable to load content');
     const htmlText = await response.text();
     contentCache.set(type, htmlText);
@@ -165,7 +168,15 @@ const openMainPopup = async (triggerElement, isOverlay = true) => {
   } catch (error) {
     if (error.name === 'AbortError') return;
     console.error('Error loading popup content:', error);
-    popupContentWrapper.innerHTML = `<div role="alert" aria-live="assertive"><p>${error.message || 'Unable to load content. Please try again.'}</p></div>`;
+    const alertDiv = document.createElement('div');
+    alertDiv.setAttribute('role', 'alert');
+    alertDiv.setAttribute('aria-live', 'assertive');
+    const alertP = document.createElement('p');
+    alertP.textContent =
+        error.message || 'Unable to load content. Please try again.';
+    alertDiv.appendChild(alertP);
+    popupContentWrapper.innerHTML = '';
+    popupContentWrapper.appendChild(alertDiv);
     if (popupTitle) popupTitle.textContent = 'Error Loading Content';
   } finally {
     abortControllers.delete(type);
@@ -178,26 +189,25 @@ const renderPopupContent = (htmlText, type, wrapper, titleEl) => {
 
   doc.querySelectorAll('script').forEach(script => script.remove());
 
-  for (const el of doc.body.querySelectorAll('*')) {
-    for (const attr of Array.from(el.attributes)) {
-      if (attr.name.startsWith('on')) el.removeAttribute(attr.name);
+  doc.querySelectorAll('a').forEach(link => {
+    if (link.getAttribute('href')?.startsWith('http')) {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
     }
-    const href = el.getAttribute('href');
-    if (el.tagName === 'A' && href?.toLowerCase().startsWith('javascript:')) {
-      el.setAttribute('href', '#');
-    }
-  }
+  });
 
-  wrapper.innerHTML = doc.body.childNodes.length === 0
-    ? '<p>No content available.</p>'
-    : '';
+  wrapper.innerHTML =
+      doc.body.childNodes.length === 0 ? '<p>No content available.</p>' : '';
 
   if (doc.body.childNodes.length > 0) {
     wrapper.append(...doc.body.childNodes);
   }
 
   if (titleEl) {
-    titleEl.textContent = doc.querySelector('h1, h2')?.textContent || type[0].toUpperCase() + type.slice(1);
+    const firstHeader = doc.querySelector('h1, h2, h3');
+    titleEl.textContent =
+        firstHeader?.textContent || type[0].toUpperCase() + type.slice(1);
+    firstHeader?.remove();
   }
 
   adjustPreWidths(wrapper);
@@ -229,6 +239,7 @@ const closeMainPopup = () => {
 
   animateHide(popup, () => {
     popup.setAttribute('aria-hidden', 'true');
+    popup.setAttribute('inert', '');
   });
 
   animateHide(overlay, () => {
@@ -250,7 +261,7 @@ const handleGlobalClose = () => {
 };
 
 const checkPopupPosition = (chip, popup) => {
-  if (!popup || window.innerWidth <= 768) {
+  if (!popup || window.innerWidth <= 600) {
     chip?.classList.remove('md3-popup-right', 'md3-popup-up');
     return;
   }
@@ -272,42 +283,31 @@ const checkPopupPosition = (chip, popup) => {
   }
 };
 
-const ripplePool = new Map();
-
 const createRipple = (event) => {
   const button = event.currentTarget;
   const diameter = Math.max(button.clientWidth, button.clientHeight);
   const radius = diameter / 2;
   const rect = button.getBoundingClientRect();
 
-  let circle = ripplePool.get(button);
-  if (!circle) {
-    circle = document.createElement('span');
-    circle.className = 'ripple';
-    ripplePool.set(button, circle);
-  }
+  const circle = document.createElement('span');
+  circle.className = 'ripple';
 
-  circle.style.animation = 'none';
-  circle.offsetHeight;
-
-  circle.style.width = `${diameter}px`;
-  circle.style.height = `${diameter}px`;
+  circle.style.width = circle.style.height = `${diameter}px`;
   circle.style.left = `${event.clientX - rect.left - radius}px`;
   circle.style.top = `${event.clientY - rect.top - radius}px`;
-  circle.style.animation = '';
 
-  if (!circle.parentNode) {
-    button.appendChild(circle);
-  }
+  button.appendChild(circle);
 
   circle.addEventListener('animationend', () => {
     circle.remove();
-  }, { once: true });
+  }, {once: true});
 };
 
 document.addEventListener('click', (e) => {
   const target = e.target.closest('.ripple-target');
-  if (target) createRipple({ currentTarget: target, clientX: e.clientX, clientY: e.clientY });
+  if (target)
+    createRipple(
+        {currentTarget: target, clientX: e.clientX, clientY: e.clientY});
 
   const popupTrigger = e.target.closest('[data-trigger-popup]');
   if (popupTrigger) {
@@ -344,25 +344,29 @@ document.addEventListener('click', (e) => {
   }
 
   if (!e.target.closest('.popup-content')) handleGlobalClose();
-}, { capture: true });
+});
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') handleGlobalClose();
 
   if (e.key === 'Tab') {
-    const activeChip = document.querySelector('.md3-chip-popup.md3-chip--active');
+    const activeChip =
+        document.querySelector('.md3-chip-popup.md3-chip--active');
     if (activeChip) trapFocus(activeChip.querySelector('.md3-small-popup'), e);
   }
 });
 
+let hoverTimeout = null;
+
 const initializeSubMenus = () => {
   for (const category of document.querySelectorAll('.md3-popup-category')) {
-    const triggerBtn = category.querySelector('.md3-popup-link.md3-popup-with-arrow');
+    const triggerBtn =
+        category.querySelector('.md3-popup-link.md3-popup-with-arrow');
     const subPopup = category.querySelector('.md3-small-popup--level2');
     if (!triggerBtn || !subPopup) continue;
 
     const openSubmenu = () => {
-      clearTimeout(window.hoverTimeout);
+      clearTimeout(hoverTimeout);
       if (activeSubPopup && activeSubPopup !== subPopup) closeActiveSubPopup();
       subPopup.classList.add('md3-subpopup-open');
       activeSubPopup = subPopup;
@@ -376,11 +380,12 @@ const initializeSubMenus = () => {
 
     if (window.matchMedia('(hover: hover)').matches) {
       category.addEventListener('mouseenter', () => {
-        if (window.innerWidth > 768) openSubmenu();
+        if (window.innerWidth > 600) openSubmenu();
       });
 
       category.addEventListener('mouseleave', () => {
-        if (window.innerWidth > 768) window.hoverTimeout = setTimeout(closeSubmenu, 500);
+        if (window.innerWidth > 600)
+          hoverTimeout = setTimeout(closeSubmenu, 500);
       });
     }
 
@@ -406,9 +411,14 @@ const initializeSubMenus = () => {
 };
 
 const retroArchData = [
-  { text: 'Linux (x86_64)', url: 'https://kr.2manygames.fr/retroarch-k-linux' },
-  { text: 'Windows (32-bit)', url: 'https://kr.2manygames.fr/retroarch-k-windows-x86' },
-  { text: 'Windows (64-bit)', url: 'https://kr.2manygames.fr/retroarch-k-windows' }
+  {text: 'Linux (x86_64)', url: 'https://kr.2manygames.fr/retroarch-k-linux'}, {
+    text: 'Windows (32-bit)',
+    url: 'https://kr.2manygames.fr/retroarch-k-windows-x86'
+  },
+  {
+    text: 'Windows (64-bit)',
+    url: 'https://kr.2manygames.fr/retroarch-k-windows'
+  }
 ];
 
 const oldEmulatorsData = [
@@ -416,78 +426,143 @@ const oldEmulatorsData = [
     category: 'Arcade',
     id: 'arcade-menu',
     items: [
-      { type: 'header', text: 'Arcade' },
-      { type: 'link', text: 'MAME32k', url: 'https://kr.2manygames.fr/emulators/MAME32k%200.64%20(Feb%20%203%202003).zip' },
-      { type: 'link', text: 'MAME32++', url: 'https://kr.2manygames.fr/emulators/MAME32++%200.119%20(Sep%2014%202007).zip' },
-      { type: 'link', text: 'Houba', url: 'https://kr.2manygames.fr/emulators/Houba32K+%200.125%20R13%20(Jun%2027%202009).zip' }
+      {type: 'header', text: 'Arcade'}, {
+        type: 'link',
+        text: 'MAME32k',
+        url:
+            'https://kr.2manygames.fr/emulators/MAME32k%200.64%20(Feb%20%203%202003).zip'
+      },
+      {
+        type: 'link',
+        text: 'MAME32++',
+        url:
+            'https://kr.2manygames.fr/emulators/MAME32++%200.119%20(Sep%2014%202007).zip'
+      },
+      {
+        type: 'link',
+        text: 'Houba',
+        url:
+            'https://kr.2manygames.fr/emulators/Houba32K+%200.125%20R13%20(Jun%2027%202009).zip'
+      }
     ]
   },
   {
     category: 'Atari',
     id: 'atari-menu',
     items: [
-      { type: 'header', text: '8 bit systems' },
-      { type: 'link', text: 'Atari800Win Plus', url: 'https://kr.2manygames.fr/emulators/Atari800Win%20PLus%204.1.zip' }
+      {type: 'header', text: '8 bit systems'}, {
+        type: 'link',
+        text: 'Atari800Win Plus',
+        url: 'https://kr.2manygames.fr/emulators/Atari800Win%20PLus%204.1.zip'
+      }
     ]
   },
   {
     category: 'Commodore',
     id: 'commodore-menu',
     items: [
-      { type: 'header', text: 'Amiga' },
-      { type: 'link', text: 'WinUAE-Kaillera', url: 'https://kr.2manygames.fr/emulators/WinUAE-Kaillera-2-2.zip' },
-      { type: 'header', text: 'C64' },
-      { type: 'link', text: 'CCS64', url: 'https://kr.2manygames.fr/emulators/CCS64%20V3.10.zip' }
+      {type: 'header', text: 'Amiga'}, {
+        type: 'link',
+        text: 'WinUAE-Kaillera',
+        url: 'https://kr.2manygames.fr/emulators/WinUAE-Kaillera-2-2.zip'
+      },
+      {type: 'header', text: 'C64'}, {
+        type: 'link',
+        text: 'CCS64',
+        url: 'https://kr.2manygames.fr/emulators/CCS64%20V3.10.zip'
+      }
     ]
   },
   {
     category: 'Mattel',
     id: 'mattel-menu',
     items: [
-      { type: 'header', text: 'Intellivision' },
-      { type: 'link', text: 'Nostalgia', url: 'https://kr.2manygames.fr/emulators/Nostalgia%205.0.zip' }
+      {type: 'header', text: 'Intellivision'}, {
+        type: 'link',
+        text: 'Nostalgia',
+        url: 'https://kr.2manygames.fr/emulators/Nostalgia%205.0.zip'
+      }
     ]
   },
   {
     category: 'Microsoft',
     id: 'microsoft-menu',
     items: [
-      { type: 'header', text: 'MSX' },
-      { type: 'link', text: 'Meisei', url: 'https://kr.2manygames.fr/emulators/Meisei%201.3.2.zip' }
+      {type: 'header', text: 'MSX'}, {
+        type: 'link',
+        text: 'Meisei',
+        url: 'https://kr.2manygames.fr/emulators/Meisei%201.3.2.zip'
+      }
     ]
   },
   {
     category: 'Nintendo',
     id: 'nintendo-menu',
     items: [
-      { type: 'header', text: 'NES' },
-      { type: 'link', text: 'Nestopia', url: 'https://kr.2manygames.fr/emulators/Nestopia%201.40.zip' },
-      { type: 'header', text: 'SNES' },
-      { type: 'link', text: 'Snes9k', url: 'https://kr.2manygames.fr/emulators/Snes9k%200.09z.zip' },
-      { type: 'header', text: 'N64' },
-      { type: 'link', text: 'Mupen64++', url: 'https://kr.2manygames.fr/emulators/Mupen64++%20Beta%200.1.3.12.zip' },
-      { type: 'link', text: 'Project64k', url: 'https://kr.2manygames.fr/emulators/Project64k%200.13%20(01%20Aug%202003).zip' }
+      {type: 'header', text: 'NES'}, {
+        type: 'link',
+        text: 'Nestopia',
+        url: 'https://kr.2manygames.fr/emulators/Nestopia%201.40.zip'
+      },
+      {type: 'header', text: 'SNES'}, {
+        type: 'link',
+        text: 'Snes9k',
+        url: 'https://kr.2manygames.fr/emulators/Snes9k%200.09z.zip'
+      },
+      {type: 'header', text: 'N64'}, {
+        type: 'link',
+        text: 'Mupen64++',
+        url:
+            'https://kr.2manygames.fr/emulators/Mupen64++%20Beta%200.1.3.12.zip'
+      },
+      {
+        type: 'link',
+        text: 'Project64k',
+        url:
+            'https://kr.2manygames.fr/emulators/Project64k%200.13%20(01%20Aug%202003).zip'
+      }
     ]
   },
   {
     category: 'Sega',
     id: 'sega-menu',
     items: [
-      { type: 'header', text: 'Mega Drive' },
-      { type: 'link', text: 'Gens', url: 'https://kr.2manygames.fr/emulators/Gens%202.10.zip' },
-      { type: 'header', text: 'Dreamcast' },
-      { type: 'link', text: 'DEmul', url: 'https://www.emu-france.com/?wpfb_dl=7038' }
+      {type: 'header', text: 'Mega Drive'}, {
+        type: 'link',
+        text: 'Gens',
+        url: 'https://kr.2manygames.fr/emulators/Gens%202.10.zip'
+      },
+      {type: 'header', text: 'Dreamcast'}, {
+        type: 'link',
+        text: 'DEmul',
+        url: 'https://www.emu-france.com/?wpfb_dl=7038'
+      }
     ]
   },
   {
     category: 'Sony',
     id: 'sony-menu',
     items: [
-      { type: 'header', text: 'PlayStation' },
-      { type: 'link', text: 'ePSXe', url: 'https://kr.2manygames.fr/emulators/ePSXe%201.6.0.zip' }
+      {type: 'header', text: 'PlayStation'}, {
+        type: 'link',
+        text: 'ePSXe',
+        url: 'https://kr.2manygames.fr/emulators/ePSXe%201.6.0.zip'
+      }
     ]
   }
 ];
+
+const createMenuLink = (text, url, extraClasses = '') => {
+  const itemDiv = document.createElement('div');
+  itemDiv.className = `md3-popup-item ${extraClasses}`;
+  const link = document.createElement('a');
+  link.className = 'md3-popup-link ripple-target';
+  link.href = url;
+  link.textContent = text;
+  link.setAttribute('role', 'menuitem');
+  itemDiv.appendChild(link);
+  return itemDiv;
+};
 
 const renderMultiMenu = (containerId, data) => {
   const container = document.getElementById(containerId);
@@ -495,7 +570,7 @@ const renderMultiMenu = (containerId, data) => {
 
   const fragment = document.createDocumentFragment();
 
-  data.forEach(({ category, id, items }) => {
+  data.forEach(({category, id, items}) => {
     const categoryDiv = document.createElement('div');
     categoryDiv.className = 'md3-popup-item md3-popup-category';
 
@@ -512,24 +587,16 @@ const renderMultiMenu = (containerId, data) => {
     submenuDiv.className = 'md3-small-popup md3-small-popup--level2';
     submenuDiv.setAttribute('aria-label', `${category} emulators`);
 
-    for (const { type, text, url } of items) {
+    for (const {type, text, url} of items) {
       if (type === 'header') {
         const headerDiv = document.createElement('div');
         headerDiv.className = 'md3-popup-header';
         headerDiv.textContent = text;
         const dividerDiv = document.createElement('div');
         dividerDiv.className = 'md3-popup-divider';
-        submenuDiv.appendChild(headerDiv);
-        submenuDiv.appendChild(dividerDiv);
+        submenuDiv.append(headerDiv, dividerDiv);
       } else if (type === 'link') {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'md3-popup-item';
-        const link = document.createElement('a');
-        link.className = 'md3-popup-link ripple-target';
-        link.href = url;
-        link.textContent = text;
-        itemDiv.appendChild(link);
-        submenuDiv.appendChild(itemDiv);
+        submenuDiv.appendChild(createMenuLink(text, url));
       }
     }
 
@@ -545,16 +612,8 @@ const renderSingleMenu = (containerId, items) => {
   if (!container) return;
 
   const fragment = document.createDocumentFragment();
-  for (const { url, text } of items) {
-    const itemDiv = document.createElement('div');
-    itemDiv.className = 'md3-popup-item';
-    const link = document.createElement('a');
-    link.className = 'md3-popup-link ripple-target';
-    link.href = url;
-    link.textContent = text;
-    link.setAttribute('role', 'menuitem');
-    itemDiv.appendChild(link);
-    fragment.appendChild(itemDiv);
+  for (const {url, text} of items) {
+    fragment.appendChild(createMenuLink(text, url));
   }
   container.appendChild(fragment);
 };
@@ -573,7 +632,7 @@ const initIntersectionObserver = () => {
         observer.unobserve(entry.target);
       }
     }
-  }, { threshold: 0.1, rootMargin: '50px' });
+  }, {threshold: 0.1, rootMargin: '50px'});
 
   for (const card of document.querySelectorAll('.md3-card')) {
     observer.observe(card);
@@ -590,19 +649,12 @@ const debounce = (func, wait) => {
 
 const handleResize = debounce(() => {
   const activeChip = document.querySelector('.md3-chip-popup.md3-chip--active');
-  if (activeChip) checkPopupPosition(activeChip, activeChip.querySelector('.md3-small-popup'));
+  if (activeChip)
+    checkPopupPosition(
+        activeChip, activeChip.querySelector('.md3-small-popup'));
 }, 150);
 
 window.addEventListener('resize', handleResize);
-
-const awaitReady = async () => {
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    return Promise.resolve();
-  }
-  return new Promise(resolve => {
-    document.addEventListener('DOMContentLoaded', resolve, { once: true });
-  });
-};
 
 let activeTab = 'servers';
 
@@ -615,7 +667,12 @@ const tablesState = {
     tabId: 'servers-tab',
     url: 'https://kaillerareborn.2manygames.fr/server_list.json',
     lastFetchTime: 0,
-    isFetching: false
+    isFetching: false,
+    columns: [
+      {key: 'serverName', type: 'link', linkKey: 'website'}, {key: 'location'},
+      {key: 'numUsers', defaultValue: 0}, {key: 'numGames', defaultValue: 0},
+      {key: 'version'}, {key: 'ipAddress', type: 'copy'}
+    ]
   },
   games: {
     data: [],
@@ -625,7 +682,12 @@ const tablesState = {
     tabId: 'games-tab',
     url: 'https://kaillerareborn.2manygames.fr/game_list.json',
     lastFetchTime: 0,
-    isFetching: false
+    isFetching: false,
+    columns: [
+      {key: 'gameName'}, {key: 'emulatorName'}, {key: 'userName'},
+      {key: 'playerCount', defaultValue: 0}, {key: 'serverName'},
+      {key: 'location'}, {key: 'ipAddress', type: 'copy'}
+    ]
   }
 };
 
@@ -656,14 +718,24 @@ const fetchData = async (type) => {
     const response = await fetch(state.url);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const result = await response.json();
-    let data = Array.isArray(result.data) ? result.data : (Array.isArray(result) ? result : []);
+    const data = Array.isArray(result.data) ?
+        result.data :
+        (Array.isArray(result) ? result : []);
 
     state.data = data;
     renderTable(type);
   } catch (error) {
     console.error(`Failed to fetch ${type} list:`, error);
     const tbody = document.getElementById(state.tbodyId);
-    if (tbody) tbody.innerHTML = `<tr><td colspan="10">Failed to load ${type} list.</td></tr>`;
+    if (tbody) {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 10;
+      td.textContent = `Failed to load ${type} list.`;
+      tr.appendChild(td);
+      tbody.innerHTML = '';
+      tbody.appendChild(tr);
+    }
   } finally {
     if (refreshButton && activeTab === type) {
       refreshButton.classList.remove('rotating');
@@ -674,17 +746,50 @@ const fetchData = async (type) => {
 
 let activeCopyButton = null;
 
+const createCell = (text, type = 'text', options = {}) => {
+  const td = document.createElement('td');
+  if (type === 'link' && options.url) {
+    const a = document.createElement('a');
+    a.href = options.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.textContent = text;
+    a.setAttribute('aria-label', text);
+    td.appendChild(a);
+  } else if (type === 'copy') {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'ip-wrapper';
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-btn-mini';
+    button.textContent = 'Copy';
+    button.setAttribute('aria-label', `Copy IP ${text || 'unknown'}`);
+    button.addEventListener('click', () => copyToClipboard(text, button));
+    wrapper.appendChild(button);
+    td.appendChild(wrapper);
+  } else {
+    td.textContent = text;
+    td.setAttribute('tabindex', '0');
+  }
+  return td;
+};
+
 const renderTable = (type) => {
   const state = tablesState[type];
   const tbody = document.getElementById(state.tbodyId);
   tbody.innerHTML = '';
 
   if (state.data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="10">No data available.</td></tr>`;
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 10;
+    td.textContent = 'No data available.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
     return;
   }
 
-  const sortedData = [...state.data].sort((a, b) => {
+  const sortedData = state.data.toSorted((a, b) => {
     let valA = a[state.sortColumn] ?? '';
     let valB = b[state.sortColumn] ?? '';
 
@@ -701,52 +806,38 @@ const renderTable = (type) => {
     return 0;
   });
 
-  sortedData.forEach(item => {
-    const row = document.createElement('tr');
+  const fragment = document.createDocumentFragment();
 
-    if (type === 'servers') {
-      row.innerHTML = `
-        <td>${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer">${item.serverName || 'N/A'}</a>` : (item.serverName || 'N/A')}</td>
-        <td>${item.location || 'N/A'}</td>
-        <td>${item.numUsers || 0}</td>
-        <td>${item.numGames || 0}</td>
-        <td>${item.version || 'N/A'}</td>
-        <td>
-          <button type="button" class="copy-btn-mini" onclick="copyToClipboard('${item.ipAddress}', this)">Copy</button>
-        </td>
-      `;
-    } else {
-      row.innerHTML = `
-        <td>${item.gameName || 'N/A'}</td>
-        <td>${item.emulatorName || 'N/A'}</td>
-        <td>${item.userName || 'N/A'}</td>
-        <td>${item.playerCount || 0}</td>
-        <td>${item.serverName || 'N/A'}</td>
-        <td>${item.location || 'N/A'}</td>
-        <td>
-          <button type="button" class="copy-btn-mini" onclick="copyToClipboard('${item.ipAddress}', this)">Copy</button>
-        </td>
-      `;
-    }
-    tbody.appendChild(row);
-  });
+  for (const item of sortedData) {
+    const row = document.createElement('tr');
+    state.columns.forEach(col => {
+      const value = item[col.key] ?? (col.defaultValue ?? 'N/A');
+      const options = col.type === 'link' ? {url: item[col.linkKey]} : {};
+      row.appendChild(createCell(value, col.type || 'text', options));
+    });
+    fragment.appendChild(row);
+  }
+
+  tbody.appendChild(fragment);
 
   if (type === activeTab) {
     updateCounterText(type);
   }
 };
 
-window.copyToClipboard = (text, button) => {
+const copyToClipboard = (text, button) => {
   if (activeCopyButton && activeCopyButton !== button) {
     activeCopyButton.textContent = 'Copy';
     activeCopyButton.classList.remove('copied');
   }
 
-  navigator.clipboard.writeText(text || '').then(() => {
-    button.textContent = 'Copied!';
-    button.classList.add('copied');
-    activeCopyButton = button;
-  }).catch(err => console.error('Copy failed', err));
+  navigator.clipboard.writeText(text || '')
+      .then(() => {
+        button.textContent = 'Copied!';
+        button.classList.add('copied');
+        activeCopyButton = button;
+      })
+      .catch(err => console.error('Copy failed', err));
 };
 
 const handleSort = (type, column, headerElement) => {
@@ -759,10 +850,14 @@ const handleSort = (type, column, headerElement) => {
   }
 
   const table = headerElement.closest('table');
-  table.querySelectorAll('th.sortable').forEach(th => {
+  for (const th of table.querySelectorAll('th.sortable')) {
     th.classList.remove('sort-asc', 'sort-desc');
-  });
-  headerElement.classList.add(state.sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+    th.removeAttribute('aria-sort');
+  }
+  headerElement.classList.add(
+      state.sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+  headerElement.setAttribute(
+      'aria-sort', state.sortDir === 'asc' ? 'ascending' : 'descending');
 
   renderTable(type);
 };
@@ -778,9 +873,7 @@ const switchTab = (tab) => {
 
   ['servers', 'games'].forEach(type => {
     const tabElement = document.getElementById(tablesState[type].tabId);
-    if (tabElement) {
-      tabElement.style.display = type === tab ? 'block' : 'none';
-    }
+    tabElement?.classList.toggle('list-tab--hidden', type !== tab);
   });
   fetchData(tab);
   updateCounterText(tab);
@@ -795,18 +888,45 @@ const updateCounterText = (type) => {
 };
 
 const initializeTables = () => {
-  document.querySelectorAll('.tab-switcher .md3-chip').forEach(chip => {
+  const tabChips = document.querySelectorAll('.tab-switcher .md3-chip');
+  tabChips.forEach(chip => {
     chip.addEventListener('click', () => switchTab(chip.dataset.tab));
+    chip.addEventListener('keydown', (e) => {
+      const chips = [...tabChips];
+      const index = chips.indexOf(chip);
+      let newIndex;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        newIndex = (index + 1) % chips.length;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        newIndex = (index - 1 + chips.length) % chips.length;
+      }
+      if (newIndex !== undefined) {
+        e.preventDefault();
+        chips[newIndex].focus();
+        switchTab(chips[newIndex].dataset.tab);
+      }
+    });
   });
-  document.getElementById('refresh-active-list')?.addEventListener('click', () => fetchData(activeTab));
+  document.getElementById('refresh-active-list')
+      ?.addEventListener('click', () => fetchData(activeTab));
 
   ['servers', 'games'].forEach(type => {
     const state = tablesState[type];
     const table = document.getElementById(state.tbodyId).closest('table');
     table.querySelectorAll('th.sortable').forEach(th => {
+      th.setAttribute('role', 'button');
+      th.setAttribute('tabindex', '0');
       th.addEventListener('click', () => handleSort(type, th.dataset.sort, th));
+      th.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleSort(type, th.dataset.sort, th);
+        }
+      });
       if (th.dataset.sort === state.sortColumn) {
         th.classList.add(state.sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+        th.setAttribute(
+            'aria-sort', state.sortDir === 'asc' ? 'ascending' : 'descending');
       }
     });
 
@@ -816,6 +936,13 @@ const initializeTables = () => {
   });
 };
 
-await awaitReady();
+window.addEventListener('beforeunload', () => {
+  for (const controller of abortControllers.values()) {
+    controller.abort();
+  }
+  abortControllers.clear();
+  contentCache.clear();
+});
+
 initIntersectionObserver();
 initializeTables();

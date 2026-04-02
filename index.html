@@ -49,30 +49,28 @@
 <body>
 
   <header class="md3-header">
-    <nav class="md3-header-container container" aria-label="Main navigation">
-      <a class="md3-logo-link" href="https://kaillerareborn.github.io" aria-label="Kaillera Reborn home">
-        <h1 class="visually-hidden">Kaillera Reborn</h1>
+    <div class="md3-header-container container">
+      <a href="https://kaillerareborn.github.io" aria-label="Kaillera Reborn home">
         <img src="images/kaillerareborn_logo.png" alt="Kaillera Reborn" class="md3-logo" fetchpriority="high"
           loading="eager" decoding="async">
       </a>
-    </nav>
+    </div>
   </header>
 
   <main id="main-content" class="md3-main container" aria-label="Main content">
-    <section id="downloads" class="md3-section" aria-label="Downloads section">
+    <section id="downloads" class="md3-section">
       <div class="content-layout-grid">
-        <div class="layout-row top-row">
+        <div class="layout-row">
           <aside class="sidebar-top">
-            <article class="md3-card downloads-card">
+            <article class="md3-card">
               <div class="md3-card-content">
                 <div class="downloads-section">
                   <header class="sidebar-section-header">
                     <h3 class="md3-title-medium">Emulators</h3>
                     <div class="info-icon">
-                      <button type="button" class="icon-button" title="About: Emulators" data-trigger-popup="emulators"
-                        data-source="resources/emulators.html">
-                        <img src="images/info_icon.svg" alt="Information about emulators" loading="eager"
-                          decoding="async">
+                      <button type="button" class="icon-button" data-trigger-popup="emulators"
+                        data-source="resources/emulators.html" aria-label="Information about emulators">
+                        <img src="images/info_icon.svg" alt="Info" loading="lazy">
                       </button>
                     </div>
                   </header>
@@ -125,10 +123,9 @@
                   <header class="sidebar-section-header">
                     <h3 class="md3-title-medium">Clients</h3>
                     <div class="info-icon">
-                      <button type="button" class="icon-button" title="About: Clients" data-trigger-popup="clients"
-                        data-source="resources/clients.html">
-                        <img src="images/info_icon.svg" alt="Information about clients" loading="eager"
-                          decoding="async">
+                      <button type="button" class="icon-button" data-trigger-popup="clients"
+                        data-source="resources/clients.html" aria-label="Information about clients">
+                        <img src="images/info_icon.svg" alt="Info" loading="lazy">
                       </button>
                     </div>
                   </header>
@@ -155,10 +152,9 @@
                   <header class="sidebar-section-header">
                     <h3 class="md3-title-medium">Servers</h3>
                     <div class="info-icon">
-                      <button type="button" class="icon-button" title="About: Servers" data-trigger-popup="servers"
-                        data-source="resources/servers.html">
-                        <img src="images/info_icon.svg" alt="Information about servers" loading="eager"
-                          decoding="async">
+                      <button type="button" class="icon-button" data-trigger-popup="servers"
+                        data-source="resources/servers.html" aria-label="Information about servers">
+                        <img src="images/info_icon.svg" alt="Info" loading="lazy">
                       </button>
                     </div>
                   </header>
@@ -185,8 +181,8 @@
             </article>
           </aside>
 
-          <main class="main-top">
-            <article class="md3-card list-card" id="main-list-card">
+          <div class="main-top">
+            <article class="md3-card" id="main-list-card">
               <div class="md3-card-header">
                 <div class="md3-header-content-wrapper">
                   <div class="md3-chip-set tab-switcher" role="tablist">
@@ -197,14 +193,15 @@
                       aria-selected="false"><span class="md3-chip-text">Waiting Games List</span></button>
                   </div>
                   <span id="list-counter" class="md3-body-small list-counter"></span>
-                  <button type="button" class="icon-button refresh-button" id="refresh-active-list" title="Refresh list"
+                  <button type="button" class="icon-button refresh-button" id="refresh-active-list"
                     aria-label="Refresh active list">
                     <img src="images/refresh_icon.svg" alt="Refresh icon" loading="lazy">
                   </button>
                 </div>
               </div>
               <div class="md3-card-content">
-                <div class="table-container list-tab" id="servers-tab">
+                <div class="table-container list-tab" id="servers-tab" role="tabpanel"
+                  aria-labelledby="btn-show-servers">
                   <table id="server-table" class="md3-table">
                     <thead>
                       <tr>
@@ -213,13 +210,14 @@
                         <th class="sortable" data-sort="numUsers">Users</th>
                         <th class="sortable" data-sort="numGames">Games</th>
                         <th class="sortable" data-sort="version">Version</th>
-                        <th style="min-width: 68px;">IP</th>
+                        <th class="col-ip" tabindex="0">IP</th>
                       </tr>
                     </thead>
                     <tbody id="server-table-body"></tbody>
                   </table>
                 </div>
-                <div class="table-container list-tab" id="games-tab" style="display: none;">
+                <div class="table-container list-tab list-tab--hidden" id="games-tab" role="tabpanel"
+                  aria-labelledby="btn-show-games">
                   <table id="game-table" class="md3-table">
                     <thead>
                       <tr>
@@ -229,7 +227,7 @@
                         <th class="sortable" data-sort="playerCount">Players</th>
                         <th class="sortable" data-sort="serverName">Server</th>
                         <th class="sortable" data-sort="location">Location</th>
-                        <th style="min-width: 68px;">IP</th>
+                        <th class="col-ip" tabindex="0">IP</th>
                       </tr>
                     </thead>
                     <tbody id="game-table-body"></tbody>
@@ -237,10 +235,10 @@
                 </div>
               </div>
             </article>
-          </main>
+          </div>
         </div>
 
-        <div class="layout-row bottom-row">
+        <div class="layout-row">
           <aside class="sidebar-bottom">
             <article class="md3-card footer-card">
               <div class="md3-card-content">
@@ -254,22 +252,22 @@
                 <p class="md3-body-small centered-text">&copy; 2026 Kaillera Reborn</p>
                 <nav class="md3-social-container" aria-label="Social media links">
                   <a class="md3-social-link" href="https://bsky.app/profile/kaillerareborn.bsky.social" target="_blank"
-                    rel="noopener noreferrer" title="Bluesky"><img src="images/bluesky_logo.svg" alt="Bluesky"
+                    rel="noopener noreferrer" aria-label="Bluesky"><img src="images/bluesky_logo.svg" alt="Bluesky"
                       class="md3-social-icon" loading="lazy"></a>
                   <a class="md3-social-link" href="https://mastodon.social/@kaillerareborn" target="_blank"
-                    rel="noopener noreferrer" title="Mastodon"><img src="images/mastodon_logo.svg" alt="Mastodon"
+                    rel="noopener noreferrer" aria-label="Mastodon"><img src="images/mastodon_logo.svg" alt="Mastodon"
                       class="md3-social-icon" loading="lazy"></a>
                   <a class="md3-social-link" href="https://twitter.com/kaillerareborn" target="_blank"
-                    rel="noopener noreferrer" title="Twitter"><img src="images/twitter_logo.svg" alt="Twitter"
+                    rel="noopener noreferrer" aria-label="Twitter"><img src="images/twitter_logo.svg" alt="Twitter"
                       class="md3-social-icon" loading="lazy"></a>
-                  <a class="md3-social-link" href="mailto:kaillerareborn@secria.me" title="Email"><img
+                  <a class="md3-social-link" href="mailto:kaillerareborn@secria.me" aria-label="Email"><img
                       src="images/email_icon.svg" alt="Email" class="md3-social-icon" loading="lazy"></a>
                 </nav>
               </div>
             </article>
           </aside>
 
-          <main class="main-bottom">
+          <div class="main-bottom">
             <article class="md3-card info-card">
               <div class="md3-card-content">
                 <p><strong>Kaillera</strong> offers the possibility to play retro games online using emulators with
@@ -283,13 +281,13 @@
                   rooms.</p>
               </div>
             </article>
-          </main>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <div id="popup" class="popup" aria-hidden="true" role="dialog" aria-modal="true">
+  <div id="popup" class="popup" aria-hidden="true" role="dialog" aria-modal="true" inert>
     <div class="popup-content" tabindex="-1" aria-labelledby="popup-title" aria-describedby="popup-description">
       <button type="button" class="close" aria-label="Close dialog"><span aria-hidden="true">&times;</span></button>
       <div id="popup-content-wrapper" aria-live="polite" aria-atomic="true">
@@ -298,6 +296,7 @@
       </div>
     </div>
   </div>
+  <div class="overlay" aria-hidden="true"></div>
 </body>
 
 </html>
