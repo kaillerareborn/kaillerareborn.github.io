@@ -64,10 +64,6 @@
     --transition-fade:
       opacity var(--transition-std), visibility 0s linear var(--duration-std);
     --transition-fade-show: opacity var(--transition-std), visibility 0s;
-    --transition-card-active:
-      box-shadow var(--duration-std) var(--ease-standard),
-      transform var(--duration-std) var(--ease-standard),
-      border-color var(--duration-std) var(--ease-standard), z-index 0s;
     --row-hover: #f9f9f9;
     --table-header-bg: #ebebeb;
     --text-color-secondary: #595959;
@@ -331,7 +327,7 @@
   }
 
   .downloads-section {
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-sm);
 
     &:last-child {
       margin-bottom: 0;
@@ -383,7 +379,7 @@
 
   .table-container {
     position: relative;
-    max-height: 480px;
+    max-height: 60vh;
     overflow-y: auto;
     overflow-x: auto;
     border: 1px solid var(--divider-color);
@@ -827,6 +823,8 @@
     font-weight: 500;
     padding: 6px 12px;
     border-radius: 6px;
+    min-width: 120px;
+    text-align: center;
     opacity: 0;
     visibility: hidden;
     display: block;

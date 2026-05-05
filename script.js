@@ -410,17 +410,6 @@ const initializeSubMenus = () => {
   }
 };
 
-const retroArchData = [
-  {text: 'Linux (x86_64)', url: 'https://kr.2manygames.fr/retroarch-k-linux'}, {
-    text: 'Windows (32-bit)',
-    url: 'https://kr.2manygames.fr/retroarch-k-windows-x86'
-  },
-  {
-    text: 'Windows (64-bit)',
-    url: 'https://kr.2manygames.fr/retroarch-k-windows'
-  }
-];
-
 const oldEmulatorsData = [
   {
     category: 'Arcade',
@@ -469,7 +458,7 @@ const oldEmulatorsData = [
       {type: 'header', text: 'C64'}, {
         type: 'link',
         text: 'CCS64',
-        url: 'https://kr.2manygames.fr/emulators/CCS64%20V3.10.zip'
+        url: 'https://kr.2manygames.fr/emulators/CCS64%20V4.0.zip'
       }
     ]
   },
@@ -549,6 +538,17 @@ const oldEmulatorsData = [
         url: 'https://kr.2manygames.fr/emulators/ePSXe%201.6.0.zip'
       }
     ]
+  }
+];
+
+const retroArchData = [
+  {text: 'Linux (x86_64)', url: 'https://kr.2manygames.fr/retroarch-k-linux'}, {
+    text: 'Windows (32-bit)',
+    url: 'https://kr.2manygames.fr/retroarch-k-windows-x86'
+  },
+  {
+    text: 'Windows (64-bit)',
+    url: 'https://kr.2manygames.fr/retroarch-k-windows'
   }
 ];
 

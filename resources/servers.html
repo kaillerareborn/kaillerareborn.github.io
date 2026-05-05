@@ -1,6 +1,21 @@
 <h2><u>EmuLinker-K</u></h2>
+
+<h3>How to configure it</h3>
+
+For a minimal setup, simply edit these values in the <code>emulinker.cfg</code> file:
+
+<ul>
+    <li><code>masterList.serverName=</code></li>
+    <li><code>masterList.serverLocation=</code></li>
+    <li><code>masterList.serverConnectAddress=</code> *</li>
+</ul>
+
+<p class="note">* Include the IPv4 address to make your server appear in the Kaillera Master Server List.</p>
+
 <h3>How to run it</h3>
+
 <h4>Linux</h4>
+
 <ul>
     <li>Install Java: *
         <pre><code>$ sudo apt install openjdk-25-jdk      # Debian based distros
@@ -14,6 +29,7 @@ $ sudo zypper install java-25-openjdk  # SUSE based distros</code></pre>
 </ul>
 
 <h4>macOS</h4>
+
 <ul>
     <li>Install <strong><a href="https://formulae.brew.sh/formula/openjdk" target="_blank" rel="noopener noreferrer"
                 title="Homebrew">Java</a></strong>.</li>
@@ -21,18 +37,18 @@ $ sudo zypper install java-25-openjdk  # SUSE based distros</code></pre>
 </ul>
 
 <h4>Windows</h4>
+
 <ul>
     <li>Install <strong><a href="https://learn.microsoft.com/java/openjdk/download#openjdk-25" target="_blank"
                 rel="noopener noreferrer" title="OpenJDK">Java</a></strong>.</li>
     <li><code>server.bat</code></li>
 </ul>
 
-<p class="note">Include the IP address of your server in the <code>masterList.serverConnectAddress=</code> value
-    (emulinker.cfg) to make it appear in the Kaillera Master Lists.</p>
 <p class="note">* Change the number to 21 if the latest LTS version isn't yet available in your distro's repositories.
 </p>
 
 <h3>How to update it</h3>
+
 <ul>
     <li>Drag the new <code>emulinker-k.jar</code> file to the <code>lib</code> folder.</li>
     <li>Replace the <code>.bat</code> and <code>.sh</code> files.</li>

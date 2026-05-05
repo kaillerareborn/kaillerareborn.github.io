@@ -64,12 +64,68 @@
           <aside class="sidebar-top">
             <article class="md3-card">
               <div class="md3-card-content">
+
                 <div class="downloads-section">
                   <header class="sidebar-section-header">
                     <h3 class="md3-title-medium">Emulators</h3>
                     <div class="info-icon">
                       <button type="button" class="icon-button" data-trigger-popup="emulators"
                         data-source="resources/emulators.html" aria-label="Information about emulators">
+                        <img src="images/info_icon.svg" alt="Info" loading="lazy">
+                      </button>
+                    </div>
+                  </header>
+                  <div class="md3-chip-set">
+                    <div class="md3-chip md3-chip-popup" id="old-emulators-button">
+                      <button type="button" class="md3-chip-action ripple-target" aria-haspopup="true"
+                        aria-expanded="false" aria-controls="old-emulators-popup">
+                        <span class="md3-chip-text">(Archive)</span>
+                      </button>
+                      <div class="md3-small-popup" id="old-emulators-popup" role="menu" aria-label="Old Emulators">
+                      </div>
+                    </div>
+                    <div class="md3-chip md3-chip-src">
+                      <a class="md3-chip-action ripple-target" href="https://kr.2manygames.fr/src/" target="_blank"
+                        rel="noopener noreferrer" aria-label="Old Emulators source codes"><span
+                          class="md3-chip-text">src</span></a>
+                    </div>
+                  </div>
+                  <div class="md3-chip-set">
+                    <div class="md3-chip md3-chip-popup">
+                      <span class="md3-chip-tooltip">Nintendo 64</span>
+                      <a class="md3-chip-action ripple-target" href="https://github.com/Jay-Day/RMG-K/releases"
+                        target="_blank" rel="noopener noreferrer" aria-label="RMG-K">
+                        <span class="md3-chip-text">RMG-K</span>
+                      </a>
+                    </div>
+                    <div class="md3-chip md3-chip-src">
+                      <a class="md3-chip-action ripple-target" href="https://github.com/Jay-Day/RMG-K" target="_blank"
+                        rel="noopener noreferrer" aria-label="RMG-K source code"><span
+                          class="md3-chip-text">src</span></a>
+                    </div>
+                  </div>
+                  <div class="md3-chip-set">
+                    <div class="md3-chip md3-chip-popup">
+                      <span class="md3-chip-tooltip">Super Nintendo</span>
+                      <a class="md3-chip-action ripple-target" href="https://github.com/horsepijjd/snes9xpp/releases"
+                        target="_blank" rel="noopener noreferrer" aria-label="Snes9x++">
+                        <span class="md3-chip-text">Snes9x++</span>
+                      </a>
+                    </div>
+                    <div class="md3-chip md3-chip-src">
+                      <a class="md3-chip-action ripple-target" href="https://github.com/horsepijjd/snes9xpp"
+                        target="_blank" rel="noopener noreferrer" aria-label="Snes9x++ source code"><span
+                          class="md3-chip-text">src</span></a>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="downloads-section">
+                  <header class="sidebar-section-header">
+                    <h3 class="md3-title-medium">Front-ends</h3>
+                    <div class="info-icon">
+                      <button type="button" class="icon-button" data-trigger-popup="frontends"
+                        data-source="resources/frontends.html" aria-label="Information about front-ends">
                         <img src="images/info_icon.svg" alt="Info" loading="lazy">
                       </button>
                     </div>
@@ -88,40 +144,10 @@
                         aria-label="RetroArch-K source code"><span class="md3-chip-text">src</span></a>
                     </div>
                   </div>
-                  <div class="md3-chip-set">
-                    <div class="md3-chip md3-chip-popup">
-                      <span class="md3-chip-tooltip">Nintendo 64</span>
-                      <a class="md3-chip-action ripple-target" href="https://github.com/Jay-Day/RMG-K/releases"
-                        target="_blank" rel="noopener noreferrer" aria-label="RMG-K">
-                        <span class="md3-chip-text">RMG-K</span>
-                      </a>
-                    </div>
-                    <div class="md3-chip md3-chip-src">
-                      <a class="md3-chip-action ripple-target" href="https://github.com/Jay-Day/RMG-K" target="_blank"
-                        rel="noopener noreferrer" aria-label="RMG-K source code"><span
-                          class="md3-chip-text">src</span></a>
-                    </div>
-                  </div>
-                  <div class="md3-chip-set">
-                    <div class="md3-chip md3-chip-popup" id="old-emulators-button">
-                      <button type="button" class="md3-chip-action ripple-target" aria-haspopup="true"
-                        aria-expanded="false" aria-controls="old-emulators-popup">
-                        <span class="md3-chip-text">Old Emulators</span>
-                      </button>
-                      <div class="md3-small-popup" id="old-emulators-popup" role="menu" aria-label="Old Emulators">
-                      </div>
-                    </div>
-                    <div class="md3-chip md3-chip-src">
-                      <a class="md3-chip-action ripple-target" href="https://kr.2manygames.fr/src/" target="_blank"
-                        rel="noopener noreferrer" aria-label="Old Emulators source codes"><span
-                          class="md3-chip-text">src</span></a>
-                    </div>
-                  </div>
                 </div>
-
                 <div class="downloads-section">
                   <header class="sidebar-section-header">
-                    <h3 class="md3-title-medium">Clients</h3>
+                    <h3 class="md3-title-medium">Kaillera clients</h3>
                     <div class="info-icon">
                       <button type="button" class="icon-button" data-trigger-popup="clients"
                         data-source="resources/clients.html" aria-label="Information about clients">
@@ -150,7 +176,7 @@
 
                 <div class="downloads-section">
                   <header class="sidebar-section-header">
-                    <h3 class="md3-title-medium">Servers</h3>
+                    <h3 class="md3-title-medium">Kaillera servers</h3>
                     <div class="info-icon">
                       <button type="button" class="icon-button" data-trigger-popup="servers"
                         data-source="resources/servers.html" aria-label="Information about servers">
